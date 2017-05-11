@@ -10,6 +10,7 @@ Edad:										7+
 
 
 
+
 Descripción
 Mystic FDI es un juego en el que tendrás que ir recorriendo mapas de la facultad de informática de la UCM, a través de los cuales tendrás que ir venciendo a profesores para sobrevivir.
 Para ser más poderoso tendrás que tener de aliados a otros alumnos e ir mejorandolos hasta que sean alumnos de último curso.
