@@ -11,7 +11,7 @@ window.addEventListener("load", function() {
         .enableSound();
 
 
-    Q.load(["fdi.png", "flechaI.png", "flechaD.png"], function() {
+    Q.load(["fdi.png", "flechaI.png", "flechaD.png", "tick1.png"], function() {
 
     });
     Q.scene("level1", function(stage) {
@@ -23,7 +23,7 @@ window.addEventListener("load", function() {
 
     Q.load([""], function() {
         Q.loadTMX("level.tmx", function() {
-            Q.stageScene("screenMain");
+            Q.stageScene("startGame");
         });
     });
 
@@ -96,6 +96,18 @@ window.addEventListener("load", function() {
             label: "Reclutar"
         }))
 
+        var label = stage.insert(new Q.UI.Text({ x: 250, y: 60, size: 17, label: "Coins: 0" }));
+        Q.state.on("change.coins", this, function(coins) {
+            label.p.label = "coins: " + coins;
+        });
+
+        if (Q.state.p.taquillas == true) {
+            button2.on("click", function() {
+
+                Q.state.inc("coins", 1);
+
+            });
+        }
 
         button3.on("click", function() {
             Q.clearStages();
@@ -109,7 +121,7 @@ window.addEventListener("load", function() {
             Q.stageScene("aprender");
 
         });
-        button4.on("click", function() {
+        button5.on("click", function() {
             Q.clearStages();
 
             Q.stageScene("reclutar");
@@ -223,6 +235,8 @@ window.addEventListener("load", function() {
             label: "Taquillas"
         }))
 
+
+
         var button3 = box.insert(new Q.UI.Button({
             x: -70,
             y: -90,
@@ -230,6 +244,12 @@ window.addEventListener("load", function() {
             fill: "#CCCCCC",
             label: "Clase"
         }))
+        var labelClase = box.insert(new Q.UI.Text({
+            x: 50,
+            y: -105,
+            label: "x500",
+            size: 20
+        }));
 
         var button4 = box.insert(new Q.UI.Button({
             x: -70,
@@ -250,6 +270,14 @@ window.addEventListener("load", function() {
         flechaI.on("click", function() {
             Q.clearStages();
             Q.stageScene("screenMain");
+
+        });
+
+        button2.on("click", function() {
+            Q.state.p.taquillas = true;
+            box.insert(new Q.UI.Button({ x: 50, y: -145, asset: "tick1.png" }));
+
+
 
         });
 
@@ -302,7 +330,7 @@ window.addEventListener("load", function() {
             y: -30,
             w: 150,
             fill: "#CCCCCC",
-            label: "Gestion empresarial"
+            label: "Gestion"
         }))
         var button5 = box.insert(new Q.UI.Button({
             x: -70,
@@ -362,6 +390,37 @@ window.addEventListener("load", function() {
             Q.stageScene("screenMain");
 
         });
+
+    });
+
+
+
+    Q.scene('startGame', function(stage) {
+
+
+        var box = stage.insert(new Q.UI.Container({
+            x: Q.width / 2,
+            y: Q.height / 2
+        }));
+        Q.state.reset({ coins: 0, taquillas: false });
+
+        var button = box.insert(new Q.UI.Button({ asset: "fdi.png" }));
+        Q.input.on("confirm", button, function() {
+            Q.clearStages();
+            Q.stageScene("screenMain");
+            //Q.stageScene("coins", 2);
+
+
+
+        });
+        button.on("click", function() {
+            Q.clearStages();
+            Q.stageScene('screenMain');
+            //Q.stageScene("coins", 2);
+
+
+        });
+
 
     });
 
