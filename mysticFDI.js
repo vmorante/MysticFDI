@@ -16,7 +16,7 @@ window.addEventListener("load", function() {
     });
 
 
-    Q.load(["fdi.png", "flechaI.png", "flechaD.png", "tick1.png", "puerta/1.png", "puerta/2.png", "puerta/3.png", "puerta/4.png", "puerta/5.png", "puerta/6.png", "coins.mp3", "coins.ogg"], function() {
+    Q.load(["fdi.png", "fletxaI.png", "fletxaD.png", "tick1.png", "puerta/1.png", "puerta/2.png", "puerta/3.png", "puerta/4.png", "puerta/5.png", "puerta/6.png", "coins.mp3", "coins.ogg"], function() {
         Q.loadTMX("level.tmx", function() {
             Q.stageScene("startGame");
         });
@@ -42,13 +42,13 @@ window.addEventListener("load", function() {
         var flechaI = box.insert(new Q.UI.Button({
             x: -110,
             y: -210,
-            asset: "flechaI.png"
+            asset: "fletxaI.png"
         }));
 
         /*var flechaD = box.insert(new Q.UI.Button({
             x: 110,
             y: -210,
-            asset: "flechaD.png"
+            asset: "fletxaD.png"
         }))*/
 
         var botonAlquimia = box.insert(new Q.UI.Button({
@@ -137,7 +137,7 @@ window.addEventListener("load", function() {
         var flechaD = box.insert(new Q.UI.Button({
             x: 110,
             y: -210,
-            asset: "flechaD.png"
+            asset: "fletxaD.png"
         }));
 
         var botonLogros = box.insert(new Q.UI.Button({
@@ -187,7 +187,7 @@ window.addEventListener("load", function() {
         var flechaI = box.insert(new Q.UI.Button({
             x: -110,
             y: -210,
-            asset: "flechaI.png"
+            asset: "fletxaI.png"
         }));
 
         var botonTaquillas = box.insert(new Q.UI.Button({
@@ -263,7 +263,7 @@ window.addEventListener("load", function() {
         var flechaI = box.insert(new Q.UI.Button({
             x: -110,
             y: -210,
-            asset: "flechaI.png"
+            asset: "fletxaI.png"
         }));
 
         var botonCmasmas = box.insert(new Q.UI.Button({
@@ -323,7 +323,7 @@ window.addEventListener("load", function() {
         var flechaI = box.insert(new Q.UI.Button({
             x: -110,
             y: -210,
-            asset: "flechaI.png"
+            asset: "fletxaI.png"
         }));
 
         var botonAmigos = box.insert(new Q.UI.Button({
