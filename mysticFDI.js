@@ -46,11 +46,11 @@ window.addEventListener("load", function() {
             asset: "flechaI.png"
         }))
 
-        var flechaD = box.insert(new Q.UI.Button({
+        /*var flechaD = box.insert(new Q.UI.Button({
             x: 110,
             y: -210,
             asset: "flechaD.png"
-        }))
+        }))*/
 
         var botonAlquimia = box.insert(new Q.UI.Button({
             x: -70,
@@ -84,7 +84,7 @@ window.addEventListener("load", function() {
             label: "Reclutar"
         }))
 
-        var label = stage.insert(new Q.UI.Text({ x: 250, y: 60, size: 17, label: "Coins: " + Q.state.coins }));
+        var label = stage.insert(new Q.UI.Text({ x: 250, y: 80, size: 17, label: "Coins: " + Q.state.p.coins }));
 
         Q.state.on("change.coins", this, function(coins) {
             label.p.label = "coins: " + coins;
@@ -344,7 +344,6 @@ window.addEventListener("load", function() {
             y: Q.height / 2
         }));
 
-        Q.state.coins = 0;
         Q.state.reset({ coins: 0, taquillas: false });
 
         var button = box.insert(new Q.UI.Button({ asset: "fdi.png" }));
