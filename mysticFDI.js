@@ -10,14 +10,13 @@ window.addEventListener("load", function() {
         .controls().touch()
         .enableSound();
 
-
     Q.scene("level1", function(stage) {
         Q.stageTMX("level.tmx", stage);
         stage.add("viewport");
     });
 
 
-    Q.load(["fdi.png", "flechaI.png", "flechaD.png", "tick1.png", "coins.mp3", "coins.ogg"], function() {
+    Q.load(["fdi.png", "flechaI.png", "flechaD.png", "tick1.png", "puerta/1.png", "puerta/2.png", "puerta/3.png", "puerta/4.png", "puerta/5.png", "puerta/6.png", "coins.mp3", "coins.ogg"], function() {
         Q.loadTMX("level.tmx", function() {
             Q.stageScene("startGame");
         });
@@ -44,7 +43,7 @@ window.addEventListener("load", function() {
             x: -110,
             y: -210,
             asset: "flechaI.png"
-        }))
+        }));
 
         /*var flechaD = box.insert(new Q.UI.Button({
             x: 110,
@@ -58,7 +57,7 @@ window.addEventListener("load", function() {
             w: 150,
             fill: "#CCCCCC",
             label: "Alquimia"
-        }))
+        }));
 
         var botonEdificios = box.insert(new Q.UI.Button({
             x: -70,
@@ -66,7 +65,7 @@ window.addEventListener("load", function() {
             w: 150,
             fill: "#CCCCCC",
             label: "Edificios"
-        }))
+        }));
 
         var botonAprender = box.insert(new Q.UI.Button({
             x: -70,
@@ -74,7 +73,7 @@ window.addEventListener("load", function() {
             w: 150,
             fill: "#CCCCCC",
             label: "Aprender"
-        }))
+        }));
 
         var botonReclutar = box.insert(new Q.UI.Button({
             x: -70,
@@ -82,12 +81,12 @@ window.addEventListener("load", function() {
             w: 150,
             fill: "#CCCCCC",
             label: "Reclutar"
-        }))
+        }));
 
         var label = stage.insert(new Q.UI.Text({ x: 250, y: 80, size: 17, label: "Coins: " + Q.state.p.coins }));
 
         Q.state.on("change.coins", this, function(coins) {
-            label.p.label = "coins: " + coins;
+            label.p.label = "Coins: " + coins;
         });
 
         if (Q.state.p.taquillas) {
@@ -139,7 +138,7 @@ window.addEventListener("load", function() {
             x: 110,
             y: -210,
             asset: "flechaD.png"
-        }))
+        }));
 
         var botonLogros = box.insert(new Q.UI.Button({
             x: -70,
@@ -147,7 +146,7 @@ window.addEventListener("load", function() {
             w: 150,
             fill: "#CCCCCC",
             label: "Logros"
-        }))
+        }));
 
         var botonSalir = box.insert(new Q.UI.Button({
             x: -70,
@@ -155,7 +154,7 @@ window.addEventListener("load", function() {
             w: 150,
             fill: "#CCCCCC",
             label: "Salir"
-        }))
+        }));
 
         flechaD.on("click", function() {
             Q.clearStages();
@@ -189,7 +188,7 @@ window.addEventListener("load", function() {
             x: -110,
             y: -210,
             asset: "flechaI.png"
-        }))
+        }));
 
         var botonTaquillas = box.insert(new Q.UI.Button({
             x: -70,
@@ -197,7 +196,7 @@ window.addEventListener("load", function() {
             w: 150,
             fill: "#CCCCCC",
             label: "Taquillas"
-        }))
+        }));
 
         var botonClase = box.insert(new Q.UI.Button({
             x: -70,
@@ -205,7 +204,7 @@ window.addEventListener("load", function() {
             w: 150,
             fill: "#CCCCCC",
             label: "Clase"
-        }))
+        }));
 
         var labelClase = box.insert(new Q.UI.Text({
             x: 50,
@@ -220,7 +219,7 @@ window.addEventListener("load", function() {
             w: 150,
             fill: "#CCCCCC",
             label: "Quiosco"
-        }))
+        }));
 
         var botonAparcamiento = box.insert(new Q.UI.Button({
             x: -70,
@@ -228,7 +227,7 @@ window.addEventListener("load", function() {
             w: 150,
             fill: "#CCCCCC",
             label: "Aparcamiento"
-        }))
+        }));
 
         flechaI.on("click", function() {
             Q.clearStages();
@@ -265,7 +264,7 @@ window.addEventListener("load", function() {
             x: -110,
             y: -210,
             asset: "flechaI.png"
-        }))
+        }));
 
         var botonCmasmas = box.insert(new Q.UI.Button({
             x: -70,
@@ -273,7 +272,7 @@ window.addEventListener("load", function() {
             w: 150,
             fill: "#CCCCCC",
             label: "C++"
-        }))
+        }));
 
         var botonJava = box.insert(new Q.UI.Button({
             x: -70,
@@ -281,7 +280,7 @@ window.addEventListener("load", function() {
             w: 150,
             fill: "#CCCCCC",
             label: "Java"
-        }))
+        }));
 
         var botonGestion = box.insert(new Q.UI.Button({
             x: -70,
@@ -289,7 +288,7 @@ window.addEventListener("load", function() {
             w: 150,
             fill: "#CCCCCC",
             label: "Gestión"
-        }))
+        }));
 
         var botonC = box.insert(new Q.UI.Button({
             x: -70,
@@ -297,7 +296,7 @@ window.addEventListener("load", function() {
             w: 150,
             fill: "#CCCCCC",
             label: "C"
-        }))
+        }));
 
         flechaI.on("click", function() {
             Q.clearStages();
@@ -325,7 +324,7 @@ window.addEventListener("load", function() {
             x: -110,
             y: -210,
             asset: "flechaI.png"
-        }))
+        }));
 
         var botonAmigos = box.insert(new Q.UI.Button({
             x: -70,
@@ -333,7 +332,7 @@ window.addEventListener("load", function() {
             w: 150,
             fill: "#CCCCCC",
             label: "Hacer amigos"
-        }))
+        }));
 
         flechaI.on("click", function() {
             Q.clearStages();
@@ -351,19 +350,23 @@ window.addEventListener("load", function() {
 
         Q.state.reset({ coins: 0, taquillas: false });
 
-        var button = box.insert(new Q.UI.Button({ asset: "fdi.png" }));
+        var button = box.insert(new Q.UI.Button({ asset: "puerta/1.png" }));
 
-        var emepezarLevel = function(){
-            Q.clearStages();
-            Q.stageScene("screenMain");
+        var empezarLevel = function(){
+            box.insert(new Q.UI.Button({ asset: "puerta/2.png" }));
+            setTimeout(function(){box.insert(new Q.UI.Button({ asset: 'puerta/3.png' }));}, 200);
+            setTimeout(function(){box.insert(new Q.UI.Button({ asset: 'puerta/4.png' }));}, 400);
+            setTimeout(function(){box.insert(new Q.UI.Button({ asset: 'puerta/5.png' }));}, 600);
+            setTimeout(function(){box.insert(new Q.UI.Button({ asset: 'puerta/6.png' }));}, 800);
+            setTimeout(function(){Q.stageScene("screenMain");}, 1500);
         };
 
         Q.input.on("confirm", button, function() {
-            emepezarLevel();
+            empezarLevel();
         });
 
         button.on("click", function() {
-            emepezarLevel();
+            empezarLevel();
         });
     });
 
