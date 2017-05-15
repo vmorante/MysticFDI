@@ -17,7 +17,7 @@ window.addEventListener("load", function() {
     });
 
 
-    Q.load(["fdi.png", "flechaI.png", "flechaD.png", "tick1.png"], function() {
+    Q.load(["fdi.png", "flechaI.png", "flechaD.png", "tick1.png", "coins.mp3", "coins.ogg"], function() {
         Q.loadTMX("level.tmx", function() {
             Q.stageScene("startGame");
         });
@@ -92,6 +92,7 @@ window.addEventListener("load", function() {
 
         if (Q.state.p.taquillas === true) {
             botonAlquimia.on("click", function() {
+                Q.audio.play("coins.mp3");
                 Q.state.inc("coins", 1);
             });
         }
