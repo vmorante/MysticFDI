@@ -90,7 +90,7 @@ window.addEventListener("load", function() {
             label.p.label = "coins: " + coins;
         });
 
-        if (Q.state.p.taquillas === true) {
+        if (Q.state.p.taquillas) {
             botonAlquimia.on("click", function() {
                 Q.audio.play("coins.mp3");
                 Q.state.inc("coins", 1);
@@ -239,6 +239,10 @@ window.addEventListener("load", function() {
             Q.state.p.taquillas = true;
             box.insert(new Q.UI.Button({ x: 50, y: -145, asset: "tick1.png" }));
         });
+
+        if(Q.state.p.taquillas){
+            box.insert(new Q.UI.Button({ x: 50, y: -145, asset: "tick1.png" }));
+        }
     });
 
 
