@@ -352,7 +352,7 @@ window.addEventListener("load", function() {
 
         var button = box.insert(new Q.UI.Button({ asset: "puerta/1.png" }));
 
-        var empezarLevel = function(){
+        var empezarJuego = function(){
             box.insert(new Q.UI.Button({ asset: "puerta/2.png" }));
             setTimeout(function(){box.insert(new Q.UI.Button({ asset: 'puerta/3.png' }));}, 200);
             setTimeout(function(){box.insert(new Q.UI.Button({ asset: 'puerta/4.png' }));}, 400);
@@ -362,11 +362,11 @@ window.addEventListener("load", function() {
         };
 
         Q.input.on("confirm", button, function() {
-            empezarLevel();
+            empezarJuego();
         });
 
         button.on("click", function() {
-            empezarLevel();
+            empezarJuego();
         });
     });
 
