@@ -10,16 +10,55 @@ window.addEventListener("load", function() {
         .controls().touch()
         .enableSound();
 
-    Q.scene("level1", function(stage) {
-        Q.stageTMX("level.tmx", stage);
-        stage.add("viewport");
+    
+    Q.animations('player_anim', {
+            front: { frames: [0, 1, 2, 3], rate: 1/30, loop: false },
+            side_right: { frames: [4, 5, 6, 7], rate: 1/7, loop: false },
+            side_left: { frames: [4, 5, 6, 7], rate: 1/7, loop: false, flip: "x" },
+            back: { frames: [8, 9, 10, 11], rate: 1/7, loop: false }
     });
 
 
-    Q.load(["fdi.png", "fletxaI.png", "fletxaD.png", "tick1.png", "puerta/1.png", "puerta/2.png", "puerta/3.png", "puerta/4.png", "puerta/5.png", "puerta/6.png", "coins.mp3", "coins.ogg"], function() {
+    Q.scene("level1", function(stage) {
+        Q.stageTMX("level.tmx", stage);
+        stage.add("viewport");
+        var player = stage.insert(new Q.Player({ x: 250, y: 350, scale: 1/7 }));
+
+        stage.add("viewport").follow(player);
+    });
+
+
+    Q.load(["fdi.png", "fletxaI.png", "fletxaD.png", "tick1.png", "puerta/1.png", "puerta/2.png", "puerta/3.png", "puerta/4.png", "puerta/5.png", "puerta/6.png", "personaje.png", "player.json", "coins.mp3", "coins.ogg"], function() {
         Q.loadTMX("level.tmx", function() {
+            Q.compileSheets("personaje.png","player.json");
             Q.stageScene("startGame");
         });
+    });
+
+
+    Q.Sprite.extend("Player",{
+        init: function(p) {
+            this._super(p, { sheet: "front", sprite: "player_anim" , gravity: 0});
+            this.add('2d, stepControls, animation');
+        },
+
+        step: function(dt) {
+            Q.input.on("right",this , function() {
+                this.play("side_right");
+            });
+
+            Q.input.on("left",this , function() {
+                this.play("side_left");
+            });
+
+            Q.input.on("up",this , function() {
+                this.play("back");
+            });
+
+            Q.input.on("down",this , function() {
+                this.play("front");
+            });
+        }
     });
 
 
@@ -126,7 +165,7 @@ window.addEventListener("load", function() {
             labelMatematicas.p.label = "Matematicas: " + matematicas;
         });
 
-        //FISIca
+        //fisica
 
         var labelFisica = stage.insert(new Q.UI.Text({ x: 250, y: 260, size: 17, label: "Fisica: " + Q.state.p.fisica }));
 
@@ -321,7 +360,6 @@ window.addEventListener("load", function() {
 
         }));
 
-
         var label = box.insert(new Q.UI.Text({
             x: 0,
             y: -225,
@@ -356,6 +394,7 @@ window.addEventListener("load", function() {
             fill: "#CCCCCC",
             label: "Ensamblador"
         }));
+
         var labelEnsamblador = box.insert(new Q.UI.Text({
             x: 70,
             y: -100,
@@ -414,13 +453,13 @@ window.addEventListener("load", function() {
             fill: "#CCCCCC",
             label: "Fisica"
         }));
+
         var labelFisica = box.insert(new Q.UI.Text({
             x: 70,
             y: 140,
             label: "x50",
             size: 20
         }));
-
 
         flechaI.on("click", function() {
             Q.clearStages();
@@ -434,6 +473,7 @@ window.addEventListener("load", function() {
                 Q.state.inc("cmasmas", 1);
             }
         });
+
         botonGestion.on("click", function() {
             dinero = comprobarDinero(50, "aprender")
             if (dinero) {
@@ -441,6 +481,7 @@ window.addEventListener("load", function() {
                 Q.state.inc("gestion", 1);
             }
         });
+
         botonC.on("click", function() {
             dinero = comprobarDinero(120, "aprender")
             if (dinero) {
@@ -448,6 +489,7 @@ window.addEventListener("load", function() {
                 Q.state.inc("c", 1);
             }
         });
+
         botonEnsamblador.on("click", function() {
             dinero = comprobarDinero(150, "aprender")
             if (dinero) {
@@ -455,6 +497,7 @@ window.addEventListener("load", function() {
                 Q.state.inc("ensamblador", 1);
             }
         });
+
         botonMatematicas.on("click", function() {
             dinero = comprobarDinero(150, "aprender")
             if (dinero) {
@@ -462,6 +505,7 @@ window.addEventListener("load", function() {
                 Q.state.inc("matematicas", 1);
             }
         });
+
         botonFisica.on("click", function() {
             dinero = comprobarDinero(50, "aprender")
             if (dinero) {
@@ -505,18 +549,22 @@ window.addEventListener("load", function() {
             Q.clearStages();
             Q.stageScene("screenMain");
         });
+
         botonAmigos.on("click", function() {
             Q.stageScene("elegirPersonaje", 1, { escena: "reclutar" });
         });
     });
 
+
     function comprobarDinero(precio, escena) {
         if (precio > Q.state.p.coins) {
             Q.stageScene("dineroInsuficiente", 1, { escena: escena });
-            return false
+            return false;
         } else
             return true;
     }
+
+
     Q.scene('dineroInsuficiente', function(stage) {
 
         var box = stage.insert(new Q.UI.Container({
@@ -545,8 +593,8 @@ window.addEventListener("load", function() {
 
         box.fit(20);
 
-
     });
+
 
     Q.scene('elegirPersonaje', function(stage) {
 
@@ -578,13 +626,15 @@ window.addEventListener("load", function() {
             fill: "#CCCCCC",
             label: "Elegir",
             font: 10
-        }))
+        }));
+
         var label = box.insert(new Q.UI.Text({
             x: 0,
             size: 10,
             y: 0,
             label: "Alumno de computadores x3 Ensamblador, x2 C"
         }));
+
         var button3 = box.insert(new Q.UI.Button({
             x: 0,
             y: 90,
@@ -592,7 +642,8 @@ window.addEventListener("load", function() {
             fill: "#CCCCCC",
             label: "Elegir",
             font: 10
-        }))
+        }));
+
         var label = box.insert(new Q.UI.Text({
             x: 10,
             size: 10,
@@ -605,7 +656,6 @@ window.addEventListener("load", function() {
         });
 
         box.fit(20);
-
 
     });
 
