@@ -10,16 +10,56 @@ window.addEventListener("load", function() {
         .controls().touch()
         .enableSound();
 
-    Q.scene("level1", function(stage) {
-        Q.stageTMX("level.tmx", stage);
-        stage.add("viewport");
+
+    Q.animations('player_anim', {
+            front: { frames: [0, 1, 2, 3], rate: 1/30, loop: false },
+            side_right: { frames: [4, 5, 6, 7], rate: 1/7, loop: false },
+            side_left: { frames: [4, 5, 6, 7], rate: 1/7, loop: false, flip: "x" },
+            back: { frames: [8, 9, 10, 11], rate: 1/7, loop: false }
     });
 
 
-    Q.load(["fdi.png", "fletxaI.png", "fletxaD.png", "tick1.png", "puerta/1.png", "puerta/2.png", "puerta/3.png", "puerta/4.png", "puerta/5.png", "puerta/6.png", "coins.mp3", "coins.ogg"], function() {
+    Q.scene("level1", function(stage) {
+        Q.stageTMX("level.tmx", stage);
+        stage.add("viewport");
+        var player = stage.insert(new Q.Player({ x: 250, y: 350, scale: 1/7 }));
+
+        stage.add("viewport").follow(player);
+    });
+
+
+    Q.load(["fdi.png", "fletxaI.png", "fletxaD.png", "tick1.png", "puerta/1.png", "puerta/2.png", "puerta/3.png", "puerta/4.png", "puerta/5.png", "puerta/6.png", "personaje.png", "player.json", "coins.mp3", "coins.ogg"], function() {
         Q.loadTMX("level.tmx", function() {
+            Q.compileSheets("personaje.png","player.json");
             Q.stageScene("startGame");
         });
+    });
+
+
+    Q.Sprite.extend("Player",{
+        init: function(p) {
+            this._super(p, { sheet: "front", sprite: "player_anim" , gravity: 0});
+            this.add('2d, stepControls, animation');
+        },
+
+        step: function(dt) {
+            Q.input.on("right",this , function() {
+                this.play("side_right");
+                debugger;
+            });
+
+            Q.input.on("left",this , function() {
+                this.play("side_left");
+            });
+
+            Q.input.on("up",this , function() {
+                this.play("back");
+            });
+
+            Q.input.on("down",this , function() {
+                this.play("front");
+            });
+        }
     });
 
    
