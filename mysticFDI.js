@@ -10,52 +10,52 @@ window.addEventListener("load", function() {
         .controls().touch()
         .enableSound();
 
-    
+
     Q.animations('player_anim', {
-            front: { frames: [0, 1, 2, 3], rate: 1/30, loop: false },
-            side_right: { frames: [4, 5, 6, 7], rate: 1/7, loop: false },
-            side_left: { frames: [4, 5, 6, 7], rate: 1/7, loop: false, flip: "x" },
-            back: { frames: [8, 9, 10, 11], rate: 1/7, loop: false }
+        front: { frames: [0, 1, 2, 3], rate: 1 / 30, loop: false },
+        side_right: { frames: [4, 5, 6, 7], rate: 1 / 7, loop: false },
+        side_left: { frames: [4, 5, 6, 7], rate: 1 / 7, loop: false, flip: "x" },
+        back: { frames: [8, 9, 10, 11], rate: 1 / 7, loop: false }
     });
 
+    Q.load(["fdi.png", "fletxaI.png", "fletxaD.png", "tick1.png", "puerta/1.png", "puerta/2.png", "puerta/3.png", "puerta/4.png", "puerta/5.png", "puerta/6.png", "personaje.png", "player.json", "coins.mp3", "coins.ogg"], function() {
+        Q.loadTMX("prueba.tmx", function() {
+            Q.compileSheets("personaje.png", "player.json");
+            Q.stageScene("startGame");
+        });
+    });
 
     Q.scene("level1", function(stage) {
-        Q.stageTMX("level.tmx", stage);
+        Q.stageTMX("prueba.tmx", stage);
         stage.add("viewport");
-        var player = stage.insert(new Q.Player({ x: 250, y: 350, scale: 1/7 }));
+        var player = stage.insert(new Q.Player({ x: 250, y: 350, scale: 1 / 7 }));
 
         stage.add("viewport").follow(player);
     });
 
 
-    Q.load(["fdi.png", "fletxaI.png", "fletxaD.png", "tick1.png", "puerta/1.png", "puerta/2.png", "puerta/3.png", "puerta/4.png", "puerta/5.png", "puerta/6.png", "personaje.png", "player.json", "coins.mp3", "coins.ogg"], function() {
-        Q.loadTMX("level.tmx", function() {
-            Q.compileSheets("personaje.png","player.json");
-            Q.stageScene("startGame");
-        });
-    });
 
 
-    Q.Sprite.extend("Player",{
+    Q.Sprite.extend("Player", {
         init: function(p) {
-            this._super(p, { sheet: "front", sprite: "player_anim" , gravity: 0});
+            this._super(p, { sheet: "front", sprite: "player_anim", gravity: 0 });
             this.add('2d, stepControls, animation');
         },
 
         step: function(dt) {
-            Q.input.on("right",this , function() {
+            Q.input.on("right", this, function() {
                 this.play("side_right");
             });
 
-            Q.input.on("left",this , function() {
+            Q.input.on("left", this, function() {
                 this.play("side_left");
             });
 
-            Q.input.on("up",this , function() {
+            Q.input.on("up", this, function() {
                 this.play("back");
             });
 
-            Q.input.on("down",this , function() {
+            Q.input.on("down", this, function() {
                 this.play("front");
             });
         }
@@ -518,7 +518,7 @@ window.addEventListener("load", function() {
 
     Q.scene('reclutar', function(stage) {
         stage.insert(new Q.Repeater({ asset: "fdi.png" }));
-
+        var posicionY = -150;
         var box = stage.insert(new Q.UI.Container({
             x: Q.width / 2,
             y: Q.height / 2
@@ -549,6 +549,38 @@ window.addEventListener("load", function() {
             Q.clearStages();
             Q.stageScene("screenMain");
         });
+        if (Q.state.p.alumnoSoftware > 0) {
+            posicionY = posicionY + 60;
+            var botonSoftware = box.insert(new Q.UI.Button({
+                x: -70,
+                y: posicionY,
+                w: 150,
+                fill: "#CCCCCC",
+                label: "Software"
+            }));
+        }
+        if (Q.state.p.alumnoInformatica > 0) {
+            posicionY = posicionY + 60;
+            var botonInformatica = box.insert(new Q.UI.Button({
+                x: -70,
+                y: posicionY,
+                w: 150,
+                fill: "#CCCCCC",
+                label: "Informatica"
+            }));
+            //alumnoi=new
+            stage.insert(new Q.UI.Text({ x: 50, y: posicionY, size: 12, label: "Vida: " + Q.state.p.c }));
+        }
+        if (Q.state.p.alumnoComputadores) {
+            posicionY = posicionY + 60;
+            var botonComputadores = box.insert(new Q.UI.Button({
+                x: -70,
+                y: posicionY,
+                w: 150,
+                fill: "#CCCCCC",
+                label: "computadores"
+            }));
+        }
 
         botonAmigos.on("click", function() {
             Q.stageScene("elegirPersonaje", 1, { escena: "reclutar" });
@@ -558,7 +590,16 @@ window.addEventListener("load", function() {
 
     function comprobarDinero(precio, escena) {
         if (precio > Q.state.p.coins) {
-            Q.stageScene("dineroInsuficiente", 1, { escena: escena });
+            Q.stageScene("dineroInsuficiente", 1, { escena: escena, label: "No tienes dinero suficiente" });
+            return false;
+        } else
+            return true;
+    }
+
+
+    function comprobarConocimientos(conocimiento1, conocimiento2, tipoAlumno, escena) {
+        if (tipoAlumno.conocimiento1 > conocimiento1 || tipoAlumno.conocimiento2 > conocimiento2) {
+            Q.stageScene("dineroInsuficiente", 1, { escena: escena, label: "No tienes conocimientos suficientes" });
             return false;
         } else
             return true;
@@ -584,7 +625,7 @@ window.addEventListener("load", function() {
             x: 10,
             size: 15,
             y: -10 - button.p.h,
-            label: "No tines dinero suficiente"
+            label: stage.options.label
         }));
         button.on("click", function() {
             Q.clearStages();
@@ -604,7 +645,7 @@ window.addEventListener("load", function() {
             fill: "#F0F8FF"
         }));
 
-        var button = box.insert(new Q.UI.Button({
+        var software = box.insert(new Q.UI.Button({
             x: 0,
             y: -30,
             size: 8,
@@ -619,7 +660,7 @@ window.addEventListener("load", function() {
             label: "Alumno de software x4 Gestion, x1 Matematicas"
         }));
 
-        var button2 = box.insert(new Q.UI.Button({
+        var computadores = box.insert(new Q.UI.Button({
             x: 0,
             y: 30,
             size: 8,
@@ -635,7 +676,7 @@ window.addEventListener("load", function() {
             label: "Alumno de computadores x3 Ensamblador, x2 C"
         }));
 
-        var button3 = box.insert(new Q.UI.Button({
+        var informatica = box.insert(new Q.UI.Button({
             x: 0,
             y: 90,
             size: 8,
@@ -650,14 +691,72 @@ window.addEventListener("load", function() {
             y: 60,
             label: "Alumno de informatica x5 C++, x1 Fisica"
         }));
-        button.on("click", function() {
-            Q.clearStages();
-            Q.stageScene(stage.options.escena);
-        });
 
+        software.on("click", function() {
+            alumnoS = new Q.AlumnoSoftware();
+            conocimientos = comprobarConocimientos(Q.state.p.gestion, Q.state.p.matematicas, alumnoS, "reclutar")
+            if (conocimientos) {
+                Q.state.inc("alumnoSoftware", 1);
+            }
+        });
+        computadores.on("click", function() {
+            alumnoS = new Q.AlumnoComputadores();
+            conocimientos = comprobarConocimientos(Q.state.p.ensamblador, Q.state.p.c, alumnoS, "reclutar")
+            if (conocimientos) {
+                Q.state.inc("alumnoComputadores", 1);
+            }
+        });
+        informatica.on("click", function() {
+            alumnoS = new Q.AlumnoInformatica();
+            conocimientos = comprobarConocimientos(Q.state.p.cmasmas, Q.state.p.fisica, alumnoS, "reclutar")
+            if (conocimientos) {
+                Q.state.inc("alumnoInformatica", 1);
+            }
+        });
         box.fit(20);
 
     });
+
+    //clases
+    Q.Class.extend("AlumnoSoftware", {
+        init: function() {
+            this.vida = 3;
+            this.velocidad = 4;
+            this.poder = 2;
+            //gestion
+            this.conocimiento1 = 4
+                //matematicas
+            this.conocimiento2 = 1
+
+
+        }
+    });
+    Q.Class.extend("AlumnoInformatica", {
+        init: function() {
+            this.vida = 3;
+            this.velocidad = 4;
+            this.poder = 2;
+            //c++
+            this.conocimiento1 = 5;
+            //fisica
+            this.conocimiento2 = 1;
+
+
+        }
+    });
+    Q.Class.extend("AlumnoComputadores", {
+        init: function() {
+            this.vida = 3;
+            this.velocidad = 4;
+            this.poder = 2;
+            //ensamblado
+            this.conocimiento1 = 3;
+            //c
+            this.conocimiento2 = 2;
+
+
+        }
+    })
 
 
     Q.scene('startGame', function(stage) {
@@ -667,7 +766,7 @@ window.addEventListener("load", function() {
             y: Q.height / 2
         }));
 
-        Q.state.reset({ coins: 0, taquillas: false, cmasmas: 0, gestion: 0, c: 0, ensamblador: 0, matematicas: 0, fisica: 0 });
+        Q.state.reset({ coins: 0, taquillas: false, cmasmas: 0, gestion: 0, c: 0, ensamblador: 0, matematicas: 0, fisica: 0, alumnoSoftware: 0, alumnoComputadores: 0, alumnoInformatica: 1 });
 
         var button = box.insert(new Q.UI.Button({ asset: "puerta/1.png" }));
 
