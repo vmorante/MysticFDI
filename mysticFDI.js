@@ -12,10 +12,10 @@ window.addEventListener("load", function() {
 
 
     Q.animations('player_anim', {
-        front: { frames: [0, 1, 2, 3], rate: 1 / 30, loop: false },
-        side_right: { frames: [4, 5, 6, 7], rate: 1 / 7, loop: false, flip: false },
-        side_left: { frames: [4, 5, 6, 7], rate: 1 / 7, loop: false, flip: "x" },
-        back: { frames: [8, 9, 10, 11], rate: 1 / 7, loop: false }
+        front: { frames: [0, 1, 2, 3], rate: 1 / 5, loop: false },
+        side_right: { frames: [4, 5, 6, 7], rate: 1 / 5, loop: false, flip: false },
+        side_left: { frames: [4, 5, 6, 7], rate: 1 / 5, loop: false, flip: "x" },
+        back: { frames: [8, 9, 10, 11], rate: 1 / 5, loop: false }
     });
 
     Q.load(["fdi.png", "fletxaI.png", "fletxaD.png", "tick1.png", "puerta/1.png", "puerta/2.png", "puerta/3.png", "puerta/4.png", "puerta/5.png", "puerta/6.png", "personaje.png", "player.json", "coins.mp3", "coins.ogg"], function() {
@@ -724,9 +724,15 @@ window.addEventListener("load", function() {
             this.velocidad = 4;
             this.poder = 2;
             //gestion
+<<<<<<< HEAD
             this.conocimiento1 = 4;
                 //matematicas
             this.conocimiento2 = 1;
+=======
+            this.conocimiento1 = 4
+                //matematicas
+            this.conocimiento2 = 1
+>>>>>>> 148fa0ed28e1b6ec221ce27b56690409bb882d6e
 
 
         }
@@ -756,7 +762,11 @@ window.addEventListener("load", function() {
 
 
         }
+<<<<<<< HEAD
     });
+=======
+    })
+>>>>>>> 148fa0ed28e1b6ec221ce27b56690409bb882d6e
 
 
     Q.scene('startGame', function(stage) {
