@@ -4,6 +4,9 @@
   <image source="../images/tiles.png" trans="ff00ff" width="512" height="384"/>
  </tileset>
  <layer name="Capa de Patrones 1" width="60" height="18">
+ 	<properties>
+   <property name="collision" value="true"/>
+  </properties>
   <data encoding="xml">
 <tile gid="21"/>
 <tile gid="21"/>
