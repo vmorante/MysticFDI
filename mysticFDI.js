@@ -18,12 +18,13 @@ window.addEventListener("load", function() {
         back: { frames: [8, 9, 10, 11], rate: 1 / 5, loop: false }
     });
 
-    Q.load(["fdi.png", "fletxaI.png", "fletxaD.png", "tick1.png", "puerta/1.png", "puerta/2.png", "puerta/3.png", "puerta/4.png", "puerta/5.png", "puerta/6.png", "personaje.png", "player.json", "coins.mp3", "coins.ogg"], function() {
+    Q.load(["fdi.png", "fletxaI.png", "fletxaD.png", "tick1.png", "puerta/1.png", "puerta/2.png", "puerta/3.png", "puerta/4.png", "puerta/5.png", "puerta/6.png", "personaje.png", "player.json", "coins.mp3", "coins.ogg", "mas.png", "menos.png"], function() {
         Q.loadTMX("prueba.tmx", function() {
             Q.compileSheets("personaje.png", "player.json");
             Q.stageScene("startGame");
         });
     });
+
 
     Q.scene("level1", function(stage) {
         Q.stageTMX("prueba.tmx", stage);
@@ -240,6 +241,18 @@ window.addEventListener("load", function() {
             label: "Salir"
         }));
 
+        var masSoftware = box.insert(new Q.UI.Button({ x: 20, y: -150, asset: "mas.png" }));
+        box.insert(new Q.UI.Text({ x: 85, y: -160, label: "A. software", size: 11 }));
+        var menosSoftware = box.insert(new Q.UI.Button({ x: 145, y: -150, asset: "menos.png" }));
+
+        var masInformatica = box.insert(new Q.UI.Button({ x: 20, y: -110, asset: "mas.png" }));
+        box.insert(new Q.UI.Text({ x: 85, y: -120, label: "A. informatica", size: 11 }));
+        var menosInformatica = box.insert(new Q.UI.Button({ x: 145, y: -110, asset: "menos.png" }));
+
+        var masComputadores = box.insert(new Q.UI.Button({ x: 20, y: -70, asset: "mas.png" }));
+        box.insert(new Q.UI.Text({ x: 85, y: -80, label: "A. computadores", size: 11 }));
+        var menosComputadores = box.insert(new Q.UI.Button({ x: 145, y: -70, asset: "menos.png" }));
+
         flechaD.on("click", function() {
             Q.clearStages();
             Q.stageScene("screenMain");
@@ -249,8 +262,71 @@ window.addEventListener("load", function() {
             Q.clearStages();
             Q.stageScene("level1");
         });
+        masSoftware.on("click", function() {
+            posible = comprobarExpedicion(Q.state.p.alumnoSoftware, Q.state.p.equipoSoftware)
+            if (posible) {
+                Q.state.inc("equipoSoftware", 1);
+                Q.state.inc("equipoActual", 1);
+            }
+
+        })
+        menosSoftware.on("click", function() {
+            console.log(Q.state.p.equipoActual)
+            console.log(Q.state.p.equipoActual)
+            if (Q.state.p.equipoSoftware > 0) {
+                Q.state.dec("equipoSoftware", 1);
+                Q.state.dec("equipoActual", 1);
+            }
+
+        })
+
+        masInformatica.on("click", function() {
+            console.log(Q.state.p.equipoActual)
+            posible = comprobarExpedicion(Q.state.p.alumnoInformatica, Q.state.p.equipoInformatica)
+            if (posible) {
+
+                Q.state.inc("equipoInformatica", 1);
+                Q.state.inc("equipoActual", 1);
+            }
+
+        })
+        menosSoftware.on("click", function() {
+
+            if (Q.state.p.equipoInformatica > 0) {
+                Q.state.dec("equipoInformatica", 1);
+                Q.state.dec("equipoActual", 1);
+            }
+
+        })
+
+        masComputadores.on("click", function() {
+            posible = comprobarExpedicion(Q.state.p.alumnoComputadores, Q.state.p.equipoComputadores)
+            if (posible) {
+                Q.state.inc("equipoComputadores", 1);
+                Q.state.inc("equipoActual", 1);
+            }
+
+        })
+        menosSoftware.on("click", function() {
+
+            if (Q.state.p.equipoComputadores > 0) {
+                Q.state.dec("equipoComputadores", 1);
+                Q.state.dec("equipoActual", 1);
+            }
+
+        })
 
     });
+
+    function comprobarExpedicion(tipoAlumno, equipoAlumno) {
+        if (tipoAlumno <= equipoAlumno && Q.state.p.equipoActual >= Q.state.p.tamañoEquipo) {
+            Q.stageScene("dineroInsuficiente", 1, { escena: "expedicion", label: "No tienes alumnos suficientes" });
+            return false;
+        } else {
+
+            return true;
+        }
+    }
 
 
     Q.scene('edificios', function(stage) {
@@ -620,7 +696,7 @@ window.addEventListener("load", function() {
             size: 15,
             fill: "#CCCCCC",
             label: "Aceptar"
-        }));
+        }))
         var label = box.insert(new Q.UI.Text({
             x: 10,
             size: 15,
@@ -652,7 +728,7 @@ window.addEventListener("load", function() {
             fill: "#CCCCCC",
             label: "Elegir",
             font: 10
-        }));
+        }))
         var label = box.insert(new Q.UI.Text({
             x: 10,
             size: 10,
@@ -724,15 +800,9 @@ window.addEventListener("load", function() {
             this.velocidad = 4;
             this.poder = 2;
             //gestion
-<<<<<<< HEAD
-            this.conocimiento1 = 4;
-                //matematicas
-            this.conocimiento2 = 1;
-=======
             this.conocimiento1 = 4
                 //matematicas
             this.conocimiento2 = 1
->>>>>>> 148fa0ed28e1b6ec221ce27b56690409bb882d6e
 
 
         }
@@ -762,11 +832,7 @@ window.addEventListener("load", function() {
 
 
         }
-<<<<<<< HEAD
-    });
-=======
     })
->>>>>>> 148fa0ed28e1b6ec221ce27b56690409bb882d6e
 
 
     Q.scene('startGame', function(stage) {
@@ -776,7 +842,7 @@ window.addEventListener("load", function() {
             y: Q.height / 2
         }));
 
-        Q.state.reset({ coins: 0, taquillas: false, cmasmas: 0, gestion: 0, c: 0, ensamblador: 0, matematicas: 0, fisica: 0, alumnoSoftware: 0, alumnoComputadores: 0, alumnoInformatica: 1 });
+        Q.state.reset({ coins: 0, taquillas: false, cmasmas: 0, gestion: 0, c: 0, ensamblador: 0, matematicas: 0, fisica: 0, alumnoSoftware: 1, alumnoComputadores: 0, alumnoInformatica: 1, tamañoEquipo: 2, equipoActual: 0, equipoSoftware: 0, equipoInformatica: 0, equipoComputadores: 0 });
 
         var button = box.insert(new Q.UI.Button({ asset: "puerta/1.png" }));
 
