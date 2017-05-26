@@ -243,15 +243,32 @@ window.addEventListener("load", function() {
 
         var masSoftware = box.insert(new Q.UI.Button({ x: 20, y: -150, asset: "mas.png" }));
         box.insert(new Q.UI.Text({ x: 85, y: -160, label: "A. software", size: 11 }));
+        var textSoftware = box.insert(new Q.UI.Text({ x: 85, y: -150, label: "N: " + Q.state.p.equipoSoftware, size: 11 }));
         var menosSoftware = box.insert(new Q.UI.Button({ x: 145, y: -150, asset: "menos.png" }));
 
         var masInformatica = box.insert(new Q.UI.Button({ x: 20, y: -110, asset: "mas.png" }));
         box.insert(new Q.UI.Text({ x: 85, y: -120, label: "A. informatica", size: 11 }));
+        var textInformatica = box.insert(new Q.UI.Text({ x: 85, y: -110, label: "N: " + Q.state.p.equipoInformatica, size: 11 }));
+
         var menosInformatica = box.insert(new Q.UI.Button({ x: 145, y: -110, asset: "menos.png" }));
 
         var masComputadores = box.insert(new Q.UI.Button({ x: 20, y: -70, asset: "mas.png" }));
         box.insert(new Q.UI.Text({ x: 85, y: -80, label: "A. computadores", size: 11 }));
+        var textComputadores = box.insert(new Q.UI.Text({ x: 85, y: -70, label: "N: " + Q.state.p.equipoComputadores, size: 11 }));
+
         var menosComputadores = box.insert(new Q.UI.Button({ x: 145, y: -70, asset: "menos.png" }));
+
+        Q.state.on("change.equipoSoftware", this, function(equipoSoftware) {
+            textSoftware.p.label = "N: " + equipoSoftware;
+        });
+
+        Q.state.on("change.equipoInformatica", this, function(equipoInformatica) {
+            textInformatica.p.label = "N: " + equipoInformatica;
+        });
+
+        Q.state.on("change.equipoComputadores", this, function(equipoComputadores) {
+            textComputadores.p.label = "N: " + equipoComputadores;
+        });
 
         flechaD.on("click", function() {
             Q.clearStages();
@@ -290,7 +307,7 @@ window.addEventListener("load", function() {
             }
 
         })
-        menosSoftware.on("click", function() {
+        menosInformatica.on("click", function() {
 
             if (Q.state.p.equipoInformatica > 0) {
                 Q.state.dec("equipoInformatica", 1);
@@ -307,7 +324,7 @@ window.addEventListener("load", function() {
             }
 
         })
-        menosSoftware.on("click", function() {
+        menosComputadores.on("click", function() {
 
             if (Q.state.p.equipoComputadores > 0) {
                 Q.state.dec("equipoComputadores", 1);
@@ -634,6 +651,16 @@ window.addEventListener("load", function() {
                 fill: "#CCCCCC",
                 label: "Software"
             }));
+
+            alumnoi = new Q.AlumnoSoftware();
+            box.insert(new Q.UI.Text({ x: 45, y: posicionY, size: 12, label: "Vida: " + alumnoi.vida }));
+            box.insert(new Q.UI.Text({ x: 45, y: posicionY - 15, size: 12, label: "Poder: " + alumnoi.poder }));
+            var alumnoSN = box.insert(new Q.UI.Text({ x: 115, y: posicionY, size: 12, label: "N: " + Q.state.p.alumnoSoftware }));
+            box.insert(new Q.UI.Text({ x: 115, y: posicionY - 15, size: 12, label: "Velocidad: " + alumnoi.velocidad }));
+
+            Q.state.on("change.alumnoSoftware", this, function(alumnoSoftware) {
+                labelSN.p.label = "N: " + alumnoSoftware;
+            })
         }
         if (Q.state.p.alumnoInformatica > 0) {
             posicionY = posicionY + 60;
@@ -644,10 +671,18 @@ window.addEventListener("load", function() {
                 fill: "#CCCCCC",
                 label: "Informatica"
             }));
-            //alumnoi=new
-            stage.insert(new Q.UI.Text({ x: 50, y: posicionY, size: 12, label: "Vida: " + Q.state.p.c }));
+            console.log(posicionY)
+            alumnoi = new Q.AlumnoInformatica();
+            box.insert(new Q.UI.Text({ x: 45, y: posicionY, size: 12, label: "Vida: " + alumnoi.vida }));
+            box.insert(new Q.UI.Text({ x: 45, y: posicionY - 15, size: 12, label: "Poder: " + alumnoi.poder }));
+            var labelIN = box.insert(new Q.UI.Text({ x: 115, y: posicionY, size: 12, label: "N: " + Q.state.p.alumnoInformatica }));
+            box.insert(new Q.UI.Text({ x: 115, y: posicionY - 15, size: 12, label: "Velocidad: " + alumnoi.velocidad }));
+
+            Q.state.on("change.alumnoInformatica", this, function(alumnoInformatica) {
+                labelIN.p.label = "N: " + alumnoInformatica;
+            });
         }
-        if (Q.state.p.alumnoComputadores) {
+        if (Q.state.p.alumnoComputadores > 0) {
             posicionY = posicionY + 60;
             var botonComputadores = box.insert(new Q.UI.Button({
                 x: -70,
@@ -656,6 +691,17 @@ window.addEventListener("load", function() {
                 fill: "#CCCCCC",
                 label: "computadores"
             }));
+
+
+            alumnoi = new Q.AlumnoComputadores();
+            box.insert(new Q.UI.Text({ x: 45, y: posicionY, size: 12, label: "Vida: " + alumnoi.vida }));
+            box.insert(new Q.UI.Text({ x: 45, y: posicionY - 15, size: 12, label: "Poder: " + alumnoi.poder }));
+            var labelCN = box.insert(new Q.UI.Text({ x: 115, y: posicionY, size: 12, label: "N: " + Q.state.p.alumnoComputadores }));
+            box.insert(new Q.UI.Text({ x: 115, y: posicionY - 15, size: 12, label: "Velocidad: " + alumnoi.velocidad }));
+
+            Q.state.on("change.alumnoComputadores", this, function(alumnoComputadores) {
+                labelCN.p.label = "N: " + alumnoComputadores;
+            })
         }
 
         botonAmigos.on("click", function() {
