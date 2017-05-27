@@ -57,7 +57,6 @@ window.addEventListener("load", function() {
             Q.input.on("down", this, function() {
                 this.play("front");
             });
-            console.log(this.p.x + " " + this.p.y);
         }
     });
 
@@ -294,7 +293,6 @@ window.addEventListener("load", function() {
         });
 
         menosSoftware.on("click", function() {
-            console.log(Q.state.p.equipoActual);
             if (Q.state.p.equipoSoftware > 0) {
                 Q.state.dec("equipoSoftware", 1);
                 Q.state.dec("equipoActual", 1);
@@ -303,7 +301,6 @@ window.addEventListener("load", function() {
         });
 
         masInformatica.on("click", function() {
-            console.log(Q.state.p.equipoActual);
             posible = comprobarExpedicion(Q.state.p.alumnoInformatica, Q.state.p.equipoInformatica);
             if (posible) {
                 Q.state.inc("equipoInformatica", 1);
@@ -313,7 +310,6 @@ window.addEventListener("load", function() {
         });
 
         menosInformatica.on("click", function() {
-
             if (Q.state.p.equipoInformatica > 0) {
                 Q.state.dec("equipoInformatica", 1);
                 Q.state.dec("equipoActual", 1);
@@ -716,7 +712,7 @@ window.addEventListener("load", function() {
                 fill: "#CCCCCC",
                 label: "Informatica"
             }));
-            console.log(posicionY);
+
             alumnoi = new Q.AlumnoInformatica();
             box.insert(new Q.UI.Text({ x: 45, y: posicionY, size: 12, label: "Vida: " + alumnoi.vida }));
             box.insert(new Q.UI.Text({ x: 45, y: posicionY - 15, size: 12, label: "Poder: " + alumnoi.poder }));
@@ -727,6 +723,7 @@ window.addEventListener("load", function() {
                 labelIN.p.label = "N: " + alumnoInformatica;
             });
         }
+
         if (Q.state.p.alumnoComputadores > 0) {
             posicionY = posicionY + 60;
             var botonComputadores = box.insert(new Q.UI.Button({
@@ -1051,7 +1048,6 @@ window.addEventListener("load", function() {
 
 
                 }
-                //console.log(contador_s++);
                 contador_s++;
 
             }, 1000);
