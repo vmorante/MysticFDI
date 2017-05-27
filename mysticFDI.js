@@ -18,7 +18,7 @@ window.addEventListener("load", function() {
         back: { frames: [8, 9, 10, 11], rate: 1 / 5, loop: false }
     });
 
-    Q.load(["fdi.png", "fletxaI.png", "fletxaD.png", "tick1.png", "puerta/1.png", "puerta/2.png", "puerta/3.png", "puerta/4.png", "puerta/5.png", "puerta/6.png", "personaje.png", "player.json", "coins.mp3", "coins.ogg", "mas.png", "menos.png"], function() {
+    Q.load(["fdi.png", "fletxaI.png", "fletxaD.png", "tick1.png", "puerta/1.jpg", "puerta/2.jpg", "puerta/3.jpg", "puerta/4.jpg", "puerta/5.jpg", "puerta/6.jpg", "puerta/7.jpg", "puerta/8.jpg", "puerta/9.jpg", "puerta/10.jpg", "puerta/11.jpg", "puerta/12.jpg", "personaje.png", "player.json", "coins.mp3", "coins.ogg", "mas.png", "menos.png"], function() {
         Q.loadTMX("level2.tmx", function() {
             Q.compileSheets("personaje.png", "player.json");
             Q.stageScene("startGame");
@@ -1063,15 +1063,21 @@ window.addEventListener("load", function() {
 
         Q.state.reset({ coins: 0, taquillas: false, cmasmas: 0, gestion: 0, c: 0, ensamblador: 0, matematicas: 0, fisica: 0, alumnoSoftware: 1, alumnoComputadores: 0, alumnoInformatica: 1, tamañoEquipo: 2, equipoActual: 0, equipoSoftware: 0, equipoInformatica: 0, equipoComputadores: 0, cocinero: 0, camarero: 0, recolector: 0, cocina: 0, cafeteria: 0 });
 
-        var button = box.insert(new Q.UI.Button({ asset: "puerta/1.png" }));
+        var button = box.insert(new Q.UI.Button({ asset: "puerta/1.jpg", scale: 1/2 }));
 
         var empezarJuego = function() {
-            box.insert(new Q.UI.Button({ asset: "puerta/2.png" }));
-            setTimeout(function() { box.insert(new Q.UI.Button({ asset: 'puerta/3.png' })); }, 200);
-            setTimeout(function() { box.insert(new Q.UI.Button({ asset: 'puerta/4.png' })); }, 400);
-            setTimeout(function() { box.insert(new Q.UI.Button({ asset: 'puerta/5.png' })); }, 600);
-            setTimeout(function() { box.insert(new Q.UI.Button({ asset: 'puerta/6.png' })); }, 800);
-            setTimeout(function() { Q.stageScene("screenMain"); }, 1500);
+            box.insert(new Q.UI.Button({ asset: "puerta/2.jpg", scale: 1/2 }));
+            setTimeout(function() { box.insert(new Q.UI.Button({ asset: 'puerta/3.jpg', scale: 1/2 })); }, 100);
+            setTimeout(function() { box.insert(new Q.UI.Button({ asset: 'puerta/4.jpg', scale: 1/2 })); }, 300);
+            setTimeout(function() { box.insert(new Q.UI.Button({ asset: 'puerta/5.jpg', scale: 1/2 })); }, 500);
+            setTimeout(function() { box.insert(new Q.UI.Button({ asset: 'puerta/6.jpg', scale: 1/2 })); }, 700);
+            setTimeout(function() { box.insert(new Q.UI.Button({ asset: 'puerta/7.jpg', scale: 1/2 })); }, 900);
+            setTimeout(function() { box.insert(new Q.UI.Button({ asset: 'puerta/8.jpg', scale: 1/2 })); }, 1100);
+            setTimeout(function() { box.insert(new Q.UI.Button({ asset: 'puerta/9.jpg', scale: 1/2 })); }, 1300);
+            setTimeout(function() { box.insert(new Q.UI.Button({ asset: 'puerta/10.jpg', scale: 1/2 })); }, 1500);
+            setTimeout(function() { box.insert(new Q.UI.Button({ asset: 'puerta/11.jpg', scale: 1/2 })); }, 1700);
+            setTimeout(function() { box.insert(new Q.UI.Button({ asset: 'puerta/12.jpg', scale: 1/2 })); }, 1900);
+            setTimeout(function() { Q.stageScene("screenMain"); }, 3000);
         };
 
         Q.input.on("confirm", button, function() {
