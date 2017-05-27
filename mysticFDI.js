@@ -85,11 +85,11 @@ window.addEventListener("load", function() {
             asset: "fletxaI.png"
         }));
 
-        /*var flechaD = box.insert(new Q.UI.Button({
+        var flechaD = box.insert(new Q.UI.Button({
             x: 110,
             y: -210,
             asset: "fletxaD.png"
-        }))*/
+        }))
 
         var botonAlquimia = box.insert(new Q.UI.Button({
             x: -70,
@@ -199,6 +199,11 @@ window.addEventListener("load", function() {
         flechaI.on("click", function() {
             Q.clearStages();
             Q.stageScene("expedicion");
+        });
+
+        flechaD.on("click", function() {
+            Q.clearStages();
+            Q.stageScene("casa");
         });
 
     });
@@ -409,7 +414,7 @@ window.addEventListener("load", function() {
 
         var botonAparcamiento = box.insert(new Q.UI.Button({
             x: -70,
-            y: 60,
+            y: 90,
             w: 150,
             fill: "#CCCCCC",
             label: "Aparcamiento"
@@ -431,6 +436,30 @@ window.addEventListener("load", function() {
             }
         });
 
+        botonCocina.on("click", function() {
+            if (!Q.state.p.cocina) {
+                dinero = comprobarDinero(50, "edificios")
+                if (dinero) {
+                    Q.state.p.cocina = true;
+                    box.insert(new Q.UI.Button({ x: 50, y: -30, asset: "tick1.png" }));
+                    Q.state.dec("coins", 50);
+                }
+            }
+        });
+
+        botonCafeteria.on("click", function() {
+            if (!Q.state.p.cafeteria) {
+                dinero = comprobarDinero(50, "edificios")
+                if (dinero) {
+                    Q.state.p.cafeteria = true;
+                    box.insert(new Q.UI.Button({ x: 50, y: 30, asset: "tick1.png" }));
+                    Q.state.dec("coins", 50);
+                }
+            }
+        });
+
+
+
         if (Q.state.p.taquillas) {
             box.insert(new Q.UI.Button({ x: 50, y: -145, asset: "tick1.png" }));
         } else {
@@ -440,6 +469,19 @@ window.addEventListener("load", function() {
                 label: "x1",
                 size: 20
             }));
+        }
+
+        if (Q.state.p.cocina) {
+            box.insert(new Q.UI.Button({ x: 50, y: -30, asset: "tick1.png" }));
+        } else {
+            box.insert(new Q.UI.Text({ x: 50, y: -30, label: "x50", size: 20 }));
+        }
+
+
+        if (Q.state.p.cafeteria) {
+            box.insert(new Q.UI.Button({ x: 50, y: 30, asset: "tick1.png" }));
+        } else {
+            box.insert(new Q.UI.Text({ x: 50, y: 30, label: "x50", size: 20 }));
         }
     });
 
@@ -880,6 +922,135 @@ window.addEventListener("load", function() {
         }
     })
 
+    Q.scene('casa', function(stage) {
+
+        stage.insert(new Q.Repeater({ asset: "fdi.png" }));
+        var box = stage.insert(new Q.UI.Container({
+            x: Q.width / 2,
+            y: Q.height / 2,
+        }));
+
+        var label = box.insert(new Q.UI.Text({
+            x: 0,
+            y: -225,
+            label: "Casa",
+            size: 20
+        }));
+
+        var flechaI = box.insert(new Q.UI.Button({
+            x: -110,
+            y: -210,
+            asset: "fletxaI.png"
+        }));
+
+
+        var masCocinero = box.insert(new Q.UI.Button({ x: 20, y: -150, asset: "mas.png" }));
+        box.insert(new Q.UI.Text({ x: 85, y: -160, label: "Cocinero", size: 11 }));
+        var textCocinero = box.insert(new Q.UI.Text({ x: 85, y: -150, label: "N: " + Q.state.p.cocinero, size: 11 }));
+        var menosCocinero = box.insert(new Q.UI.Button({ x: 145, y: -150, asset: "menos.png" }));
+
+        var masCamarero = box.insert(new Q.UI.Button({ x: 20, y: -110, asset: "mas.png" }));
+        box.insert(new Q.UI.Text({ x: 85, y: -120, label: "Camarero", size: 11 }));
+        var textcamarero = box.insert(new Q.UI.Text({ x: 85, y: -110, label: "N: " + Q.state.p.camarero, size: 11 }));
+        var menosCamarero = box.insert(new Q.UI.Button({ x: 145, y: -110, asset: "menos.png" }));
+
+        var masRecolector = box.insert(new Q.UI.Button({ x: 20, y: -70, asset: "mas.png" }));
+        box.insert(new Q.UI.Text({ x: 85, y: -80, label: "Recolector", size: 11 }));
+        var textRecolector = box.insert(new Q.UI.Text({ x: 85, y: -70, label: "N: " + Q.state.p.recolector, size: 11 }));
+        var menosRecolector = box.insert(new Q.UI.Button({ x: 145, y: -70, asset: "menos.png" }));
+
+        Q.state.on("change.cocinero", this, function(cocinero) {
+            textCocinero.p.label = "N: " + cocinero;
+        });
+
+        Q.state.on("change.camarero", this, function(camarero) {
+            textCamarero.p.label = "N: " + Camarero;
+        });
+
+        Q.state.on("change.recolector", this, function(recolector) {
+            textRecolector.label = "N: " + recolector;
+        });
+
+        flechaI.on("click", function() {
+            Q.clearStages();
+            Q.stageScene("screenMain");
+        });
+
+
+        // masSoftware.on("click", function() {
+        //     posible = comprobarExpedicion(Q.state.p.alumnoSoftware, Q.state.p.equipoSoftware)
+        //     if (posible) {
+        //         Q.state.inc("equipoSoftware", 1);
+        //         Q.state.inc("equipoActual", 1);
+        //     }
+
+        // })
+        // menosSoftware.on("click", function() {
+        //     console.log(Q.state.p.equipoActual)
+        //     console.log(Q.state.p.equipoActual)
+        //     if (Q.state.p.equipoSoftware > 0) {
+        //         Q.state.dec("equipoSoftware", 1);
+        //         Q.state.dec("equipoActual", 1);
+        //     }
+
+        // })
+
+        // masInformatica.on("click", function() {
+        //     console.log(Q.state.p.equipoActual)
+        //     posible = comprobarExpedicion(Q.state.p.alumnoInformatica, Q.state.p.equipoInformatica)
+        //     if (posible) {
+
+        //         Q.state.inc("equipoInformatica", 1);
+        //         Q.state.inc("equipoActual", 1);
+        //     }
+
+        // })
+        // menosInformatica.on("click", function() {
+
+        //     if (Q.state.p.equipoInformatica > 0) {
+        //         Q.state.dec("equipoInformatica", 1);
+        //         Q.state.dec("equipoActual", 1);
+        //     }
+
+        // })
+
+        // masComputadores.on("click", function() {
+        //     posible = comprobarExpedicion(Q.state.p.alumnoComputadores, Q.state.p.equipoComputadores)
+        //     if (posible) {
+        //         Q.state.inc("equipoComputadores", 1);
+        //         Q.state.inc("equipoActual", 1);
+        //     }
+
+        // })
+        // menosComputadores.on("click", function() {
+
+        //     if (Q.state.p.equipoComputadores > 0) {
+        //         Q.state.dec("equipoComputadores", 1);
+        //         Q.state.dec("equipoActual", 1);
+        //     }
+
+        // })
+
+    });
+
+    function carga() {
+
+        contador_s = 0;
+        cronometro = setInterval(
+            function() {
+                if (contador_s == 20) {
+                    contador_s = 0;
+
+                    Q.state.inc("coins", 1);
+
+
+                }
+                //console.log(contador_s++);
+                contador_s++;
+
+            }, 1000);
+
+    }
 
     Q.scene('startGame', function(stage) {
 
@@ -888,7 +1059,7 @@ window.addEventListener("load", function() {
             y: Q.height / 2
         }));
 
-        Q.state.reset({ coins: 0, taquillas: false, cmasmas: 0, gestion: 0, c: 0, ensamblador: 0, matematicas: 0, fisica: 0, alumnoSoftware: 1, alumnoComputadores: 0, alumnoInformatica: 1, tamañoEquipo: 2, equipoActual: 0, equipoSoftware: 0, equipoInformatica: 0, equipoComputadores: 0 });
+        Q.state.reset({ coins: 0, taquillas: false, cmasmas: 0, gestion: 0, c: 0, ensamblador: 0, matematicas: 0, fisica: 0, alumnoSoftware: 1, alumnoComputadores: 0, alumnoInformatica: 1, tamañoEquipo: 2, equipoActual: 0, equipoSoftware: 0, equipoInformatica: 0, equipoComputadores: 0, cocinero: 0, camarero: 0, recolector: 0, cocina: 0, cafeteria: 0 });
 
         var button = box.insert(new Q.UI.Button({ asset: "puerta/1.png" }));
 
@@ -902,10 +1073,12 @@ window.addEventListener("load", function() {
         };
 
         Q.input.on("confirm", button, function() {
+            carga();
             empezarJuego();
         });
 
         button.on("click", function() {
+            carga();
             empezarJuego();
         });
     });
