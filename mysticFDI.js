@@ -19,7 +19,7 @@ window.addEventListener("load", function() {
     });
 
     Q.load(["fdi.png", "fletxaI.png", "fletxaD.png", "tick1.png", "puerta/1.png", "puerta/2.png", "puerta/3.png", "puerta/4.png", "puerta/5.png", "puerta/6.png", "personaje.png", "player.json", "coins.mp3", "coins.ogg", "mas.png", "menos.png"], function() {
-        Q.loadTMX("prueba.tmx", function() {
+        Q.loadTMX("level2.tmx", function() {
             Q.compileSheets("personaje.png", "player.json");
             Q.stageScene("startGame");
         });
@@ -27,14 +27,12 @@ window.addEventListener("load", function() {
 
 
     Q.scene("level1", function(stage) {
-        Q.stageTMX("prueba.tmx", stage);
+        Q.stageTMX("level2.tmx", stage);
         stage.add("viewport");
-        var player = stage.insert(new Q.Player({ x: 250, y: 350, scale: 1 / 7 }));
+        var player = stage.insert(new Q.Player({ x: 90, y: 925.5, scale: 1 / 7 }));
 
         stage.add("viewport").follow(player);
     });
-
-
 
 
     Q.Sprite.extend("Player", {
@@ -59,6 +57,7 @@ window.addEventListener("load", function() {
             Q.input.on("down", this, function() {
                 this.play("front");
             });
+            console.log(this.p.x + " " + this.p.y);
         }
     });
 
@@ -89,7 +88,7 @@ window.addEventListener("load", function() {
             x: 110,
             y: -210,
             asset: "fletxaD.png"
-        }))
+        }));
 
         var botonAlquimia = box.insert(new Q.UI.Button({
             x: -70,
@@ -284,34 +283,35 @@ window.addEventListener("load", function() {
             Q.clearStages();
             Q.stageScene("level1");
         });
+
         masSoftware.on("click", function() {
-            posible = comprobarExpedicion(Q.state.p.alumnoSoftware, Q.state.p.equipoSoftware)
+            posible = comprobarExpedicion(Q.state.p.alumnoSoftware, Q.state.p.equipoSoftware);
             if (posible) {
                 Q.state.inc("equipoSoftware", 1);
                 Q.state.inc("equipoActual", 1);
             }
 
-        })
+        });
+
         menosSoftware.on("click", function() {
-            console.log(Q.state.p.equipoActual)
-            console.log(Q.state.p.equipoActual)
+            console.log(Q.state.p.equipoActual);
             if (Q.state.p.equipoSoftware > 0) {
                 Q.state.dec("equipoSoftware", 1);
                 Q.state.dec("equipoActual", 1);
             }
 
-        })
+        });
 
         masInformatica.on("click", function() {
-            console.log(Q.state.p.equipoActual)
-            posible = comprobarExpedicion(Q.state.p.alumnoInformatica, Q.state.p.equipoInformatica)
+            console.log(Q.state.p.equipoActual);
+            posible = comprobarExpedicion(Q.state.p.alumnoInformatica, Q.state.p.equipoInformatica);
             if (posible) {
-
                 Q.state.inc("equipoInformatica", 1);
                 Q.state.inc("equipoActual", 1);
             }
 
-        })
+        });
+
         menosInformatica.on("click", function() {
 
             if (Q.state.p.equipoInformatica > 0) {
@@ -319,16 +319,17 @@ window.addEventListener("load", function() {
                 Q.state.dec("equipoActual", 1);
             }
 
-        })
+        });
 
         masComputadores.on("click", function() {
-            posible = comprobarExpedicion(Q.state.p.alumnoComputadores, Q.state.p.equipoComputadores)
+            posible = comprobarExpedicion(Q.state.p.alumnoComputadores, Q.state.p.equipoComputadores);
             if (posible) {
                 Q.state.inc("equipoComputadores", 1);
                 Q.state.inc("equipoActual", 1);
             }
 
-        })
+        });
+
         menosComputadores.on("click", function() {
 
             if (Q.state.p.equipoComputadores > 0) {
@@ -336,7 +337,7 @@ window.addEventListener("load", function() {
                 Q.state.dec("equipoActual", 1);
             }
 
-        })
+        });
 
     });
 
@@ -427,7 +428,7 @@ window.addEventListener("load", function() {
 
         botonTaquillas.on("click", function() {
             if (!Q.state.p.taquillas) {
-                dinero = comprobarDinero(1, "edificios")
+                dinero = comprobarDinero(1, "edificios");
                 if (dinero) {
                     Q.state.p.taquillas = true;
                     box.insert(new Q.UI.Button({ x: 50, y: -145, asset: "tick1.png" }));
@@ -438,7 +439,7 @@ window.addEventListener("load", function() {
 
         botonCocina.on("click", function() {
             if (!Q.state.p.cocina) {
-                dinero = comprobarDinero(50, "edificios")
+                dinero = comprobarDinero(50, "edificios");
                 if (dinero) {
                     Q.state.p.cocina = true;
                     box.insert(new Q.UI.Button({ x: 50, y: -30, asset: "tick1.png" }));
@@ -449,7 +450,7 @@ window.addEventListener("load", function() {
 
         botonCafeteria.on("click", function() {
             if (!Q.state.p.cafeteria) {
-                dinero = comprobarDinero(50, "edificios")
+                dinero = comprobarDinero(50, "edificios");
                 if (dinero) {
                     Q.state.p.cafeteria = true;
                     box.insert(new Q.UI.Button({ x: 50, y: 30, asset: "tick1.png" }));
@@ -602,7 +603,7 @@ window.addEventListener("load", function() {
         });
 
         botonCmasmas.on("click", function() {
-            dinero = comprobarDinero(80, "aprender")
+            dinero = comprobarDinero(80, "aprender");
             if (dinero) {
                 Q.state.dec("coins", 80);
                 Q.state.inc("cmasmas", 1);
@@ -610,7 +611,7 @@ window.addEventListener("load", function() {
         });
 
         botonGestion.on("click", function() {
-            dinero = comprobarDinero(50, "aprender")
+            dinero = comprobarDinero(50, "aprender");
             if (dinero) {
                 Q.state.dec("coins", 50);
                 Q.state.inc("gestion", 1);
@@ -618,7 +619,7 @@ window.addEventListener("load", function() {
         });
 
         botonC.on("click", function() {
-            dinero = comprobarDinero(120, "aprender")
+            dinero = comprobarDinero(120, "aprender");
             if (dinero) {
                 Q.state.dec("coins", 120);
                 Q.state.inc("c", 1);
@@ -626,7 +627,7 @@ window.addEventListener("load", function() {
         });
 
         botonEnsamblador.on("click", function() {
-            dinero = comprobarDinero(150, "aprender")
+            dinero = comprobarDinero(150, "aprender");
             if (dinero) {
                 Q.state.dec("coins", 150);
                 Q.state.inc("ensamblador", 1);
@@ -634,7 +635,7 @@ window.addEventListener("load", function() {
         });
 
         botonMatematicas.on("click", function() {
-            dinero = comprobarDinero(150, "aprender")
+            dinero = comprobarDinero(150, "aprender");
             if (dinero) {
                 Q.state.dec("coins", 150);
                 Q.state.inc("matematicas", 1);
@@ -642,7 +643,7 @@ window.addEventListener("load", function() {
         });
 
         botonFisica.on("click", function() {
-            dinero = comprobarDinero(50, "aprender")
+            dinero = comprobarDinero(50, "aprender");
             if (dinero) {
                 Q.state.dec("coins", 50);
                 Q.state.inc("fisica", 1);
@@ -684,6 +685,7 @@ window.addEventListener("load", function() {
             Q.clearStages();
             Q.stageScene("screenMain");
         });
+
         if (Q.state.p.alumnoSoftware > 0) {
             posicionY = posicionY + 60;
             var botonSoftware = box.insert(new Q.UI.Button({
@@ -702,8 +704,9 @@ window.addEventListener("load", function() {
 
             Q.state.on("change.alumnoSoftware", this, function(alumnoSoftware) {
                 labelSN.p.label = "N: " + alumnoSoftware;
-            })
+            });
         }
+
         if (Q.state.p.alumnoInformatica > 0) {
             posicionY = posicionY + 60;
             var botonInformatica = box.insert(new Q.UI.Button({
@@ -713,7 +716,7 @@ window.addEventListener("load", function() {
                 fill: "#CCCCCC",
                 label: "Informatica"
             }));
-            console.log(posicionY)
+            console.log(posicionY);
             alumnoi = new Q.AlumnoInformatica();
             box.insert(new Q.UI.Text({ x: 45, y: posicionY, size: 12, label: "Vida: " + alumnoi.vida }));
             box.insert(new Q.UI.Text({ x: 45, y: posicionY - 15, size: 12, label: "Poder: " + alumnoi.poder }));
@@ -743,7 +746,7 @@ window.addEventListener("load", function() {
 
             Q.state.on("change.alumnoComputadores", this, function(alumnoComputadores) {
                 labelCN.p.label = "N: " + alumnoComputadores;
-            })
+            });
         }
 
         botonAmigos.on("click", function() {
@@ -784,13 +787,15 @@ window.addEventListener("load", function() {
             size: 15,
             fill: "#CCCCCC",
             label: "Aceptar"
-        }))
+        }));
+
         var label = box.insert(new Q.UI.Text({
             x: 10,
             size: 15,
             y: -10 - button.p.h,
             label: stage.options.label
         }));
+
         button.on("click", function() {
             Q.clearStages();
             Q.stageScene(stage.options.escena);
@@ -816,7 +821,8 @@ window.addEventListener("load", function() {
             fill: "#CCCCCC",
             label: "Elegir",
             font: 10
-        }))
+        }));
+
         var label = box.insert(new Q.UI.Text({
             x: 10,
             size: 10,
@@ -858,21 +864,21 @@ window.addEventListener("load", function() {
 
         software.on("click", function() {
             alumnoS = new Q.AlumnoSoftware();
-            conocimientos = comprobarConocimientos(Q.state.p.gestion, Q.state.p.matematicas, alumnoS, "reclutar")
+            conocimientos = comprobarConocimientos(Q.state.p.gestion, Q.state.p.matematicas, alumnoS, "reclutar");
             if (conocimientos) {
                 Q.state.inc("alumnoSoftware", 1);
             }
         });
         computadores.on("click", function() {
             alumnoS = new Q.AlumnoComputadores();
-            conocimientos = comprobarConocimientos(Q.state.p.ensamblador, Q.state.p.c, alumnoS, "reclutar")
+            conocimientos = comprobarConocimientos(Q.state.p.ensamblador, Q.state.p.c, alumnoS, "reclutar");
             if (conocimientos) {
                 Q.state.inc("alumnoComputadores", 1);
             }
         });
         informatica.on("click", function() {
             alumnoS = new Q.AlumnoInformatica();
-            conocimientos = comprobarConocimientos(Q.state.p.cmasmas, Q.state.p.fisica, alumnoS, "reclutar")
+            conocimientos = comprobarConocimientos(Q.state.p.cmasmas, Q.state.p.fisica, alumnoS, "reclutar");
             if (conocimientos) {
                 Q.state.inc("alumnoInformatica", 1);
             }
@@ -888,9 +894,9 @@ window.addEventListener("load", function() {
             this.velocidad = 4;
             this.poder = 2;
             //gestion
-            this.conocimiento1 = 4
+            this.conocimiento1 = 4;
                 //matematicas
-            this.conocimiento2 = 1
+            this.conocimiento2 = 1;
 
 
         }
