@@ -28,10 +28,27 @@ window.addEventListener("load", function() {
 
     Q.scene("level1", function(stage) {
         Q.stageTMX("level2.tmx", stage);
-        stage.add("viewport");
         var player = stage.insert(new Q.Player({ x: 90, y: 925.5, scale: 1 / 7 }));
 
         stage.add("viewport").follow(player);
+    });
+
+    Q.scene("salirDelMapa", function(stage) {
+        var botonSalir = stage.insert(new Q.UI.Button({
+            x: Q.width - 50,
+            y: 20,
+            h: 20,
+            w: 85,
+            fill: "#CCCCCC",
+            font: {size: 50},
+            label: "Salir del mapa"
+        }));
+
+        botonSalir.on("click", function() {
+            Q.clearStages();
+            Q.stageScene("screenMain");
+        });
+         
     });
 
 
@@ -296,6 +313,7 @@ window.addEventListener("load", function() {
 
         botonSalir.on("click", function() {
             Q.clearStages();
+            Q.stageScene("salirDelMapa",1);
             Q.stageScene("level1");
         });
 
@@ -444,6 +462,7 @@ window.addEventListener("load", function() {
                     Q.state.p.taquillas = true;
                     box.insert(new Q.UI.Button({ x: 50, y: -145, asset: "tick1.png" }));
                     Q.state.dec("coins", 1);
+                    labelTaquillas.destroy();
                 }
             }
         });
@@ -463,6 +482,7 @@ window.addEventListener("load", function() {
                     Q.state.p.cocina = true;
                     box.insert(new Q.UI.Button({ x: 50, y: -30, asset: "tick1.png" }));
                     Q.state.dec("coins", 50);
+                    labelCocina.destroy();
                 }
             }
         });
@@ -474,10 +494,10 @@ window.addEventListener("load", function() {
                     Q.state.p.cafeteria = true;
                     box.insert(new Q.UI.Button({ x: 50, y: 30, asset: "tick1.png" }));
                     Q.state.dec("coins", 50);
+                    labelCafeteria.destroy();
                 }
             }
         });
-
 
 
         if (Q.state.p.taquillas) {
@@ -494,14 +514,24 @@ window.addEventListener("load", function() {
         if (Q.state.p.cocina) {
             box.insert(new Q.UI.Button({ x: 50, y: -30, asset: "tick1.png" }));
         } else {
-            box.insert(new Q.UI.Text({ x: 50, y: -30, label: "x50", size: 20 }));
+            var labelCocina = box.insert(new Q.UI.Text({ 
+                x: 50, 
+                y: -30, 
+                label: "x50", 
+                size: 20 
+            }));
         }
 
 
         if (Q.state.p.cafeteria) {
             box.insert(new Q.UI.Button({ x: 50, y: 30, asset: "tick1.png" }));
         } else {
-            box.insert(new Q.UI.Text({ x: 50, y: 30, label: "x50", size: 20 }));
+            var labelCafeteria = box.insert(new Q.UI.Text({ 
+                x: 50, 
+                y: 30, 
+                label: "x50", 
+                size: 20 
+            }));
         }
     });
 
@@ -1100,7 +1130,7 @@ window.addEventListener("load", function() {
                 contador_s++;
             }, 1000);
     }
-    
+
 
     Q.scene('startGame', function(stage) {
 
