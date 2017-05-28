@@ -28,10 +28,27 @@ window.addEventListener("load", function() {
 
     Q.scene("level1", function(stage) {
         Q.stageTMX("level2.tmx", stage);
-        stage.add("viewport");
         var player = stage.insert(new Q.Player({ x: 90, y: 925.5, scale: 1 / 7 }));
 
         stage.add("viewport").follow(player);
+    });
+
+    Q.scene("salirDelMapa", function(stage) {
+        var botonSalir = stage.insert(new Q.UI.Button({
+            x: Q.width - 50,
+            y: 20,
+            h: 20,
+            w: 85,
+            fill: "#CCCCCC",
+            font: {size: 50},
+            label: "Salir del mapa"
+        }));
+
+        botonSalir.on("click", function() {
+            Q.clearStages();
+            Q.stageScene("screenMain");
+        });
+         
     });
 
 
@@ -158,18 +175,18 @@ window.addEventListener("load", function() {
         });
 
         //matematicas
-        var labelMatematicas = stage.insert(new Q.UI.Text({ x: 250, y: 230, size: 17, label: "Matematicas: " + Q.state.p.matematicas }));
+        var labelMatematicas = stage.insert(new Q.UI.Text({ x: 250, y: 230, size: 17, label: "Matemáticas: " + Q.state.p.matematicas }));
 
         Q.state.on("change.matematicas", this, function(matematicas) {
-            labelMatematicas.p.label = "Matematicas: " + matematicas;
+            labelMatematicas.p.label = "Matemáticas: " + matematicas;
         });
 
         //fisica
 
-        var labelFisica = stage.insert(new Q.UI.Text({ x: 250, y: 260, size: 17, label: "Fisica: " + Q.state.p.fisica }));
+        var labelFisica = stage.insert(new Q.UI.Text({ x: 250, y: 260, size: 17, label: "Física: " + Q.state.p.fisica }));
 
         Q.state.on("change.fisica", this, function(fisica) {
-            labelFisica.p.label = "Fisica: " + fisica;
+            labelFisica.p.label = "Física: " + fisica;
         });
 
         //comida
@@ -223,6 +240,7 @@ window.addEventListener("load", function() {
 
 
     Q.scene('expedicion', function(stage) {
+        var posible = false;
 
         stage.insert(new Q.Repeater({ asset: "fdi.png" }));
         var box = stage.insert(new Q.UI.Container({
@@ -295,6 +313,7 @@ window.addEventListener("load", function() {
 
         botonSalir.on("click", function() {
             Q.clearStages();
+            Q.stageScene("salirDelMapa",1);
             Q.stageScene("level1");
         });
 
@@ -342,7 +361,6 @@ window.addEventListener("load", function() {
         });
 
         menosComputadores.on("click", function() {
-
             if (Q.state.p.equipoComputadores > 0) {
                 Q.state.dec("equipoComputadores", 1);
                 Q.state.dec("equipoActual", 1);
@@ -357,7 +375,6 @@ window.addEventListener("load", function() {
             Q.stageScene("dineroInsuficiente", 1, { escena: "expedicion", label: "No tienes alumnos suficientes" });
             return false;
         } else {
-
             return true;
         }
     }
@@ -365,6 +382,7 @@ window.addEventListener("load", function() {
 
     Q.scene('edificios', function(stage) {
         stage.insert(new Q.Repeater({ asset: "fdi.png" }));
+        var dinero = false;
 
         var box = stage.insert(new Q.UI.Container({
             x: Q.width / 2,
@@ -444,19 +462,17 @@ window.addEventListener("load", function() {
                     Q.state.p.taquillas = true;
                     box.insert(new Q.UI.Button({ x: 50, y: -145, asset: "tick1.png" }));
                     Q.state.dec("coins", 1);
+                    labelTaquillas.destroy();
                 }
             }
         });
 
         botonClase.on("click", function() {
-
             dinero = comprobarDinero(50, "edificios");
             if (dinero) {
-
-                Q.state.inc("totalTrabajadores", 3)
+                Q.state.inc("totalTrabajadores", 3);
                 Q.state.dec("coins", 50);
             }
-
         });
 
         botonCocina.on("click", function() {
@@ -466,6 +482,7 @@ window.addEventListener("load", function() {
                     Q.state.p.cocina = true;
                     box.insert(new Q.UI.Button({ x: 50, y: -30, asset: "tick1.png" }));
                     Q.state.dec("coins", 50);
+                    labelCocina.destroy();
                 }
             }
         });
@@ -477,10 +494,10 @@ window.addEventListener("load", function() {
                     Q.state.p.cafeteria = true;
                     box.insert(new Q.UI.Button({ x: 50, y: 30, asset: "tick1.png" }));
                     Q.state.dec("coins", 50);
+                    labelCafeteria.destroy();
                 }
             }
         });
-
 
 
         if (Q.state.p.taquillas) {
@@ -497,19 +514,30 @@ window.addEventListener("load", function() {
         if (Q.state.p.cocina) {
             box.insert(new Q.UI.Button({ x: 50, y: -30, asset: "tick1.png" }));
         } else {
-            box.insert(new Q.UI.Text({ x: 50, y: -30, label: "x50", size: 20 }));
+            var labelCocina = box.insert(new Q.UI.Text({ 
+                x: 50, 
+                y: -30, 
+                label: "x50", 
+                size: 20 
+            }));
         }
 
 
         if (Q.state.p.cafeteria) {
             box.insert(new Q.UI.Button({ x: 50, y: 30, asset: "tick1.png" }));
         } else {
-            box.insert(new Q.UI.Text({ x: 50, y: 30, label: "x50", size: 20 }));
+            var labelCafeteria = box.insert(new Q.UI.Text({ 
+                x: 50, 
+                y: 30, 
+                label: "x50", 
+                size: 20 
+            }));
         }
     });
 
 
     Q.scene('aprender', function(stage) {
+        var dinero = false;
         stage.insert(new Q.Repeater({ asset: "fdi.png" }));
 
         var box = stage.insert(new Q.UI.Container({
@@ -580,7 +608,7 @@ window.addEventListener("load", function() {
             y: 30,
             w: 150,
             fill: "#CCCCCC",
-            label: "Matematicas"
+            label: "Matemáticas"
         }));
 
         var labelMatematicas = box.insert(new Q.UI.Text({
@@ -609,7 +637,7 @@ window.addEventListener("load", function() {
             y: 150,
             w: 150,
             fill: "#CCCCCC",
-            label: "Fisica"
+            label: "Física"
         }));
 
         var labelFisica = box.insert(new Q.UI.Text({
@@ -718,11 +746,11 @@ window.addEventListener("load", function() {
                 label: "Software"
             }));
 
-            alumnoi = new Q.AlumnoSoftware();
-            box.insert(new Q.UI.Text({ x: 45, y: posicionY, size: 12, label: "Vida: " + alumnoi.vida }));
-            box.insert(new Q.UI.Text({ x: 45, y: posicionY - 15, size: 12, label: "Poder: " + alumnoi.poder }));
+            var alumnoS = new Q.AlumnoSoftware();
+            box.insert(new Q.UI.Text({ x: 45, y: posicionY, size: 12, label: "Vida: " + alumnoS.vida }));
+            box.insert(new Q.UI.Text({ x: 45, y: posicionY - 15, size: 12, label: "Poder: " + alumnoS.poder }));
             var alumnoSN = box.insert(new Q.UI.Text({ x: 115, y: posicionY, size: 12, label: "N: " + Q.state.p.alumnoSoftware }));
-            box.insert(new Q.UI.Text({ x: 115, y: posicionY - 15, size: 12, label: "Velocidad: " + alumnoi.velocidad }));
+            box.insert(new Q.UI.Text({ x: 115, y: posicionY - 15, size: 12, label: "Velocidad: " + alumnoS.velocidad }));
 
             Q.state.on("change.alumnoSoftware", this, function(alumnoSoftware) {
                 labelSN.p.label = "N: " + alumnoSoftware;
@@ -739,11 +767,11 @@ window.addEventListener("load", function() {
                 label: "Informatica"
             }));
 
-            alumnoi = new Q.AlumnoInformatica();
-            box.insert(new Q.UI.Text({ x: 45, y: posicionY, size: 12, label: "Vida: " + alumnoi.vida }));
-            box.insert(new Q.UI.Text({ x: 45, y: posicionY - 15, size: 12, label: "Poder: " + alumnoi.poder }));
+            var alumnoI = new Q.AlumnoInformatica();
+            box.insert(new Q.UI.Text({ x: 45, y: posicionY, size: 12, label: "Vida: " + alumnoI.vida }));
+            box.insert(new Q.UI.Text({ x: 45, y: posicionY - 15, size: 12, label: "Poder: " + alumnoI.poder }));
             var labelIN = box.insert(new Q.UI.Text({ x: 115, y: posicionY, size: 12, label: "N: " + Q.state.p.alumnoInformatica }));
-            box.insert(new Q.UI.Text({ x: 115, y: posicionY - 15, size: 12, label: "Velocidad: " + alumnoi.velocidad }));
+            box.insert(new Q.UI.Text({ x: 115, y: posicionY - 15, size: 12, label: "Velocidad: " + alumnoI.velocidad }));
 
             Q.state.on("change.alumnoInformatica", this, function(alumnoInformatica) {
                 labelIN.p.label = "N: " + alumnoInformatica;
@@ -760,12 +788,11 @@ window.addEventListener("load", function() {
                 label: "computadores"
             }));
 
-
-            alumnoi = new Q.AlumnoComputadores();
-            box.insert(new Q.UI.Text({ x: 45, y: posicionY, size: 12, label: "Vida: " + alumnoi.vida }));
-            box.insert(new Q.UI.Text({ x: 45, y: posicionY - 15, size: 12, label: "Poder: " + alumnoi.poder }));
+            var alumnoC = new Q.AlumnoComputadores();
+            box.insert(new Q.UI.Text({ x: 45, y: posicionY, size: 12, label: "Vida: " + alumnoC.vida }));
+            box.insert(new Q.UI.Text({ x: 45, y: posicionY - 15, size: 12, label: "Poder: " + alumnoC.poder }));
             var labelCN = box.insert(new Q.UI.Text({ x: 115, y: posicionY, size: 12, label: "N: " + Q.state.p.alumnoComputadores }));
-            box.insert(new Q.UI.Text({ x: 115, y: posicionY - 15, size: 12, label: "Velocidad: " + alumnoi.velocidad }));
+            box.insert(new Q.UI.Text({ x: 115, y: posicionY - 15, size: 12, label: "Velocidad: " + alumnoC.velocidad }));
 
             Q.state.on("change.alumnoComputadores", this, function(alumnoComputadores) {
                 labelCN.p.label = "N: " + alumnoComputadores;
@@ -825,11 +852,11 @@ window.addEventListener("load", function() {
         });
 
         box.fit(20);
-
     });
 
 
     Q.scene('elegirPersonaje', function(stage) {
+        var conocimientos = false;
 
         var box = stage.insert(new Q.UI.Container({
             x: Q.width / 2,
@@ -850,7 +877,7 @@ window.addEventListener("load", function() {
             x: 10,
             size: 10,
             y: -60,
-            label: "Alumno de software x4 Gestion, x1 Matematicas"
+            label: "Alumno de software x4 Gestion, x1 Matemáticas"
         }));
 
         var computadores = box.insert(new Q.UI.Button({
@@ -862,7 +889,7 @@ window.addEventListener("load", function() {
             font: 10
         }));
 
-        var label = box.insert(new Q.UI.Text({
+        label = box.insert(new Q.UI.Text({
             x: 0,
             size: 10,
             y: 0,
@@ -878,30 +905,30 @@ window.addEventListener("load", function() {
             font: 10
         }));
 
-        var label = box.insert(new Q.UI.Text({
+        label = box.insert(new Q.UI.Text({
             x: 10,
             size: 10,
             y: 60,
-            label: "Alumno de informatica x5 C++, x1 Fisica"
+            label: "Alumno de informatica x5 C++, x1 Física"
         }));
 
         software.on("click", function() {
-            alumnoS = new Q.AlumnoSoftware();
+            var alumnoS = new Q.AlumnoSoftware();
             conocimientos = comprobarConocimientos(Q.state.p.gestion, Q.state.p.matematicas, alumnoS, "reclutar");
             if (conocimientos) {
                 Q.state.inc("alumnoSoftware", 1);
             }
         });
         computadores.on("click", function() {
-            alumnoS = new Q.AlumnoComputadores();
-            conocimientos = comprobarConocimientos(Q.state.p.ensamblador, Q.state.p.c, alumnoS, "reclutar");
+            var alumnoC = new Q.AlumnoComputadores();
+            conocimientos = comprobarConocimientos(Q.state.p.ensamblador, Q.state.p.c, alumnoC, "reclutar");
             if (conocimientos) {
                 Q.state.inc("alumnoComputadores", 1);
             }
         });
         informatica.on("click", function() {
-            alumnoS = new Q.AlumnoInformatica();
-            conocimientos = comprobarConocimientos(Q.state.p.cmasmas, Q.state.p.fisica, alumnoS, "reclutar");
+            var alumnoI = new Q.AlumnoInformatica();
+            conocimientos = comprobarConocimientos(Q.state.p.cmasmas, Q.state.p.fisica, alumnoI, "reclutar");
             if (conocimientos) {
                 Q.state.inc("alumnoInformatica", 1);
             }
@@ -920,10 +947,9 @@ window.addEventListener("load", function() {
             this.conocimiento1 = 4;
             //matematicas
             this.conocimiento2 = 1;
-
-
         }
     });
+
     Q.Class.extend("AlumnoInformatica", {
         init: function() {
             this.vida = 3;
@@ -933,10 +959,9 @@ window.addEventListener("load", function() {
             this.conocimiento1 = 5;
             //fisica
             this.conocimiento2 = 1;
-
-
         }
     });
+
     Q.Class.extend("AlumnoComputadores", {
         init: function() {
             this.vida = 3;
@@ -946,10 +971,8 @@ window.addEventListener("load", function() {
             this.conocimiento1 = 3;
             //c
             this.conocimiento2 = 2;
-
-
         }
-    })
+    });
 
     Q.scene('casa', function(stage) {
 
@@ -1025,15 +1048,15 @@ window.addEventListener("load", function() {
             } else {
                 Q.stageScene("dineroInsuficiente", 1, { escena: "casa", label: "Compre la cocina" });
             }
-        })
+        });
+
         menosCocinero.on("click", function() {
 
             if (Q.state.p.cocinero > 0) {
                 Q.state.dec("cocinero", 1);
                 Q.state.dec("trabajadoresActuales", 1);
             }
-
-        })
+        });
 
         masCamarero.on("click", function() {
             if (Q.state.p.cafeteria) {
@@ -1047,7 +1070,7 @@ window.addEventListener("load", function() {
             } else {
                 Q.stageScene("dineroInsuficiente", 1, { escena: "casa", label: "Compre la cafeteria" });
             }
-        })
+        });
 
         menosCamarero.on("click", function() {
 
@@ -1066,8 +1089,7 @@ window.addEventListener("load", function() {
             } else {
                 Q.stageScene("dineroInsuficiente", 1, { escena: "casa", label: "No tiene trabajadores suficientes" });
             }
-
-        })
+        });
 
         menosRecolector.on("click", function() {
 
@@ -1075,49 +1097,40 @@ window.addEventListener("load", function() {
                 Q.state.dec("recolector", 1);
                 Q.state.dec("trabajadoresActuales", 1);
             }
-
-        })
-
-
-
-
-
+        });
     });
+
 
     function carga() {
 
-        contador_s = 0;
+        var contador_s = 0;
         cronometro = setInterval(
             function() {
                 if (contador_s == 10) {
                     contador_s = 0;
+
                     if (Q.state.p.cocinero > 0) {
                         Q.state.inc("comida", Q.state.p.cocinero);
                     }
+                    
                     if (Q.state.p.camarero > 0) {
                         if (Q.state.p.comida >= 2 * Q.state.p.camarero) {
                             Q.state.dec("comida", Q.state.p.camarero * 2);
                             Q.state.inc("energia", Q.state.p.camarero);
-
                         }
-
                     }
+
                     if (Q.state.p.recolector > 0) {
                         if (Q.state.p.energia >= Q.state.p.energia) {
                             Q.state.dec("energia", Q.state.p.recolector);
                             Q.state.inc("coins", Q.state.p.recolector);
-
-
                         }
                     }
-
-
                 }
                 contador_s++;
-
             }, 1000);
-
     }
+
 
     Q.scene('startGame', function(stage) {
 
