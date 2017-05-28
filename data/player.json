@@ -1,0 +1,5 @@
+{
+	"front":{ "sx":0,"sy":0,"tileW":171,"tileH":315,"frames":4 },
+	"side":{ "sx":684,"sy":0,"tileW":171,"tileH":315,"frames":4 },
+	"back":{ "sx":1350,"sy":0,"tileW":153,"tileH":298,"frames":4 }
+}

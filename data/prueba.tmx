@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="60" height="18" tilewidth="34" tileheight="34" nextobjectid="1">
+ <imagelayer name="Capa de Imagen 1">
+  <image source="../images/map.png" width="2040" height="612"/>
+ </imagelayer>
+</map>
