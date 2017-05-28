@@ -172,6 +172,21 @@ window.addEventListener("load", function() {
             labelFisica.p.label = "Fisica: " + fisica;
         });
 
+        //comida
+        var labelComida = stage.insert(new Q.UI.Text({ x: 250, y: 290, size: 17, label: "Comida: " + Q.state.p.comida }));
+
+        Q.state.on("change.comida", this, function(comida) {
+            labelComida.p.label = "Comida: " + comida;
+        });
+
+        //energia
+        var labelEnergia = stage.insert(new Q.UI.Text({ x: 250, y: 320, size: 17, label: "Energia: " + Q.state.p.energia }));
+
+        Q.state.on("change.energia", this, function(energia) {
+            labelEnergia.p.label = "Energia: " + energia;
+        });
+
+
 
         botonAlquimia.on("click", function() {
             Q.audio.play("coins.mp3");
@@ -388,7 +403,7 @@ window.addEventListener("load", function() {
         var labelClase = box.insert(new Q.UI.Text({
             x: 50,
             y: -105,
-            label: "x500",
+            label: "x50",
             size: 20
         }));
 
@@ -431,6 +446,17 @@ window.addEventListener("load", function() {
                     Q.state.dec("coins", 1);
                 }
             }
+        });
+
+        botonClase.on("click", function() {
+
+            dinero = comprobarDinero(50, "edificios");
+            if (dinero) {
+
+                Q.state.inc("totalTrabajadores", 3)
+                Q.state.dec("coins", 50);
+            }
+
         });
 
         botonCocina.on("click", function() {
@@ -892,7 +918,7 @@ window.addEventListener("load", function() {
             this.poder = 2;
             //gestion
             this.conocimiento1 = 4;
-                //matematicas
+            //matematicas
             this.conocimiento2 = 1;
 
 
@@ -946,6 +972,13 @@ window.addEventListener("load", function() {
             asset: "fletxaI.png"
         }));
 
+        var labelTrabajadores = box.insert(new Q.UI.Text({ x: -80, y: -150, size: 12, label: "Total Trabajadores: " + Q.state.p.totalTrabajadores }));
+
+        Q.state.on("change.totalTrabajadores", this, function(totalTrabajadores) {
+            labelTrabajadores.p.label = "Total trabajadores: " + totalTrabajadores;
+        });
+
+
 
         var masCocinero = box.insert(new Q.UI.Button({ x: 20, y: -150, asset: "mas.png" }));
         box.insert(new Q.UI.Text({ x: 85, y: -160, label: "Cocinero", size: 11 }));
@@ -954,7 +987,7 @@ window.addEventListener("load", function() {
 
         var masCamarero = box.insert(new Q.UI.Button({ x: 20, y: -110, asset: "mas.png" }));
         box.insert(new Q.UI.Text({ x: 85, y: -120, label: "Camarero", size: 11 }));
-        var textcamarero = box.insert(new Q.UI.Text({ x: 85, y: -110, label: "N: " + Q.state.p.camarero, size: 11 }));
+        var textCamarero = box.insert(new Q.UI.Text({ x: 85, y: -110, label: "N: " + Q.state.p.camarero, size: 11 }));
         var menosCamarero = box.insert(new Q.UI.Button({ x: 145, y: -110, asset: "menos.png" }));
 
         var masRecolector = box.insert(new Q.UI.Button({ x: 20, y: -70, asset: "mas.png" }));
@@ -967,7 +1000,7 @@ window.addEventListener("load", function() {
         });
 
         Q.state.on("change.camarero", this, function(camarero) {
-            textCamarero.p.label = "N: " + Camarero;
+            textCamarero.p.label = "N: " + camarero;
         });
 
         Q.state.on("change.recolector", this, function(recolector) {
@@ -980,59 +1013,74 @@ window.addEventListener("load", function() {
         });
 
 
-        // masSoftware.on("click", function() {
-        //     posible = comprobarExpedicion(Q.state.p.alumnoSoftware, Q.state.p.equipoSoftware)
-        //     if (posible) {
-        //         Q.state.inc("equipoSoftware", 1);
-        //         Q.state.inc("equipoActual", 1);
-        //     }
+        masCocinero.on("click", function() {
+            if (Q.state.p.cocina) {
 
-        // })
-        // menosSoftware.on("click", function() {
-        //     console.log(Q.state.p.equipoActual)
-        //     console.log(Q.state.p.equipoActual)
-        //     if (Q.state.p.equipoSoftware > 0) {
-        //         Q.state.dec("equipoSoftware", 1);
-        //         Q.state.dec("equipoActual", 1);
-        //     }
+                if (Q.state.p.trabajadoresActuales < Q.state.p.totalTrabajadores) {
+                    Q.state.inc("cocinero", 1);
+                    Q.state.inc("trabajadoresActuales", 1);
+                } else {
+                    Q.stageScene("dineroInsuficiente", 1, { escena: "casa", label: "No tiene trabajadores suficientes" });
+                }
+            } else {
+                Q.stageScene("dineroInsuficiente", 1, { escena: "casa", label: "Compre la cocina" });
+            }
+        })
+        menosCocinero.on("click", function() {
 
-        // })
+            if (Q.state.p.cocinero > 0) {
+                Q.state.dec("cocinero", 1);
+                Q.state.dec("trabajadoresActuales", 1);
+            }
 
-        // masInformatica.on("click", function() {
-        //     console.log(Q.state.p.equipoActual)
-        //     posible = comprobarExpedicion(Q.state.p.alumnoInformatica, Q.state.p.equipoInformatica)
-        //     if (posible) {
+        })
 
-        //         Q.state.inc("equipoInformatica", 1);
-        //         Q.state.inc("equipoActual", 1);
-        //     }
+        masCamarero.on("click", function() {
+            if (Q.state.p.cafeteria) {
 
-        // })
-        // menosInformatica.on("click", function() {
+                if (Q.state.p.trabajadoresActuales < Q.state.p.totalTrabajadores) {
+                    Q.state.inc("camarero", 1);
+                    Q.state.inc("trabajadoresActuales", 1);
+                } else {
+                    Q.stageScene("dineroInsuficiente", 1, { escena: "casa", label: "No tiene trabajadores suficientes" });
+                }
+            } else {
+                Q.stageScene("dineroInsuficiente", 1, { escena: "casa", label: "Compre la cafeteria" });
+            }
+        })
 
-        //     if (Q.state.p.equipoInformatica > 0) {
-        //         Q.state.dec("equipoInformatica", 1);
-        //         Q.state.dec("equipoActual", 1);
-        //     }
+        menosCamarero.on("click", function() {
 
-        // })
+            if (Q.state.p.camarero > 0) {
+                Q.state.dec("camarero", 1);
+                Q.state.dec("trabajadoresActuales", 1);
+            }
 
-        // masComputadores.on("click", function() {
-        //     posible = comprobarExpedicion(Q.state.p.alumnoComputadores, Q.state.p.equipoComputadores)
-        //     if (posible) {
-        //         Q.state.inc("equipoComputadores", 1);
-        //         Q.state.inc("equipoActual", 1);
-        //     }
+        })
 
-        // })
-        // menosComputadores.on("click", function() {
+        masRecolector.on("click", function() {
 
-        //     if (Q.state.p.equipoComputadores > 0) {
-        //         Q.state.dec("equipoComputadores", 1);
-        //         Q.state.dec("equipoActual", 1);
-        //     }
+            if (Q.state.p.trabajadoresActuales < Q.state.p.totalTrabajadores) {
+                Q.state.inc("recolector", 1);
+                Q.state.inc("trabajadoresActuales", 1);
+            } else {
+                Q.stageScene("dineroInsuficiente", 1, { escena: "casa", label: "No tiene trabajadores suficientes" });
+            }
 
-        // })
+        })
+
+        menosRecolector.on("click", function() {
+
+            if (Q.state.p.recolector > 0) {
+                Q.state.dec("recolector", 1);
+                Q.state.dec("trabajadoresActuales", 1);
+            }
+
+        })
+
+
+
+
 
     });
 
@@ -1041,10 +1089,27 @@ window.addEventListener("load", function() {
         contador_s = 0;
         cronometro = setInterval(
             function() {
-                if (contador_s == 20) {
+                if (contador_s == 10) {
                     contador_s = 0;
+                    if (Q.state.p.cocinero > 0) {
+                        Q.state.inc("comida", Q.state.p.cocinero);
+                    }
+                    if (Q.state.p.camarero > 0) {
+                        if (Q.state.p.comida >= 2 * Q.state.p.camarero) {
+                            Q.state.dec("comida", Q.state.p.camarero * 2);
+                            Q.state.inc("energia", Q.state.p.camarero);
 
-                    Q.state.inc("coins", 1);
+                        }
+
+                    }
+                    if (Q.state.p.recolector > 0) {
+                        if (Q.state.p.energia >= Q.state.p.energia) {
+                            Q.state.dec("energia", Q.state.p.recolector);
+                            Q.state.inc("coins", Q.state.p.recolector);
+
+
+                        }
+                    }
 
 
                 }
@@ -1061,22 +1126,22 @@ window.addEventListener("load", function() {
             y: Q.height / 2
         }));
 
-        Q.state.reset({ coins: 0, taquillas: false, cmasmas: 0, gestion: 0, c: 0, ensamblador: 0, matematicas: 0, fisica: 0, alumnoSoftware: 1, alumnoComputadores: 0, alumnoInformatica: 1, tamañoEquipo: 2, equipoActual: 0, equipoSoftware: 0, equipoInformatica: 0, equipoComputadores: 0, cocinero: 0, camarero: 0, recolector: 0, cocina: 0, cafeteria: 0 });
+        Q.state.reset({ coins: 200, taquillas: false, cmasmas: 0, gestion: 0, c: 0, ensamblador: 0, matematicas: 0, fisica: 0, alumnoSoftware: 1, alumnoComputadores: 0, alumnoInformatica: 1, tamañoEquipo: 2, equipoActual: 0, equipoSoftware: 0, equipoInformatica: 0, equipoComputadores: 0, cocinero: 0, camarero: 0, recolector: 0, cocina: false, cafeteria: false, totalTrabajadores: 0, trabajadoresActuales: 0, comida: 0, energia: 0 });
 
-        var button = box.insert(new Q.UI.Button({ asset: "puerta/1.jpg", scale: 1/2 }));
+        var button = box.insert(new Q.UI.Button({ asset: "puerta/1.jpg", scale: 1 / 2 }));
 
         var empezarJuego = function() {
-            box.insert(new Q.UI.Button({ asset: "puerta/2.jpg", scale: 1/2 }));
-            setTimeout(function() { box.insert(new Q.UI.Button({ asset: 'puerta/3.jpg', scale: 1/2 })); }, 100);
-            setTimeout(function() { box.insert(new Q.UI.Button({ asset: 'puerta/4.jpg', scale: 1/2 })); }, 300);
-            setTimeout(function() { box.insert(new Q.UI.Button({ asset: 'puerta/5.jpg', scale: 1/2 })); }, 500);
-            setTimeout(function() { box.insert(new Q.UI.Button({ asset: 'puerta/6.jpg', scale: 1/2 })); }, 700);
-            setTimeout(function() { box.insert(new Q.UI.Button({ asset: 'puerta/7.jpg', scale: 1/2 })); }, 900);
-            setTimeout(function() { box.insert(new Q.UI.Button({ asset: 'puerta/8.jpg', scale: 1/2 })); }, 1100);
-            setTimeout(function() { box.insert(new Q.UI.Button({ asset: 'puerta/9.jpg', scale: 1/2 })); }, 1300);
-            setTimeout(function() { box.insert(new Q.UI.Button({ asset: 'puerta/10.jpg', scale: 1/2 })); }, 1500);
-            setTimeout(function() { box.insert(new Q.UI.Button({ asset: 'puerta/11.jpg', scale: 1/2 })); }, 1700);
-            setTimeout(function() { box.insert(new Q.UI.Button({ asset: 'puerta/12.jpg', scale: 1/2 })); }, 1900);
+            box.insert(new Q.UI.Button({ asset: "puerta/2.jpg", scale: 1 / 2 }));
+            setTimeout(function() { box.insert(new Q.UI.Button({ asset: 'puerta/3.jpg', scale: 1 / 2 })); }, 100);
+            setTimeout(function() { box.insert(new Q.UI.Button({ asset: 'puerta/4.jpg', scale: 1 / 2 })); }, 300);
+            setTimeout(function() { box.insert(new Q.UI.Button({ asset: 'puerta/5.jpg', scale: 1 / 2 })); }, 500);
+            setTimeout(function() { box.insert(new Q.UI.Button({ asset: 'puerta/6.jpg', scale: 1 / 2 })); }, 700);
+            setTimeout(function() { box.insert(new Q.UI.Button({ asset: 'puerta/7.jpg', scale: 1 / 2 })); }, 900);
+            setTimeout(function() { box.insert(new Q.UI.Button({ asset: 'puerta/8.jpg', scale: 1 / 2 })); }, 1100);
+            setTimeout(function() { box.insert(new Q.UI.Button({ asset: 'puerta/9.jpg', scale: 1 / 2 })); }, 1300);
+            setTimeout(function() { box.insert(new Q.UI.Button({ asset: 'puerta/10.jpg', scale: 1 / 2 })); }, 1500);
+            setTimeout(function() { box.insert(new Q.UI.Button({ asset: 'puerta/11.jpg', scale: 1 / 2 })); }, 1700);
+            setTimeout(function() { box.insert(new Q.UI.Button({ asset: 'puerta/12.jpg', scale: 1 / 2 })); }, 1900);
             setTimeout(function() { Q.stageScene("screenMain"); }, 3000);
         };
 
