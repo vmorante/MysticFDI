@@ -18,6 +18,7 @@ window.addEventListener("load", function() {
         back: { frames: [8, 9, 10, 11], rate: 1 / 5, loop: false }
     });
 
+
     Q.load(["fdi.png", "fletxaI.png", "fletxaD.png", "tick1.png", "puerta/1.jpg", "puerta/2.jpg", "puerta/3.jpg", "puerta/4.jpg", "puerta/5.jpg", "puerta/6.jpg", "puerta/7.jpg", "puerta/8.jpg", "puerta/9.jpg", "puerta/10.jpg", "puerta/11.jpg", "puerta/12.jpg", "personaje.png", "player.json", "coins.mp3", "coins.ogg", "mas.png", "menos.png"], function() {
         Q.loadTMX("level2.tmx", function() {
             Q.compileSheets("personaje.png", "player.json");
@@ -32,6 +33,7 @@ window.addEventListener("load", function() {
 
         stage.add("viewport").follow(player);
     });
+
 
     Q.scene("salirDelMapa", function(stage) {
         var botonSalir = stage.insert(new Q.UI.Button({
@@ -48,7 +50,6 @@ window.addEventListener("load", function() {
             Q.clearStages();
             Q.stageScene("screenMain");
         });
-         
     });
 
 
@@ -159,7 +160,6 @@ window.addEventListener("load", function() {
         });
 
         //c
-
         var labelC = stage.insert(new Q.UI.Text({ x: 250, y: 170, size: 17, label: "C: " + Q.state.p.c }));
 
         Q.state.on("change.gestion", this, function(c) {
@@ -167,7 +167,6 @@ window.addEventListener("load", function() {
         });
 
         //ensamblador
-
         var labelEnsamblador = stage.insert(new Q.UI.Text({ x: 250, y: 200, size: 17, label: "Ensamblador: " + Q.state.p.ensamblador }));
 
         Q.state.on("change.gestion", this, function(ensamblador) {
@@ -182,7 +181,6 @@ window.addEventListener("load", function() {
         });
 
         //fisica
-
         var labelFisica = stage.insert(new Q.UI.Text({ x: 250, y: 260, size: 17, label: "Física: " + Q.state.p.fisica }));
 
         Q.state.on("change.fisica", this, function(fisica) {
@@ -203,13 +201,10 @@ window.addEventListener("load", function() {
             labelEnergia.p.label = "Energia: " + energia;
         });
 
-
-
         botonAlquimia.on("click", function() {
             Q.audio.play("coins.mp3");
             Q.state.inc("coins", 1);
         });
-
 
         botonEdificios.on("click", function() {
             Q.clearStages();
@@ -235,7 +230,6 @@ window.addEventListener("load", function() {
             Q.clearStages();
             Q.stageScene("casa");
         });
-
     });
 
 
@@ -340,7 +334,6 @@ window.addEventListener("load", function() {
                 Q.state.inc("equipoInformatica", 1);
                 Q.state.inc("equipoActual", 1);
             }
-
         });
 
         menosInformatica.on("click", function() {
@@ -357,7 +350,6 @@ window.addEventListener("load", function() {
                 Q.state.inc("equipoComputadores", 1);
                 Q.state.inc("equipoActual", 1);
             }
-
         });
 
         menosComputadores.on("click", function() {
@@ -365,10 +357,9 @@ window.addEventListener("load", function() {
                 Q.state.dec("equipoComputadores", 1);
                 Q.state.dec("equipoActual", 1);
             }
-
         });
-
     });
+
 
     function comprobarExpedicion(tipoAlumno, equipoAlumno) {
         if (tipoAlumno <= equipoAlumno && Q.state.p.equipoActual >= Q.state.p.tamañoEquipo) {
@@ -441,7 +432,6 @@ window.addEventListener("load", function() {
             label: "Cafeteria"
         }));
 
-
         var botonAparcamiento = box.insert(new Q.UI.Button({
             x: -70,
             y: 90,
@@ -499,7 +489,6 @@ window.addEventListener("load", function() {
             }
         });
 
-
         if (Q.state.p.taquillas) {
             box.insert(new Q.UI.Button({ x: 50, y: -145, asset: "tick1.png" }));
         } else {
@@ -521,7 +510,6 @@ window.addEventListener("load", function() {
                 size: 20 
             }));
         }
-
 
         if (Q.state.p.cafeteria) {
             box.insert(new Q.UI.Button({ x: 50, y: 30, asset: "tick1.png" }));
@@ -566,6 +554,7 @@ window.addEventListener("load", function() {
             fill: "#CCCCCC",
             label: "C++"
         }));
+
         var labelCmasmas = box.insert(new Q.UI.Text({
             x: 70,
             y: -160,
@@ -632,6 +621,7 @@ window.addEventListener("load", function() {
             label: "x120",
             size: 20
         }));
+
         var botonFisica = box.insert(new Q.UI.Button({
             x: -70,
             y: 150,
@@ -919,6 +909,7 @@ window.addEventListener("load", function() {
                 Q.state.inc("alumnoSoftware", 1);
             }
         });
+
         computadores.on("click", function() {
             var alumnoC = new Q.AlumnoComputadores();
             conocimientos = comprobarConocimientos(Q.state.p.ensamblador, Q.state.p.c, alumnoC, "reclutar");
@@ -926,6 +917,7 @@ window.addEventListener("load", function() {
                 Q.state.inc("alumnoComputadores", 1);
             }
         });
+
         informatica.on("click", function() {
             var alumnoI = new Q.AlumnoInformatica();
             conocimientos = comprobarConocimientos(Q.state.p.cmasmas, Q.state.p.fisica, alumnoI, "reclutar");
@@ -950,6 +942,7 @@ window.addEventListener("load", function() {
         }
     });
 
+
     Q.Class.extend("AlumnoInformatica", {
         init: function() {
             this.vida = 3;
@@ -962,6 +955,7 @@ window.addEventListener("load", function() {
         }
     });
 
+
     Q.Class.extend("AlumnoComputadores", {
         init: function() {
             this.vida = 3;
@@ -973,6 +967,7 @@ window.addEventListener("load", function() {
             this.conocimiento2 = 2;
         }
     });
+
 
     Q.scene('casa', function(stage) {
 
@@ -1000,8 +995,6 @@ window.addEventListener("load", function() {
         Q.state.on("change.totalTrabajadores", this, function(totalTrabajadores) {
             labelTrabajadores.p.label = "Total trabajadores: " + totalTrabajadores;
         });
-
-
 
         var masCocinero = box.insert(new Q.UI.Button({ x: 20, y: -150, asset: "mas.png" }));
         box.insert(new Q.UI.Text({ x: 85, y: -160, label: "Cocinero", size: 11 }));
@@ -1034,7 +1027,6 @@ window.addEventListener("load", function() {
             Q.clearStages();
             Q.stageScene("screenMain");
         });
-
 
         masCocinero.on("click", function() {
             if (Q.state.p.cocina) {
@@ -1078,8 +1070,7 @@ window.addEventListener("load", function() {
                 Q.state.dec("camarero", 1);
                 Q.state.dec("trabajadoresActuales", 1);
             }
-
-        })
+        });
 
         masRecolector.on("click", function() {
 
@@ -1168,5 +1159,4 @@ window.addEventListener("load", function() {
             empezarJuego();
         });
     });
-
 });
