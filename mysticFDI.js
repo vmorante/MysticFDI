@@ -362,7 +362,7 @@ window.addEventListener("load", function() {
 
 
     function comprobarExpedicion(tipoAlumno, equipoAlumno) {
-        if (tipoAlumno <= equipoAlumno && Q.state.p.equipoActual >= Q.state.p.tamañoEquipo) {
+        if (tipoAlumno <= equipoAlumno || Q.state.p.equipoActual >= Q.state.p.tamañoEquipo) {
             Q.stageScene("dineroInsuficiente", 1, { escena: "expedicion", label: "No tienes alumnos suficientes" });
             return false;
         } else {
