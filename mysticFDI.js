@@ -671,7 +671,7 @@ window.addEventListener("load", function() {
             dinero = comprobarDinero(50, "aprender");
             if (dinero) {
                 Q.state.dec("coins", 50);
-                Q.state.inc("gestion", 1);
+                Q.state.inc("gestion", 1);//200w 333h
             }
         });
 
