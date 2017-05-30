@@ -29,6 +29,7 @@ window.addEventListener("load", function() {
 
     Q.scene("level1", function(stage) {
         Q.stageTMX("level2.tmx", stage);
+        Q.stageScene("salirDelMapa",1);
         var player = stage.insert(new Q.Player({ x: 90, y: 925.5, scale: 1 / 7 }));
         var profe = stage.insert(new Q.Profesor({ x: 90, y: 825.5 }));
 
@@ -87,12 +88,27 @@ window.addEventListener("load", function() {
 
             this.on("hit.sprite",function(collision) {
                 if(collision.obj.isA("Player")) {
-                    console.log("Has chocado");
                     Q.clearStages();
-                    Q.stageScene("screenMain");
+                    Q.stageScene("batalla");
                 }
             });
         }
+    });
+
+    //Esto
+    Q.scene('batalla',function(stage) {
+        var box = stage.insert(new Q.UI.Container({
+            x: Q.width/2, y: Q.height/2, fill: "rgba(0,0,0,0.5)"
+        }));
+      
+        var button = box.insert(new Q.UI.Button({ x: 0, y: 0, fill: "#CCCCCC",
+                                               label: "Simulación de batalla" }));        
+
+        button.on("click",function() {
+            Q.clearStages();
+            Q.stageScene('level1');
+        });
+        box.fit(20);
     });
 
 
@@ -324,7 +340,6 @@ window.addEventListener("load", function() {
 
         botonSalir.on("click", function() {
             Q.clearStages();
-            Q.stageScene("salirDelMapa",1);
             Q.stageScene("level1");
         });
 
