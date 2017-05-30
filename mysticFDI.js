@@ -30,6 +30,7 @@ window.addEventListener("load", function() {
     Q.scene("level1", function(stage) {
         Q.stageTMX("level2.tmx", stage);
         var player = stage.insert(new Q.Player({ x: 90, y: 925.5, scale: 1 / 7 }));
+        var profe = stage.insert(new Q.Profesor({ x: 90, y: 825.5 }));
 
         stage.add("viewport").follow(player);
     });
@@ -74,6 +75,22 @@ window.addEventListener("load", function() {
 
             Q.input.on("down", this, function() {
                 this.play("front");
+            });
+        }
+    });
+
+
+    Q.Sprite.extend("Profesor", {
+        init: function(p) {
+            this._super(p, {w: 12, h: 12,  gravity: 0 });
+            this.add('2d');
+
+            this.on("hit.sprite",function(collision) {
+                if(collision.obj.isA("Player")) {
+                    console.log("Has chocado");
+                    Q.clearStages();
+                    Q.stageScene("screenMain");
+                }
             });
         }
     });
@@ -1112,7 +1129,7 @@ window.addEventListener("load", function() {
                     }
 
                     if (Q.state.p.recolector > 0) {
-                        if (Q.state.p.energia >= Q.state.p.energia) {
+                        if (Q.state.p.energia >= Q.state.p.recolector) {
                             Q.state.dec("energia", Q.state.p.recolector);
                             Q.state.inc("coins", Q.state.p.recolector);
                         }
