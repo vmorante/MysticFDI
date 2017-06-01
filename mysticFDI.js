@@ -20,7 +20,7 @@ window.addEventListener("load", function() {
 
 
     Q.load(["fdi.png", "fletxaI.png", "fletxaD.png", "tick1.png", "puerta/1.jpg", "puerta/2.jpg", "puerta/3.jpg", "puerta/4.jpg", "puerta/5.jpg", "puerta/6.jpg", "puerta/7.jpg", "puerta/8.jpg", "puerta/9.jpg", "puerta/10.jpg", "puerta/11.jpg", "puerta/12.jpg", "titulo.png","personaje.png", "player.json", "coins.mp3", "coins.ogg", "mas.png", "menos.png"], function() {
-        Q.loadTMX("level2.tmx", function() {
+        Q.loadTMX("level.tmx", function() {
             Q.compileSheets("personaje.png", "player.json");
             Q.stageScene("startGame");
         });
@@ -28,7 +28,7 @@ window.addEventListener("load", function() {
 
 
     Q.scene("level1", function(stage) {
-        Q.stageTMX("level2.tmx", stage);
+        Q.stageTMX("level.tmx", stage);
         Q.stageScene("salirDelMapa",1);
         var player = stage.insert(new Q.Player({ x: 90, y: 925.5, scale: 1 / 7 }));
         var profe = stage.insert(new Q.Profesor({ x: 90, y: 825.5 }));
@@ -88,27 +88,15 @@ window.addEventListener("load", function() {
 
             this.on("hit.sprite",function(collision) {
                 if(collision.obj.isA("Player")) {
-                    Q.clearStages();
-                    Q.stageScene("batalla");
+                    /*Q.clearStages();
+                    Q.stageScene("batalla");*/
                 }
             });
         }
     });
 
-    //Esto
-    Q.scene('batalla',function(stage) {
-        var box = stage.insert(new Q.UI.Container({
-            x: Q.width/2, y: Q.height/2, fill: "rgba(0,0,0,0.5)"
-        }));
-      
-        var button = box.insert(new Q.UI.Button({ x: 0, y: 0, fill: "#CCCCCC",
-                                               label: "Simulación de batalla" }));        
 
-        button.on("click",function() {
-            Q.clearStages();
-            Q.stageScene('level1');
-        });
-        box.fit(20);
+    Q.scene('batalla',function(stage) {
     });
 
 
@@ -771,7 +759,7 @@ window.addEventListener("load", function() {
             var alumnoS = new Q.AlumnoSoftware();
             box.insert(new Q.UI.Text({ x: 45, y: posicionY, size: 12, label: "Vida: " + alumnoS.vida }));
             box.insert(new Q.UI.Text({ x: 45, y: posicionY - 15, size: 12, label: "Poder: " + alumnoS.poder }));
-            var alumnoSN = box.insert(new Q.UI.Text({ x: 115, y: posicionY, size: 12, label: "N: " + Q.state.p.alumnoSoftware }));
+            var labelSN = box.insert(new Q.UI.Text({ x: 115, y: posicionY, size: 12, label: "N: " + Q.state.p.alumnoSoftware }));
             box.insert(new Q.UI.Text({ x: 115, y: posicionY - 15, size: 12, label: "Velocidad: " + alumnoS.velocidad }));
 
             Q.state.on("change.alumnoSoftware", this, function(alumnoSoftware) {
