@@ -30,9 +30,17 @@ window.addEventListener("load", function() {
     Q.scene("level1", function(stage) {
         Q.stageTMX("level.tmx", stage);
         Q.stageScene("salirDelMapa",1);
-        var player = stage.insert(new Q.Player({ x: 90, y: 925.5, scale: 1 / 7 }));
-        var profe = stage.insert(new Q.Profesor({ x: 90, y: 825.5 }));
+        var player = stage.insert(new Q.Player({ x: Q.state.get('xPlayer'), y: Q.state.get('yPlayer'), scale: 1 / 7 }));
 
+        var n = ((Math.random() * 6 ) + 1).toFixed(0);
+        var x = 0, y = 0, i = 0;
+
+        for(i; i < n; i++){
+            x = (Math.random() * (570 - 90) + 90).toFixed(1);
+            y = (Math.random() * (860 - 92) + 92).toFixed(1); 
+            stage.insert(new Q.Profesor({ x: parseInt(x), y: parseInt(y) }));
+        }
+        
         stage.add("viewport").follow(player);
     });
 
@@ -88,8 +96,9 @@ window.addEventListener("load", function() {
 
             this.on("hit.sprite",function(collision) {
                 if(collision.obj.isA("Player")) {
-                    /*Q.clearStages();
-                    Q.stageScene("batalla");*/
+                    Q.state.set({ xPlayer: collision.obj.p.x, yPlayer: collision.obj.p.y });
+                    Q.clearStages();
+                    Q.stageScene("batalla");
                 }
             });
         }
@@ -97,6 +106,18 @@ window.addEventListener("load", function() {
 
 
     Q.scene('batalla',function(stage) {
+        var box = stage.insert(new Q.UI.Container({
+            x: Q.width/2, y: Q.height/2, fill: "rgba(0,0,0,0.5)"
+        }));
+      
+        var button = box.insert(new Q.UI.Button({ x: 0, y: 0, fill: "#CCCCCC",
+                                               label: "Batalla" }));        
+
+        button.on("click",function() {
+            Q.clearStages();
+            Q.stageScene('level1');
+        });
+        box.fit(20);
     });
 
 
@@ -1150,7 +1171,7 @@ window.addEventListener("load", function() {
             y: Q.height / 2
         }));
 
-        Q.state.reset({ coins: 200, taquillas: false, cmasmas: 0, gestion: 0, c: 0, ensamblador: 0, matematicas: 0, fisica: 0, alumnoSoftware: 1, alumnoComputadores: 0, alumnoInformatica: 1, tamañoEquipo: 2, equipoActual: 0, equipoSoftware: 0, equipoInformatica: 0, equipoComputadores: 0, cocinero: 0, camarero: 0, recolector: 0, cocina: false, cafeteria: false, totalTrabajadores: 0, trabajadoresActuales: 0, comida: 0, energia: 0 });
+        Q.state.reset({ coins: 200, taquillas: false, cmasmas: 0, gestion: 0, c: 0, ensamblador: 0, matematicas: 0, fisica: 0, alumnoSoftware: 1, alumnoComputadores: 0, alumnoInformatica: 1, tamañoEquipo: 2, equipoActual: 0, equipoSoftware: 0, equipoInformatica: 0, equipoComputadores: 0, cocinero: 0, camarero: 0, recolector: 0, cocina: false, cafeteria: false, totalTrabajadores: 0, trabajadoresActuales: 0, comida: 0, energia: 0, xPlayer: 90, yPlayer: 925.5 });
 
         var button = box.insert(new Q.UI.Button({ asset: "puerta/1.jpg", scale: 1 / 2 }));
         var titulo = box.insert(new Q.UI.Button({ x: 0, y: -10, asset: "titulo.png" }));
