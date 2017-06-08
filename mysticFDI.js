@@ -67,6 +67,7 @@ window.addEventListener("load", function() {
         init: function(p) {
             this._super(p, { sheet: "front", sprite: "player_anim", gravity: 0 });
             this.add('2d, stepControls, animation');
+            this.t =  0;
         },
 
         step: function(dt) {
