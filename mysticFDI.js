@@ -12,10 +12,10 @@ window.addEventListener("load", function() {
 
 
     Q.animations('player_anim', {
-        front: { frames: [0, 1, 2, 3], rate: 1 / 5, loop: false },
-        side_right: { frames: [4, 5, 6, 7], rate: 1 / 5, loop: false, flip: false },
-        side_left: { frames: [4, 5, 6, 7], rate: 1 / 5, loop: false, flip: "x" },
-        back: { frames: [8, 9, 10, 11], rate: 1 / 5, loop: false }
+        front: { frames: [0, 1, 2, 3], rate: 1 / 2.5, loop: false },
+        side_right: { frames: [4, 5, 6, 7], rate: 1 / 2.5, loop: false, flip: false },
+        side_left: { frames: [4, 5, 6, 7], rate: 1 / 2.5, loop: false, flip: "x" },
+        back: { frames: [8, 9, 10, 11], rate: 1 / 2.5, loop: false }
     });
 
 
@@ -30,6 +30,7 @@ window.addEventListener("load", function() {
     Q.scene("level1", function(stage) {
         Q.stageTMX("level.tmx", stage);
         Q.stageScene("salirDelMapa",1);
+        Q.stageScene("energia",2);
         var player = stage.insert(new Q.Player({ x: Q.state.get('xPlayer'), y: Q.state.get('yPlayer'), scale: 1 / 7 }));
 
         var n = ((Math.random() * 6 ) + 1).toFixed(0);
@@ -42,6 +43,18 @@ window.addEventListener("load", function() {
         }
         
         stage.add("viewport").follow(player);
+    });
+
+
+    Q.scene("energia", function(stage) {
+        var label = stage.insert(new Q.UI.Text({ x: Q.width/2, y: 15, size: 12, color: "white", label: "Energía: " + Q.state.get('energia') }));
+        Q.state.on("change.energia", this, function( energia ) {
+            if(energia === 0){
+                Q.clearStages();
+                Q.stageScene("screenMain");
+            }
+            label.p.label = "Energía: " + energia;
+        }); 
     });
 
 
@@ -349,8 +362,13 @@ window.addEventListener("load", function() {
         });
 
         botonSalir.on("click", function() {
-            Q.clearStages();
-            Q.stageScene("level1");
+            if(Q.state.get('energia') > 0){
+                Q.clearStages();
+                Q.stageScene("level1");
+            }
+            else{
+                Q.stageScene("materialInsuficiente", 1, { escena: "expedicion", label: "No tienes energía suficiente" });
+            }
         });
 
         masSoftware.on("click", function() {
@@ -405,7 +423,7 @@ window.addEventListener("load", function() {
 
     function comprobarExpedicion(tipoAlumno, equipoAlumno) {
         if (tipoAlumno <= equipoAlumno || Q.state.p.equipoActual >= Q.state.p.tamañoEquipo) {
-            Q.stageScene("dineroInsuficiente", 1, { escena: "expedicion", label: "No tienes alumnos suficientes" });
+            Q.stageScene("materialInsuficiente", 1, { escena: "expedicion", label: "No tienes alumnos suficientes" });
             return false;
         } else {
             return true;
@@ -839,7 +857,7 @@ window.addEventListener("load", function() {
 
     function comprobarDinero(precio, escena) {
         if (precio > Q.state.p.coins) {
-            Q.stageScene("dineroInsuficiente", 1, { escena: escena, label: "No tienes dinero suficiente" });
+            Q.stageScene("materialInsuficiente", 1, { escena: escena, label: "No tienes dinero suficiente" });
             return false;
         } else
             return true;
@@ -848,14 +866,14 @@ window.addEventListener("load", function() {
 
     function comprobarConocimientos(conocimiento1, conocimiento2, tipoAlumno, escena) {
         if (tipoAlumno.conocimiento1 > conocimiento1 || tipoAlumno.conocimiento2 > conocimiento2) {
-            Q.stageScene("dineroInsuficiente", 1, { escena: escena, label: "No tienes conocimientos suficientes" });
+            Q.stageScene("materialInsuficiente", 1, { escena: escena, label: "No tienes conocimientos suficientes" });
             return false;
         } else
             return true;
     }
 
 
-    Q.scene('dineroInsuficiente', function(stage) {
+    Q.scene('materialInsuficiente', function(stage) {
 
         var box = stage.insert(new Q.UI.Container({
             x: Q.width / 2,
@@ -1077,10 +1095,10 @@ window.addEventListener("load", function() {
                     Q.state.inc("cocinero", 1);
                     Q.state.inc("trabajadoresActuales", 1);
                 } else {
-                    Q.stageScene("dineroInsuficiente", 1, { escena: "casa", label: "No tiene trabajadores suficientes" });
+                    Q.stageScene("materialInsuficiente", 1, { escena: "casa", label: "No tiene trabajadores suficientes" });
                 }
             } else {
-                Q.stageScene("dineroInsuficiente", 1, { escena: "casa", label: "Compre la cocina" });
+                Q.stageScene("materialInsuficiente", 1, { escena: "casa", label: "Compre la cocina" });
             }
         });
 
@@ -1099,10 +1117,10 @@ window.addEventListener("load", function() {
                     Q.state.inc("camarero", 1);
                     Q.state.inc("trabajadoresActuales", 1);
                 } else {
-                    Q.stageScene("dineroInsuficiente", 1, { escena: "casa", label: "No tiene trabajadores suficientes" });
+                    Q.stageScene("materialInsuficiente", 1, { escena: "casa", label: "No tiene trabajadores suficientes" });
                 }
             } else {
-                Q.stageScene("dineroInsuficiente", 1, { escena: "casa", label: "Compre la cafeteria" });
+                Q.stageScene("materialInsuficiente", 1, { escena: "casa", label: "Compre la cafeteria" });
             }
         });
 
@@ -1120,7 +1138,7 @@ window.addEventListener("load", function() {
                 Q.state.inc("recolector", 1);
                 Q.state.inc("trabajadoresActuales", 1);
             } else {
-                Q.stageScene("dineroInsuficiente", 1, { escena: "casa", label: "No tiene trabajadores suficientes" });
+                Q.stageScene("materialInsuficiente", 1, { escena: "casa", label: "No tiene trabajadores suficientes" });
             }
         });
 
@@ -1172,7 +1190,7 @@ window.addEventListener("load", function() {
             y: Q.height / 2
         }));
 
-        Q.state.reset({ coins: 200, taquillas: false, cmasmas: 0, gestion: 0, c: 0, ensamblador: 0, matematicas: 0, fisica: 0, alumnoSoftware: 1, alumnoComputadores: 0, alumnoInformatica: 1, tamañoEquipo: 2, equipoActual: 0, equipoSoftware: 0, equipoInformatica: 0, equipoComputadores: 0, cocinero: 0, camarero: 0, recolector: 0, cocina: false, cafeteria: false, totalTrabajadores: 0, trabajadoresActuales: 0, comida: 0, energia: 0, xPlayer: 90, yPlayer: 925.5 });
+        Q.state.reset({ coins: 200, taquillas: false, cmasmas: 0, gestion: 0, c: 0, ensamblador: 0, matematicas: 0, fisica: 0, alumnoSoftware: 1, alumnoComputadores: 0, alumnoInformatica: 1, tamañoEquipo: 2, equipoActual: 0, equipoSoftware: 0, equipoInformatica: 0, equipoComputadores: 0, cocinero: 0, camarero: 0, recolector: 0, cocina: false, cafeteria: false, totalTrabajadores: 0, trabajadoresActuales: 0, comida: 0, energia: 50, xPlayer: 90, yPlayer: 925.5 });
 
         var button = box.insert(new Q.UI.Button({ asset: "puerta/1.jpg", scale: 1 / 2 }));
         var titulo = box.insert(new Q.UI.Button({ x: 0, y: -10, asset: "titulo.png" }));
