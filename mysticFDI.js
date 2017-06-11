@@ -19,7 +19,7 @@ window.addEventListener("load", function() {
     });
 
 
-    Q.load(["fdi.png", "fletxaI.png", "fletxaD.png", "tick1.png", "puerta/1.jpg", "puerta/2.jpg", "puerta/3.jpg", "puerta/4.jpg", "puerta/5.jpg", "puerta/6.jpg", "puerta/7.jpg", "puerta/8.jpg", "puerta/9.jpg", "puerta/10.jpg", "puerta/11.jpg", "puerta/12.jpg", "titulo.png", "personaje.png", "player.json", "coins.mp3", "coins.ogg", "mas.png", "menos.png", "quiz.json"], function() {
+    Q.load(["fdi.png", "fletxaI.png", "fletxaD.png", "tick1.png", "puerta/1.jpg", "puerta/2.jpg", "puerta/3.jpg", "puerta/4.jpg", "puerta/5.jpg", "puerta/6.jpg", "puerta/7.jpg", "puerta/8.jpg", "puerta/9.jpg", "puerta/10.jpg", "puerta/11.jpg", "puerta/12.jpg", "titulo.png", "personaje.png", "player.json", "coins.mp3", "coins.ogg", "mas.png", "menos.png", "quiz.json", "profesor1.jpg", "profesor2.jpg"], function() {
         Q.loadTMX("level.tmx", function() {
             Q.compileSheets("personaje.png", "player.json");
             Q.stageScene("startGame");
@@ -33,7 +33,7 @@ window.addEventListener("load", function() {
         Q.stageScene("energia", 2);
         var player = stage.insert(new Q.Player({ x: Q.state.get('xPlayer'), y: Q.state.get('yPlayer'), scale: 1 / 7 }));
 
-        var n = ((Math.random() * 6) + 1).toFixed(0);
+        var n = ((Math.random() * 10) + 5).toFixed(0);
         var x = 0,
             y = 0,
             i = 0;
@@ -41,7 +41,13 @@ window.addEventListener("load", function() {
         for (i; i < n; i++) {
             x = (Math.random() * (570 - 90) + 90).toFixed(1);
             y = (Math.random() * (860 - 92) + 92).toFixed(1);
-            stage.insert(new Q.Profesor({ x: parseInt(x), y: parseInt(y) }));
+
+            nProfesor = Math.floor(Math.random() * (3 - 1) + 1);
+            if (nProfesor === 1)
+                stage.insert(new Q.Profesor1({ x: parseInt(x), y: parseInt(y) }));
+            else
+                stage.insert(new Q.Profesor2({ x: parseInt(x), y: parseInt(y) }));
+
         }
 
         stage.add("viewport").follow(player);
@@ -103,25 +109,64 @@ window.addEventListener("load", function() {
             });
         }
     });
-
-
-    Q.Sprite.extend("Profesor", {
+    Q.Sprite.extend("Profesor1", {
         init: function(p) {
-            this._super(p, { w: 12, h: 12, gravity: 0 });
-            this.add('2d');
+            this._super(p, {
+                foto: "profesor1.jpg",
+                vida: 10,
+                poder: 4,
+                velocidad: 3,
+                scale: 1 / 7
+            });
 
-            this.on("hit.sprite", function(collision) {
+            this.add('2d,aiBounce,Profesor');
+
+
+        }
+
+    });
+
+    Q.Sprite.extend("Profesor2", {
+        init: function(p) {
+            this._super(p, {
+                foto: "profesor2.jpg",
+                vida: 13,
+                poder: 2,
+                velocidad: 3.5,
+                scale: 1 / 7
+            });
+
+            this.add('2d,aiBounce,Profesor');
+
+
+        }
+
+    });
+
+    Q.component("Profesor", {
+
+        added: function() {
+
+            this.entity.p.w = 12
+            this.entity.p.h = 12
+            this.entity.p.gravity = 0
+
+            this.entity.on("hit.sprite", function(collision) {
                 if (collision.obj.isA("Player")) {
+
                     Q.state.set({ xPlayer: collision.obj.p.x, yPlayer: collision.obj.p.y });
                     Q.clearStages();
-                    Q.stageScene("batalla");
+                    Q.stageScene("batalla", 1, { foto: this.p.foto });
                 }
             });
         }
+
     });
 
 
     Q.scene('batalla', function(stage) {
+
+        stage.insert(new Q.Repeater({ asset: stage.options.foto }));
         var box = stage.insert(new Q.UI.Container({
             x: Q.width / 2,
             y: Q.height / 2,
