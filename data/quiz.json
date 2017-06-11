@@ -1,0 +1,54 @@
+{
+    "lista": [{
+        "id": 1,
+        "pregunta": "pregunta1",
+        "correcta": 2,
+        "respuestas": {
+            "respuesta1": {
+                "id": 1,
+                "respuesta": "respuesta1"
+
+            },
+            "respuesta2": {
+                "id": 2,
+                "respuesta": "respuesta2"
+
+
+            },
+
+            "respuesta3": {
+                "id": 3,
+                "respuesta": "respuesta3"
+
+
+            }
+        }
+
+
+    }, {
+        "id": 2,
+        "pregunta": "pregunta2",
+        "correcta": 2,
+        "respuestas": {
+            "respuesta1": {
+                "id": 1,
+                "respuesta": "respuesta1"
+
+            },
+            "respuesta2": {
+                "id": 2,
+                "respuesta": "respuesta2"
+
+
+            },
+
+            "respuesta3": {
+                "id": 3,
+                "respuesta": "respuesta3"
+
+
+            }
+        }
+
+    }]
+}

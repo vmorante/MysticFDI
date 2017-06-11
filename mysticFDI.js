@@ -19,7 +19,7 @@ window.addEventListener("load", function() {
     });
 
 
-    Q.load(["fdi.png", "fletxaI.png", "fletxaD.png", "tick1.png", "puerta/1.jpg", "puerta/2.jpg", "puerta/3.jpg", "puerta/4.jpg", "puerta/5.jpg", "puerta/6.jpg", "puerta/7.jpg", "puerta/8.jpg", "puerta/9.jpg", "puerta/10.jpg", "puerta/11.jpg", "puerta/12.jpg", "titulo.png","personaje.png", "player.json", "coins.mp3", "coins.ogg", "mas.png", "menos.png"], function() {
+    Q.load(["fdi.png", "fletxaI.png", "fletxaD.png", "tick1.png", "puerta/1.jpg", "puerta/2.jpg", "puerta/3.jpg", "puerta/4.jpg", "puerta/5.jpg", "puerta/6.jpg", "puerta/7.jpg", "puerta/8.jpg", "puerta/9.jpg", "puerta/10.jpg", "puerta/11.jpg", "puerta/12.jpg", "titulo.png", "personaje.png", "player.json", "coins.mp3", "coins.ogg", "mas.png", "menos.png", "quiz.json"], function() {
         Q.loadTMX("level.tmx", function() {
             Q.compileSheets("personaje.png", "player.json");
             Q.stageScene("startGame");
@@ -29,32 +29,34 @@ window.addEventListener("load", function() {
 
     Q.scene("level1", function(stage) {
         Q.stageTMX("level.tmx", stage);
-        Q.stageScene("salirDelMapa",1);
-        Q.stageScene("energia",2);
+        Q.stageScene("salirDelMapa", 1);
+        Q.stageScene("energia", 2);
         var player = stage.insert(new Q.Player({ x: Q.state.get('xPlayer'), y: Q.state.get('yPlayer'), scale: 1 / 7 }));
 
-        var n = ((Math.random() * 6 ) + 1).toFixed(0);
-        var x = 0, y = 0, i = 0;
+        var n = ((Math.random() * 6) + 1).toFixed(0);
+        var x = 0,
+            y = 0,
+            i = 0;
 
-        for(i; i < n; i++){
+        for (i; i < n; i++) {
             x = (Math.random() * (570 - 90) + 90).toFixed(1);
-            y = (Math.random() * (860 - 92) + 92).toFixed(1); 
+            y = (Math.random() * (860 - 92) + 92).toFixed(1);
             stage.insert(new Q.Profesor({ x: parseInt(x), y: parseInt(y) }));
         }
-        
+
         stage.add("viewport").follow(player);
     });
 
 
     Q.scene("energia", function(stage) {
-        var label = stage.insert(new Q.UI.Text({ x: Q.width/2, y: 15, size: 12, color: "white", label: "Energía: " + Q.state.get('energia') }));
-        Q.state.on("change.energia", this, function( energia ) {
-            if(energia === 0){
+        var label = stage.insert(new Q.UI.Text({ x: Q.width / 2, y: 15, size: 12, color: "white", label: "Energía: " + Q.state.get('energia') }));
+        Q.state.on("change.energia", this, function(energia) {
+            if (energia === 0) {
                 Q.clearStages();
                 Q.stageScene("screenMain");
             }
             label.p.label = "Energía: " + energia;
-        }); 
+        });
     });
 
 
@@ -65,7 +67,7 @@ window.addEventListener("load", function() {
             h: 20,
             w: 85,
             fill: "#CCCCCC",
-            font: {size: 50},
+            font: { size: 50 },
             label: "Salir del mapa"
         }));
 
@@ -80,7 +82,7 @@ window.addEventListener("load", function() {
         init: function(p) {
             this._super(p, { sheet: "front", sprite: "player_anim", gravity: 0 });
             this.add('2d, stepControls, animation');
-            this.t =  0;
+            this.t = 0;
         },
 
         step: function(dt) {
@@ -105,11 +107,11 @@ window.addEventListener("load", function() {
 
     Q.Sprite.extend("Profesor", {
         init: function(p) {
-            this._super(p, {w: 12, h: 12,  gravity: 0 });
+            this._super(p, { w: 12, h: 12, gravity: 0 });
             this.add('2d');
 
-            this.on("hit.sprite",function(collision) {
-                if(collision.obj.isA("Player")) {
+            this.on("hit.sprite", function(collision) {
+                if (collision.obj.isA("Player")) {
                     Q.state.set({ xPlayer: collision.obj.p.x, yPlayer: collision.obj.p.y });
                     Q.clearStages();
                     Q.stageScene("batalla");
@@ -119,17 +121,34 @@ window.addEventListener("load", function() {
     });
 
 
-    Q.scene('batalla',function(stage) {
+    Q.scene('batalla', function(stage) {
         var box = stage.insert(new Q.UI.Container({
-            x: Q.width/2, y: Q.height/2, fill: "rgba(0,0,0,0.5)"
+            x: Q.width / 2,
+            y: Q.height / 2,
+            fill: "rgba(0,0,0,0.5)"
         }));
-      
-        var button = box.insert(new Q.UI.Button({ x: 0, y: 0, fill: "#CCCCCC",
-                                               label: "Batalla" }));        
 
-        button.on("click",function() {
+        var button = box.insert(new Q.UI.Button({
+            x: 0,
+            y: 0,
+            fill: "#CCCCCC",
+            label: "Batalla"
+        }));
+        var quiz = box.insert(new Q.UI.Button({
+            x: 0,
+            y: 60,
+            fill: "#CCCCCC",
+            label: "Quiz"
+        }));
+
+        button.on("click", function() {
             Q.clearStages();
             Q.stageScene('level1');
+        });
+
+        quiz.on("click", function() {
+            Q.clearStages();
+            Q.stageScene('quiz');
         });
         box.fit(20);
     });
@@ -264,7 +283,9 @@ window.addEventListener("load", function() {
 
         botonEdificios.on("click", function() {
             Q.clearStages();
+
             Q.stageScene("edificios");
+
         });
 
         botonAprender.on("click", function() {
@@ -362,11 +383,10 @@ window.addEventListener("load", function() {
         });
 
         botonSalir.on("click", function() {
-            if(Q.state.get('energia') > 0){
+            if (Q.state.get('energia') > 0) {
                 Q.clearStages();
                 Q.stageScene("level1");
-            }
-            else{
+            } else {
                 Q.stageScene("materialInsuficiente", 1, { escena: "expedicion", label: "No tienes energía suficiente" });
             }
         });
@@ -563,22 +583,22 @@ window.addEventListener("load", function() {
         if (Q.state.p.cocina) {
             box.insert(new Q.UI.Button({ x: 50, y: -30, asset: "tick1.png" }));
         } else {
-            var labelCocina = box.insert(new Q.UI.Text({ 
-                x: 50, 
-                y: -30, 
-                label: "x50", 
-                size: 20 
+            var labelCocina = box.insert(new Q.UI.Text({
+                x: 50,
+                y: -30,
+                label: "x50",
+                size: 20
             }));
         }
 
         if (Q.state.p.cafeteria) {
             box.insert(new Q.UI.Button({ x: 50, y: 30, asset: "tick1.png" }));
         } else {
-            var labelCafeteria = box.insert(new Q.UI.Text({ 
-                x: 50, 
-                y: 30, 
-                label: "x50", 
-                size: 20 
+            var labelCafeteria = box.insert(new Q.UI.Text({
+                x: 50,
+                y: 30,
+                label: "x50",
+                size: 20
             }));
         }
     });
@@ -714,7 +734,7 @@ window.addEventListener("load", function() {
             dinero = comprobarDinero(50, "aprender");
             if (dinero) {
                 Q.state.dec("coins", 50);
-                Q.state.inc("gestion", 1);//200w 333h
+                Q.state.inc("gestion", 1); //200w 333h
             }
         });
 
@@ -1163,7 +1183,7 @@ window.addEventListener("load", function() {
                     if (Q.state.p.cocinero > 0) {
                         Q.state.inc("comida", Q.state.p.cocinero);
                     }
-                    
+
                     if (Q.state.p.camarero > 0) {
                         if (Q.state.p.comida >= 2 * Q.state.p.camarero) {
                             Q.state.dec("comida", Q.state.p.camarero * 2);
@@ -1181,7 +1201,116 @@ window.addEventListener("load", function() {
                 contador_s++;
             }, 1000);
     }
+    Q.scene('quiz', function(stage) {
+        var textPregunta, respuesta1, respuesta2, respuesta3, correcta;
+        $.getJSON("data/quiz.json", function(datos) {
 
+            id = Math.floor(Math.random() * (3 - 1) + 1);
+
+
+            $.each(datos["lista"], function(idx, pregunta) {
+                if (pregunta.id === id) {
+                    textPregunta = pregunta.pregunta;
+                    respuesta1 = pregunta.respuestas.respuesta1.respuesta;
+                    respuesta2 = pregunta.respuestas.respuesta2.respuesta;
+                    respuesta3 = pregunta.respuestas.respuesta3.respuesta;
+                    correcta = pregunta.correcta;
+
+                    var box = stage.insert(new Q.UI.Container({
+                        x: Q.width / 2,
+                        y: Q.height / 2
+
+                    }));
+                    var labelPregunta = box.insert(new Q.UI.Text({
+                        x: 0,
+                        y: -30,
+                        label: textPregunta,
+                        size: 20,
+                        color: "white"
+                    }));
+
+                    var botonRespuesta1 = box.insert(new Q.UI.Button({
+                        x: 0,
+                        y: 30,
+                        w: 150,
+                        fill: "#CCCCCC",
+                        label: respuesta1
+                    }));
+
+                    var botonRespuesta2 = box.insert(new Q.UI.Button({
+                        x: 0,
+                        y: 90,
+                        w: 150,
+                        fill: "#CCCCCC",
+                        label: respuesta2
+                    }));
+
+
+
+                    var botonRespuesta3 = box.insert(new Q.UI.Button({
+                        x: 0,
+                        y: 150,
+                        w: 150,
+                        fill: "#CCCCCC",
+                        label: respuesta3
+                    }));
+
+                    botonRespuesta1.on("click", function() {
+                        Q.stageScene("comprobarQuiz", 1, { respuesta: 1, correcta: correcta });
+
+                    });
+                    botonRespuesta2.on("click", function() {
+                        Q.stageScene("comprobarQuiz", 1, { respuesta: 2, correcta: correcta });
+
+                    });
+                    botonRespuesta3.on("click", function() {
+                        Q.stageScene("comprobarQuiz", 1, { respuesta: 3, correcta: correcta });
+
+                    });
+                }
+            });
+        });
+
+
+
+
+    })
+
+    Q.scene('comprobarQuiz', function(stage) {
+        var mensaje
+        if (stage.options.correcta == stage.options.respuesta)
+            mensaje = "Has acertado";
+        else
+            mensaje = "Has fallado"
+
+        var box = stage.insert(new Q.UI.Container({
+            x: Q.width / 2,
+            y: Q.height / 2,
+            fill: "#F0F8FF"
+        }));
+
+        var button = box.insert(new Q.UI.Button({
+            x: 0,
+            y: 0,
+            size: 15,
+            fill: "#CCCCCC",
+            label: "Aceptar"
+        }));
+
+        var label = box.insert(new Q.UI.Text({
+            x: 10,
+            size: 15,
+            y: -10 - button.p.h,
+            label: mensaje
+        }));
+
+        button.on("click", function() {
+            Q.clearStages();
+            Q.stageScene("quiz");
+        });
+
+        box.fit(20);
+    });
 
     Q.scene('startGame', function(stage) {
 
@@ -1194,8 +1323,8 @@ window.addEventListener("load", function() {
 
         var button = box.insert(new Q.UI.Button({ asset: "puerta/1.jpg", scale: 1 / 2 }));
         var titulo = box.insert(new Q.UI.Button({ x: 0, y: -10, asset: "titulo.png" }));
-        var label1 = box.insert(new Q.UI.Button({ x:0, y: 190, h:80, fill: "#CCCCCC",label: "Haz clic o presiona enter" }));
-        var label2 = box.insert(new Q.UI.Button({ x:0, y: label1.p.y + 20, label: "para entrar en la FDI" }));
+        var label1 = box.insert(new Q.UI.Button({ x: 0, y: 190, h: 80, fill: "#CCCCCC", label: "Haz clic o presiona enter" }));
+        var label2 = box.insert(new Q.UI.Button({ x: 0, y: label1.p.y + 20, label: "para entrar en la FDI" }));
 
         var empezarJuego = function() {
             box.insert(new Q.UI.Button({ asset: "puerta/2.jpg", scale: 1 / 2 }));
