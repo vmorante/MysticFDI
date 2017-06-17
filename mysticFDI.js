@@ -3,8 +3,8 @@
 
 
 window.addEventListener("load", function() {
-    const primerNivel = { xPlayer: 90, yPlayer: 925.5 };
-    const segundoNivel = { xPlayer: 90, yPlayer: 925.5 };
+    const primerNivelInicio = { xPlayer: 90, yPlayer: 925.5 };
+    const segundoNivelInicio = { xPlayer: 90, yPlayer: 925.5 };                                              
 
     var Q = window.Q = Quintus({ audioSupported: ['mp3', 'ogg'] })
         .include("Sprites, Scenes, Input, Touch, UI, TMX, Anim, 2D, Audio")
@@ -50,6 +50,7 @@ window.addEventListener("load", function() {
                 stage.insert(new Q.Profesor1({ x: parseInt(x), y: parseInt(y) }));
             else
                 stage.insert(new Q.Profesor2({ x: parseInt(x), y: parseInt(y) }));
+
         }
 
         stage.add("viewport").follow(player);
@@ -58,10 +59,9 @@ window.addEventListener("load", function() {
 
     Q.scene("energia", function(stage) {
         var label = stage.insert(new Q.UI.Text({ x: Q.width / 2, y: 15, size: 12, color: "white", label: "Energía: " + Q.state.get('energia') }));
-        
         Q.state.on("change.energia", this, function(energia) {
             if (energia === 0) {
-                Q.state.set({ xPlayer:primerNivel.xPlayer, yPlayer: primerNivel.yPlayer, energia:50 });
+                Q.state.set({ xPlayer:primerNivelInicio.xPlayer, yPlayer: primerNivelInicio.yPlayer, energia:50 });                                                                                    
                 Q.clearStages();
                 Q.stageScene("screenMain");
             }
@@ -82,7 +82,7 @@ window.addEventListener("load", function() {
         }));
 
         botonSalir.on("click", function() {
-            Q.state.set({ xPlayer:primerNivel.xPlayer, yPlayer: primerNivel.yPlayer });
+         Q.state.set({ xPlayer:primerNivelInicio.xPlayer, yPlayer: primerNivelInicio.yPlayer });                                                               
             Q.clearStages();
             Q.stageScene("screenMain");
         });
@@ -114,8 +114,6 @@ window.addEventListener("load", function() {
             });
         }
     });
-
-
     Q.Sprite.extend("Profesor1", {
         init: function(p) {
             this._super(p, {
@@ -127,9 +125,11 @@ window.addEventListener("load", function() {
             });
 
             this.add('2d,aiBounce,Profesor');
-        }
-    });
 
+
+        }
+
+    });
 
     Q.Sprite.extend("Profesor2", {
         init: function(p) {
@@ -142,9 +142,11 @@ window.addEventListener("load", function() {
             });
 
             this.add('2d,aiBounce,Profesor');
-        }
-    });
 
+
+        }
+
+    });
 
     Q.component("Profesor", {
 
@@ -156,13 +158,16 @@ window.addEventListener("load", function() {
 
             this.entity.on("hit.sprite", function(collision) {
                 if (collision.obj.isA("Player")) {
+                    console.log(this.p.vida);
+                    console.log(this);
+                    Q.state.set({ xPlayer: collision.obj.p.x, yPlayer: collision.obj.p.y, vidaRestanteProfesor: this.p.vida, vidaProfesor: this.p.vida });
 
-                    Q.state.set({ xPlayer: collision.obj.p.x, yPlayer: collision.obj.p.y });
                     Q.clearStages();
                     Q.stageScene("batalla", 1, { foto: this.p.foto });
                 }
             });
         }
+
     });
 
 
@@ -181,7 +186,6 @@ window.addEventListener("load", function() {
             fill: "#CCCCCC",
             label: "Batalla"
         }));
-
         var quiz = box.insert(new Q.UI.Button({
             x: 0,
             y: 60,
@@ -432,6 +436,8 @@ window.addEventListener("load", function() {
 
         botonSalir.on("click", function() {
             if (Q.state.get('energia') > 0) {
+
+                Q.state.set({ "vidaRestantePropia": Q.state.p.vidaPropia });
                 Q.clearStages();
                 Q.stageScene("level1");
             } else {
@@ -442,16 +448,20 @@ window.addEventListener("load", function() {
         masSoftware.on("click", function() {
             posible = comprobarExpedicion(Q.state.p.alumnoSoftware, Q.state.p.equipoSoftware);
             if (posible) {
+                var software = new Q.AlumnoSoftware();
                 Q.state.inc("equipoSoftware", 1);
                 Q.state.inc("equipoActual", 1);
+                Q.state.inc("vidaPropia", software.vida);
             }
 
         });
 
         menosSoftware.on("click", function() {
             if (Q.state.p.equipoSoftware > 0) {
+                var software = new Q.AlumnoSoftware();
                 Q.state.dec("equipoSoftware", 1);
                 Q.state.dec("equipoActual", 1);
+                Q.state.dec("vidaPropia", software.vida);
             }
 
         });
@@ -459,15 +469,19 @@ window.addEventListener("load", function() {
         masInformatica.on("click", function() {
             posible = comprobarExpedicion(Q.state.p.alumnoInformatica, Q.state.p.equipoInformatica);
             if (posible) {
+                var informatica = new Q.AlumnoInformatica();
                 Q.state.inc("equipoInformatica", 1);
                 Q.state.inc("equipoActual", 1);
+                Q.state.inc("vidaPropia", informatica.vida);
             }
         });
 
         menosInformatica.on("click", function() {
             if (Q.state.p.equipoInformatica > 0) {
+                var informatica = new Q.AlumnoInformatica();
                 Q.state.dec("equipoInformatica", 1);
                 Q.state.dec("equipoActual", 1);
+                Q.state.dec("vidaPropia", informatica.vida);
             }
 
         });
@@ -475,15 +489,19 @@ window.addEventListener("load", function() {
         masComputadores.on("click", function() {
             posible = comprobarExpedicion(Q.state.p.alumnoComputadores, Q.state.p.equipoComputadores);
             if (posible) {
+                var computadores = new Q.AlumnoComputadores();
                 Q.state.inc("equipoComputadores", 1);
                 Q.state.inc("equipoActual", 1);
+                Q.state.inc("vidaPropia", computadores.vida);
             }
         });
 
         menosComputadores.on("click", function() {
             if (Q.state.p.equipoComputadores > 0) {
+                var computadores = new Q.AlumnoComputadores()
                 Q.state.dec("equipoComputadores", 1);
                 Q.state.dec("equipoActual", 1);
+                Q.state.dec("vidaPropia", computadores.vida)
             }
         });
     });
@@ -521,17 +539,17 @@ window.addEventListener("load", function() {
             asset: "fletxaI.png"
         }));
 
-        var botonTaquillas = box.insert(new Q.UI.Button({
-            x: -70,
-            y: -150,
-            w: 150,
-            fill: "#CCCCCC",
-            label: "Taquillas"
-        }));
+        // var botonTaquillas = box.insert(new Q.UI.Button({
+        //     x: -70,
+        //     y: -150,
+        //     w: 150,
+        //     fill: "#CCCCCC",
+        //     label: "Taquillas"
+        // }));
 
         var botonClase = box.insert(new Q.UI.Button({
             x: -70,
-            y: -90,
+            y: -150,
             w: 150,
             fill: "#CCCCCC",
             label: "Clase"
@@ -539,14 +557,14 @@ window.addEventListener("load", function() {
 
         var labelClase = box.insert(new Q.UI.Text({
             x: 50,
-            y: -105,
+            y: -165,
             label: "x50",
             size: 20
         }));
 
         var botonCocina = box.insert(new Q.UI.Button({
             x: -70,
-            y: -30,
+            y: -90,
             w: 150,
             fill: "#CCCCCC",
             label: "Cocina"
@@ -554,7 +572,7 @@ window.addEventListener("load", function() {
 
         var botonCafeteria = box.insert(new Q.UI.Button({
             x: -70,
-            y: 30,
+            y: -30,
             w: 150,
             fill: "#CCCCCC",
             label: "Cafeteria"
@@ -562,7 +580,7 @@ window.addEventListener("load", function() {
 
         var botonAparcamiento = box.insert(new Q.UI.Button({
             x: -70,
-            y: 90,
+            y: 30,
             w: 150,
             fill: "#CCCCCC",
             label: "Aparcamiento"
@@ -573,17 +591,17 @@ window.addEventListener("load", function() {
             Q.stageScene("screenMain");
         });
 
-        botonTaquillas.on("click", function() {
-            if (!Q.state.p.taquillas) {
-                dinero = comprobarDinero(1, "edificios");
-                if (dinero) {
-                    Q.state.p.taquillas = true;
-                    box.insert(new Q.UI.Button({ x: 50, y: -145, asset: "tick1.png" }));
-                    Q.state.dec("coins", 1);
-                    labelTaquillas.destroy();
-                }
-            }
-        });
+        // botonTaquillas.on("click", function() {
+        //     if (!Q.state.p.taquillas) {
+        //         dinero = comprobarDinero(1, "edificios");
+        //         if (dinero) {
+        //             Q.state.p.taquillas = true;
+        //             box.insert(new Q.UI.Button({ x: 50, y: -145, asset: "tick1.png" }));
+        //             Q.state.dec("coins", 1);
+        //             labelTaquillas.destroy();
+        //         }
+        //     }
+        // });
 
         botonClase.on("click", function() {
             dinero = comprobarDinero(50, "edificios");
@@ -598,7 +616,7 @@ window.addEventListener("load", function() {
                 dinero = comprobarDinero(50, "edificios");
                 if (dinero) {
                     Q.state.p.cocina = true;
-                    box.insert(new Q.UI.Button({ x: 50, y: -30, asset: "tick1.png" }));
+                    box.insert(new Q.UI.Button({ x: 50, y: -90, asset: "tick1.png" }));
                     Q.state.dec("coins", 50);
                     labelCocina.destroy();
                 }
@@ -610,41 +628,41 @@ window.addEventListener("load", function() {
                 dinero = comprobarDinero(50, "edificios");
                 if (dinero) {
                     Q.state.p.cafeteria = true;
-                    box.insert(new Q.UI.Button({ x: 50, y: 30, asset: "tick1.png" }));
+                    box.insert(new Q.UI.Button({ x: 50, y: -30, asset: "tick1.png" }));
                     Q.state.dec("coins", 50);
                     labelCafeteria.destroy();
                 }
             }
         });
 
-        if (Q.state.p.taquillas) {
-            box.insert(new Q.UI.Button({ x: 50, y: -145, asset: "tick1.png" }));
-        } else {
-            var labelTaquillas = box.insert(new Q.UI.Text({
-                x: 50,
-                y: -155,
-                label: "x1",
-                size: 20
-            }));
-        }
+        // if (Q.state.p.taquillas) {
+        //     box.insert(new Q.UI.Button({ x: 50, y: -145, asset: "tick1.png" }));
+        // } else {
+        //     var labelTaquillas = box.insert(new Q.UI.Text({
+        //         x: 50,
+        //         y: -155,
+        //         label: "x1",
+        //         size: 20
+        //     }));
+        // }
 
         if (Q.state.p.cocina) {
-            box.insert(new Q.UI.Button({ x: 50, y: -30, asset: "tick1.png" }));
+            box.insert(new Q.UI.Button({ x: 50, y: -90, asset: "tick1.png" }));
         } else {
             var labelCocina = box.insert(new Q.UI.Text({
                 x: 50,
-                y: -30,
+                y: -90,
                 label: "x50",
                 size: 20
             }));
         }
 
         if (Q.state.p.cafeteria) {
-            box.insert(new Q.UI.Button({ x: 50, y: 30, asset: "tick1.png" }));
+            box.insert(new Q.UI.Button({ x: 50, y: -30, asset: "tick1.png" }));
         } else {
             var labelCafeteria = box.insert(new Q.UI.Text({
                 x: 50,
-                y: 30,
+                y: -30,
                 label: "x50",
                 size: 20
             }));
@@ -1248,13 +1266,16 @@ window.addEventListener("load", function() {
                 }
                 contador_s++;
             }, 1000);
-    }
+    };
+
+
     Q.scene('quiz', function(stage) {
-        var textPregunta, respuesta1, respuesta2, respuesta3, correcta, id;
+        var textPregunta, respuesta1, respuesta2, respuesta3, correcta,id;
+        Q.stageScene("vidaPropia", 1);
+        Q.stageScene("vidaProfesor", 2);
         $.getJSON("data/quiz.json", function(datos) {
 
-            id = Math.floor(Math.random() * (3 - 1) + 1);
-
+            id = Math.floor(Math.random() * (7 - 1) + 1);
 
             $.each(datos["lista"], function(idx, pregunta) {
                 if (pregunta.id === id) {
@@ -1269,17 +1290,19 @@ window.addEventListener("load", function() {
                         y: Q.height / 2
 
                     }));
+
                     var labelPregunta = box.insert(new Q.UI.Text({
                         x: 0,
                         y: -30,
                         label: textPregunta,
-                        size: 20,
+                        size: 10,
                         color: "white"
                     }));
 
                     var botonRespuesta1 = box.insert(new Q.UI.Button({
                         x: 0,
                         y: 30,
+                        font: 10,
                         w: 150,
                         fill: "#CCCCCC",
                         label: respuesta1
@@ -1288,17 +1311,18 @@ window.addEventListener("load", function() {
                     var botonRespuesta2 = box.insert(new Q.UI.Button({
                         x: 0,
                         y: 90,
+                        font: 10,
                         w: 150,
+                        size: 30,
                         fill: "#CCCCCC",
                         label: respuesta2
                     }));
-
-
 
                     var botonRespuesta3 = box.insert(new Q.UI.Button({
                         x: 0,
                         y: 150,
                         w: 150,
+                        font: 10,
                         fill: "#CCCCCC",
                         label: respuesta3
                     }));
@@ -1324,10 +1348,14 @@ window.addEventListener("load", function() {
     Q.scene('comprobarQuiz', function(stage) {
         var mensaje;
 
-        if (stage.options.correcta == stage.options.respuesta)
+        if (stage.options.correcta == stage.options.respuesta) {
+            Q.state.dec("vidaRestanteProfesor", 3);
             mensaje = "Has acertado";
-        else
+        } else {
             mensaje = "Has fallado";
+            Q.state.dec("vidaRestantePropia", 3);
+
+        }
 
         var box = stage.insert(new Q.UI.Container({
             x: Q.width / 2,
@@ -1351,13 +1379,78 @@ window.addEventListener("load", function() {
         }));
 
         button.on("click", function() {
-            Q.clearStages();
-            Q.stageScene("quiz");
+            if (Q.state.p.vidaRestanteProfesor <= 0) {
+                console.log("has ganado");
+                Q.clearStages();
+                Q.stageScene("finBatalla", 1, { label: "Ha ganado, intenta vecer a los demas profesores que quedan", win: true });
+
+            } else if (Q.state.p.vidaRestantePropia <= 0) {
+                console.log("has perdido");
+                Q.clearStages();
+                Q.stageScene("finBatalla", 1, { label: "Ha perdido,regresa a casa y crea un ejercito mejor", win: false });
+
+            } else {
+                Q.clearStages();
+                Q.stageScene("quiz");
+            }
+        });
+
+        box.fit(20);
+    });
+    Q.scene('finBatalla', function(stage) {
+
+
+
+        var box = stage.insert(new Q.UI.Container({
+            x: Q.width / 2,
+            y: Q.height / 2,
+            fill: "#F0F8FF"
+        }));
+
+        var button = box.insert(new Q.UI.Button({
+            x: 0,
+            y: 0,
+            size: 15,
+            fill: "#CCCCCC",
+            label: "Aceptar"
+        }));
+
+        var label = box.insert(new Q.UI.Text({
+            x: 10,
+            size: 10,
+            y: -10 - button.p.h,
+            label: stage.options.label
+        }));
+
+        button.on("click", function() {
+            if (stage.options.win) {
+                Q.clearStages();
+                Q.stageScene("level1");
+            } else {
+                Q.clearStages();
+                Q.stageScene("screenMain");
+            }
+
         });
 
         box.fit(20);
     });
 
+    Q.scene("vidaPropia", function(stage) {
+        var label = stage.insert(new Q.UI.Text({ x: Q.width / 2, y: 15, size: 12, color: "white", label: "Vida: " + Q.state.get('vidaRestantePropia') }));
+        Q.state.on("change.vidaRestantePropia", this, function(vida) {
+
+            label.p.label = "Vida: " + vida;
+        });
+    });
+
+    Q.scene("vidaProfesor", function(stage) {
+        var label = stage.insert(new Q.UI.Text({ x: Q.width / 2, y: 25, size: 12, color: "white", label: "Vida profesor: " + Q.state.get('vidaRestanteProfesor') }));
+        Q.state.on("change.vidaRestanteProfesor", this, function(vidaProfesor) {
+
+            label.p.label = "Vida profesor: " + vidaProfesor;
+        });
+    });
     Q.scene('startGame', function(stage) {
 
         var box = stage.insert(new Q.UI.Container({
@@ -1365,7 +1458,7 @@ window.addEventListener("load", function() {
             y: Q.height / 2
         }));
 
-        Q.state.reset({ coins: 200, taquillas: false, cmasmas: 0, gestion: 0, c: 0, ensamblador: 0, matematicas: 0, fisica: 0, alumnoSoftware: 1, alumnoComputadores: 0, alumnoInformatica: 1, tamañoEquipo: 2, equipoActual: 0, equipoSoftware: 0, equipoInformatica: 0, equipoComputadores: 0, cocinero: 0, camarero: 0, recolector: 0, cocina: false, cafeteria: false, totalTrabajadores: 0, trabajadoresActuales: 0, comida: 0, energia: 50, xPlayer: primerNivel.xPlayer, yPlayer: primerNivel.yPlayer });
+        Q.state.reset({ coins: 200, taquillas: false, cmasmas: 0, gestion: 0, c: 0, ensamblador: 0, matematicas: 0, fisica: 0, alumnoSoftware: 1, alumnoComputadores: 0, alumnoInformatica: 1, tamañoEquipo: 2, equipoActual: 0, equipoSoftware: 0, equipoInformatica: 0, equipoComputadores: 0, cocinero: 0, camarero: 0, recolector: 0, cocina: false, cafeteria: false, totalTrabajadores: 0, trabajadoresActuales: 0, comida: 0, energia: 50, xPlayer: primerNivelInicio.xPlayer, yPlayer: primerNivelInicio.yPlayer, vidaProfesor: 0, vidaPropia: 0, vidaRestanteProfesor: 0, vidaRestantePropia: 0 });
 
         var button = box.insert(new Q.UI.Button({ asset: "puerta/1.jpg", scale: 1 / 2 }));
         var titulo = box.insert(new Q.UI.Button({ x: 0, y: -10, asset: "titulo.png" }));
