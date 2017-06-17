@@ -3,6 +3,8 @@
 
 
 window.addEventListener("load", function() {
+    const primerNivel = { xPlayer: 90, yPlayer: 925.5 };
+    const segundoNivel = { xPlayer: 90, yPlayer: 925.5 };
 
     var Q = window.Q = Quintus({ audioSupported: ['mp3', 'ogg'] })
         .include("Sprites, Scenes, Input, Touch, UI, TMX, Anim, 2D, Audio")
@@ -33,8 +35,9 @@ window.addEventListener("load", function() {
         Q.stageScene("energia", 2);
         var player = stage.insert(new Q.Player({ x: Q.state.get('xPlayer'), y: Q.state.get('yPlayer'), scale: 1 / 7 }));
 
-        var n = ((Math.random() * 10) + 5).toFixed(0);
-        var x = 0,
+        var nProfesor,
+            n = ((Math.random() * 10) + 5).toFixed(0),
+            x = 0,
             y = 0,
             i = 0;
 
@@ -47,7 +50,6 @@ window.addEventListener("load", function() {
                 stage.insert(new Q.Profesor1({ x: parseInt(x), y: parseInt(y) }));
             else
                 stage.insert(new Q.Profesor2({ x: parseInt(x), y: parseInt(y) }));
-
         }
 
         stage.add("viewport").follow(player);
@@ -56,8 +58,10 @@ window.addEventListener("load", function() {
 
     Q.scene("energia", function(stage) {
         var label = stage.insert(new Q.UI.Text({ x: Q.width / 2, y: 15, size: 12, color: "white", label: "Energía: " + Q.state.get('energia') }));
+        
         Q.state.on("change.energia", this, function(energia) {
             if (energia === 0) {
+                Q.state.set({ xPlayer:primerNivel.xPlayer, yPlayer: primerNivel.yPlayer, energia:50 });
                 Q.clearStages();
                 Q.stageScene("screenMain");
             }
@@ -78,6 +82,7 @@ window.addEventListener("load", function() {
         }));
 
         botonSalir.on("click", function() {
+            Q.state.set({ xPlayer:primerNivel.xPlayer, yPlayer: primerNivel.yPlayer });
             Q.clearStages();
             Q.stageScene("screenMain");
         });
@@ -109,6 +114,8 @@ window.addEventListener("load", function() {
             });
         }
     });
+
+
     Q.Sprite.extend("Profesor1", {
         init: function(p) {
             this._super(p, {
@@ -120,11 +127,9 @@ window.addEventListener("load", function() {
             });
 
             this.add('2d,aiBounce,Profesor');
-
-
         }
-
     });
+
 
     Q.Sprite.extend("Profesor2", {
         init: function(p) {
@@ -137,19 +142,17 @@ window.addEventListener("load", function() {
             });
 
             this.add('2d,aiBounce,Profesor');
-
-
         }
-
     });
+
 
     Q.component("Profesor", {
 
         added: function() {
 
-            this.entity.p.w = 12
-            this.entity.p.h = 12
-            this.entity.p.gravity = 0
+            this.entity.p.w = 12;
+            this.entity.p.h = 12;
+            this.entity.p.gravity = 0;
 
             this.entity.on("hit.sprite", function(collision) {
                 if (collision.obj.isA("Player")) {
@@ -160,7 +163,6 @@ window.addEventListener("load", function() {
                 }
             });
         }
-
     });
 
 
@@ -179,6 +181,7 @@ window.addEventListener("load", function() {
             fill: "#CCCCCC",
             label: "Batalla"
         }));
+
         var quiz = box.insert(new Q.UI.Button({
             x: 0,
             y: 60,
@@ -1220,7 +1223,7 @@ window.addEventListener("load", function() {
     function carga() {
 
         var contador_s = 0;
-        cronometro = setInterval(
+        var cronometro = setInterval(
             function() {
                 if (contador_s == 10) {
                     contador_s = 0;
@@ -1247,7 +1250,7 @@ window.addEventListener("load", function() {
             }, 1000);
     }
     Q.scene('quiz', function(stage) {
-        var textPregunta, respuesta1, respuesta2, respuesta3, correcta;
+        var textPregunta, respuesta1, respuesta2, respuesta3, correcta, id;
         $.getJSON("data/quiz.json", function(datos) {
 
             id = Math.floor(Math.random() * (3 - 1) + 1);
@@ -1315,18 +1318,16 @@ window.addEventListener("load", function() {
                 }
             });
         });
+    });
 
-
-
-
-    })
 
     Q.scene('comprobarQuiz', function(stage) {
-        var mensaje
+        var mensaje;
+
         if (stage.options.correcta == stage.options.respuesta)
             mensaje = "Has acertado";
         else
-            mensaje = "Has fallado"
+            mensaje = "Has fallado";
 
         var box = stage.insert(new Q.UI.Container({
             x: Q.width / 2,
@@ -1364,7 +1365,7 @@ window.addEventListener("load", function() {
             y: Q.height / 2
         }));
 
-        Q.state.reset({ coins: 200, taquillas: false, cmasmas: 0, gestion: 0, c: 0, ensamblador: 0, matematicas: 0, fisica: 0, alumnoSoftware: 1, alumnoComputadores: 0, alumnoInformatica: 1, tamañoEquipo: 2, equipoActual: 0, equipoSoftware: 0, equipoInformatica: 0, equipoComputadores: 0, cocinero: 0, camarero: 0, recolector: 0, cocina: false, cafeteria: false, totalTrabajadores: 0, trabajadoresActuales: 0, comida: 0, energia: 50, xPlayer: 90, yPlayer: 925.5 });
+        Q.state.reset({ coins: 200, taquillas: false, cmasmas: 0, gestion: 0, c: 0, ensamblador: 0, matematicas: 0, fisica: 0, alumnoSoftware: 1, alumnoComputadores: 0, alumnoInformatica: 1, tamañoEquipo: 2, equipoActual: 0, equipoSoftware: 0, equipoInformatica: 0, equipoComputadores: 0, cocinero: 0, camarero: 0, recolector: 0, cocina: false, cafeteria: false, totalTrabajadores: 0, trabajadoresActuales: 0, comida: 0, energia: 50, xPlayer: primerNivel.xPlayer, yPlayer: primerNivel.yPlayer });
 
         var button = box.insert(new Q.UI.Button({ asset: "puerta/1.jpg", scale: 1 / 2 }));
         var titulo = box.insert(new Q.UI.Button({ x: 0, y: -10, asset: "titulo.png" }));
