@@ -3,6 +3,7 @@
 
 
 window.addEventListener("load", function() {
+
     const primerNivelInicio = { xPlayer: 90, yPlayer: 925.5 };
     const segundoNivelInicio = { xPlayer: 90, yPlayer: 925.5 };                                              
 
@@ -61,7 +62,7 @@ window.addEventListener("load", function() {
         var label = stage.insert(new Q.UI.Text({ x: Q.width / 2, y: 15, size: 12, color: "white", label: "Energía: " + Q.state.get('energia') }));
         Q.state.on("change.energia", this, function(energia) {
             if (energia === 0) {
-                Q.state.set({ xPlayer:primerNivelInicio.xPlayer, yPlayer: primerNivelInicio.yPlayer, energia:50 });                                                                                    
+                Q.state.set({ xPlayer:primerNivelInicio.xPlayer, yPlayer: primerNivelInicio.yPlayer, energia:50 });
                 Q.clearStages();
                 Q.stageScene("screenMain");
             }
@@ -82,7 +83,7 @@ window.addEventListener("load", function() {
         }));
 
         botonSalir.on("click", function() {
-         Q.state.set({ xPlayer:primerNivelInicio.xPlayer, yPlayer: primerNivelInicio.yPlayer });                                                               
+            Q.state.set({ xPlayer:primerNivelInicio.xPlayer, yPlayer: primerNivelInicio.yPlayer });                                                               
             Q.clearStages();
             Q.stageScene("screenMain");
         });
@@ -1266,7 +1267,7 @@ window.addEventListener("load", function() {
                 }
                 contador_s++;
             }, 1000);
-    };
+    }
 
 
     Q.scene('quiz', function(stage) {
@@ -1354,7 +1355,6 @@ window.addEventListener("load", function() {
         } else {
             mensaje = "Has fallado";
             Q.state.dec("vidaRestantePropia", 3);
-
         }
 
         var box = stage.insert(new Q.UI.Container({
@@ -1397,9 +1397,9 @@ window.addEventListener("load", function() {
 
         box.fit(20);
     });
+
+
     Q.scene('finBatalla', function(stage) {
-
-
 
         var box = stage.insert(new Q.UI.Container({
             x: Q.width / 2,
@@ -1436,6 +1436,7 @@ window.addEventListener("load", function() {
         box.fit(20);
     });
 
+
     Q.scene("vidaPropia", function(stage) {
         var label = stage.insert(new Q.UI.Text({ x: Q.width / 2, y: 15, size: 12, color: "white", label: "Vida: " + Q.state.get('vidaRestantePropia') }));
         Q.state.on("change.vidaRestantePropia", this, function(vida) {
@@ -1444,6 +1445,7 @@ window.addEventListener("load", function() {
         });
     });
 
+
     Q.scene("vidaProfesor", function(stage) {
         var label = stage.insert(new Q.UI.Text({ x: Q.width / 2, y: 25, size: 12, color: "white", label: "Vida profesor: " + Q.state.get('vidaRestanteProfesor') }));
         Q.state.on("change.vidaRestanteProfesor", this, function(vidaProfesor) {
@@ -1451,6 +1453,8 @@ window.addEventListener("load", function() {
             label.p.label = "Vida profesor: " + vidaProfesor;
         });
     });
+
+
     Q.scene('startGame', function(stage) {
 
         var box = stage.insert(new Q.UI.Container({
