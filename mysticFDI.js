@@ -3,6 +3,8 @@
 
 
 window.addEventListener("load", function() {
+		 const primerNivel = { xPlayer: 90, yPlayer: 925.5 };
+         const segundoNivel = { xPlayer: 90, yPlayer: 925.5 };												
 
     var Q = window.Q = Quintus({ audioSupported: ['mp3', 'ogg'] })
         .include("Sprites, Scenes, Input, Touch, UI, TMX, Anim, 2D, Audio")
@@ -33,8 +35,9 @@ window.addEventListener("load", function() {
         Q.stageScene("energia", 2);
         var player = stage.insert(new Q.Player({ x: Q.state.get('xPlayer'), y: Q.state.get('yPlayer'), scale: 1 / 7 }));
 
-        var n = ((Math.random() * 10) + 5).toFixed(0);
-        var x = 0,
+        var nProfesor,
+            n = ((Math.random() * 10) + 5).toFixed(0),
+            x = 0,
             y = 0,
             i = 0;
 
@@ -58,6 +61,7 @@ window.addEventListener("load", function() {
         var label = stage.insert(new Q.UI.Text({ x: Q.width / 2, y: 15, size: 12, color: "white", label: "Energía: " + Q.state.get('energia') }));
         Q.state.on("change.energia", this, function(energia) {
             if (energia === 0) {
+				Q.state.set({ xPlayer:primerNivel.xPlayer, yPlayer: primerNivel.yPlayer, energia:50 });																					   
                 Q.clearStages();
                 Q.stageScene("screenMain");
             }
@@ -78,6 +82,7 @@ window.addEventListener("load", function() {
         }));
 
         botonSalir.on("click", function() {
+		 Q.state.set({ xPlayer:primerNivel.xPlayer, yPlayer: primerNivel.yPlayer });															   
             Q.clearStages();
             Q.stageScene("screenMain");
         });
@@ -147,14 +152,14 @@ window.addEventListener("load", function() {
 
         added: function() {
 
-            this.entity.p.w = 12
-            this.entity.p.h = 12
-            this.entity.p.gravity = 0
+            this.entity.p.w = 12;
+            this.entity.p.h = 12;
+            this.entity.p.gravity = 0;
 
             this.entity.on("hit.sprite", function(collision) {
                 if (collision.obj.isA("Player")) {
                     console.log(this.p.vida)
-
+                    console.log(this)
                     Q.state.set({ xPlayer: collision.obj.p.x, yPlayer: collision.obj.p.y, vidaRestanteProfesor: this.p.vida, vidaProfesor: this.p.vida });
 
                     Q.clearStages();
@@ -1236,7 +1241,7 @@ window.addEventListener("load", function() {
     function carga() {
 
         var contador_s = 0;
-        cronometro = setInterval(
+        var cronometro = setInterval(
             function() {
                 if (contador_s == 10) {
                     contador_s = 0;
@@ -1263,7 +1268,7 @@ window.addEventListener("load", function() {
             }, 1000);
     }
     Q.scene('quiz', function(stage) {
-        var textPregunta, respuesta1, respuesta2, respuesta3, correcta;
+        var textPregunta, respuesta1, respuesta2, respuesta3, correcta,id;
         Q.stageScene("vidaPropia", 1);
         Q.stageScene("vidaProfesor", 2);
         $.getJSON("data/quiz.json", function(datos) {
@@ -1344,7 +1349,7 @@ window.addEventListener("load", function() {
     })
 
     Q.scene('comprobarQuiz', function(stage) {
-        var mensaje
+        var mensaje;
 
         if (stage.options.correcta == stage.options.respuesta) {
             Q.state.dec("vidaRestanteProfesor", 3)
