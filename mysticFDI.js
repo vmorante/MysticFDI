@@ -1268,7 +1268,7 @@ window.addEventListener("load", function() {
         Q.stageScene("vidaProfesor", 2);
         $.getJSON("data/quiz.json", function(datos) {
 
-            id = Math.floor(Math.random() * (3 - 1) + 1);
+            id = Math.floor(Math.random() * (7 - 1) + 1);
 
 
             $.each(datos["lista"], function(idx, pregunta) {
@@ -1288,13 +1288,14 @@ window.addEventListener("load", function() {
                         x: 0,
                         y: -30,
                         label: textPregunta,
-                        size: 20,
+                        size: 10,
                         color: "white"
                     }));
 
                     var botonRespuesta1 = box.insert(new Q.UI.Button({
                         x: 0,
                         y: 30,
+                        font: 10,
                         w: 150,
                         fill: "#CCCCCC",
                         label: respuesta1
@@ -1303,7 +1304,9 @@ window.addEventListener("load", function() {
                     var botonRespuesta2 = box.insert(new Q.UI.Button({
                         x: 0,
                         y: 90,
+                        font: 10,
                         w: 150,
+                        size: 30,
                         fill: "#CCCCCC",
                         label: respuesta2
                     }));
@@ -1314,6 +1317,7 @@ window.addEventListener("load", function() {
                         x: 0,
                         y: 150,
                         w: 150,
+                        font: 10,
                         fill: "#CCCCCC",
                         label: respuesta3
                     }));

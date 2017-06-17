@@ -1,54 +1,159 @@
 {
     "lista": [{
-        "id": 1,
-        "pregunta": "pregunta1",
-        "correcta": 2,
-        "respuestas": {
-            "respuesta1": {
-                "id": 1,
-                "respuesta": "respuesta1"
+            "id": 1,
+            "pregunta": "En un lenguaje débilmente tipado",
+            "correcta": 1,
+            "respuestas": {
+                "respuesta1": {
+                    "id": 1,
+                    "respuesta": " Un valor de un tipo puede ser tratado como de otro tipo "
 
-            },
-            "respuesta2": {
-                "id": 2,
-                "respuesta": "respuesta2"
-
-
-            },
-
-            "respuesta3": {
-                "id": 3,
-                "respuesta": "respuesta3"
+                },
+                "respuesta2": {
+                    "id": 2,
+                    "respuesta": "Un valor de un tipo nunca puede ser tratado como de otro tipo"
 
 
+                },
+
+                "respuesta3": {
+                    "id": 3,
+                    "respuesta": "Las anteriores respuestas no son correctas "
+
+
+                }
             }
-        }
 
 
-    }, {
-        "id": 2,
-        "pregunta": "pregunta2",
-        "correcta": 2,
-        "respuestas": {
-            "respuesta1": {
-                "id": 1,
-                "respuesta": "respuesta1"
+        }, {
+            "id": 2,
+            "pregunta": "Se considera que el primer lenguaje de alto nivel fue",
+            "correcta": 3,
+            "respuestas": {
+                "respuesta1": {
+                    "id": 1,
+                    "respuesta": "Ada"
 
-            },
-            "respuesta2": {
-                "id": 2,
-                "respuesta": "respuesta2"
-
-
-            },
-
-            "respuesta3": {
-                "id": 3,
-                "respuesta": "respuesta3"
+                },
+                "respuesta2": {
+                    "id": 2,
+                    "respuesta": "C "
 
 
+                },
+
+                "respuesta3": {
+                    "id": 3,
+                    "respuesta": "Fortran "
+
+
+                }
             }
-        }
 
-    }]
+        },
+        {
+            "id": 3,
+            "pregunta": "if, else, for y while son",
+            "correcta": 2,
+            "respuestas": {
+                "respuesta1": {
+                    "id": 1,
+                    "respuesta": "Funciones de acceso a datos "
+
+                },
+                "respuesta2": {
+                    "id": 2,
+                    "respuesta": "Sentencias de control  "
+
+
+                },
+
+                "respuesta3": {
+                    "id": 3,
+                    "respuesta": "Tipos de datos  "
+
+
+                }
+            }
+
+        },
+        {
+            "id": 4,
+            "pregunta": "¿Cuál es el código ASCII decimal de la letra A mayúscula?",
+            "correcta": 2,
+            "respuestas": {
+                "respuesta1": {
+                    "id": 1,
+                    "respuesta": "32 "
+
+                },
+                "respuesta2": {
+                    "id": 2,
+                    "respuesta": "65  "
+
+
+                },
+
+                "respuesta3": {
+                    "id": 3,
+                    "respuesta": "97"
+
+
+                }
+            }
+
+        },
+        {
+            "id": 5,
+            "pregunta": "¿Qué significa EOF?",
+            "correcta": 2,
+            "respuestas": {
+                "respuesta1": {
+                    "id": 1,
+                    "respuesta": " Empty or full "
+
+                },
+                "respuesta2": {
+                    "id": 2,
+                    "respuesta": "End of file  "
+
+
+                },
+
+                "respuesta3": {
+                    "id": 3,
+                    "respuesta": "End of floop  "
+
+
+                }
+            }
+
+        },
+        {
+            "id": 6,
+            "pregunta": "int, char, float, string y boolean son",
+            "correcta": 3,
+            "respuestas": {
+                "respuesta1": {
+                    "id": 1,
+                    "respuesta": "Instrucciones de acceso a datos "
+
+                },
+                "respuesta2": {
+                    "id": 2,
+                    "respuesta": "Funciones de acceso a datos  "
+
+
+                },
+
+                "respuesta3": {
+                    "id": 3,
+                    "respuesta": "Tipos de datos "
+
+
+                }
+            }
+
+        }
+    ]
 }
