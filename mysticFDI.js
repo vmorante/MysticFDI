@@ -22,7 +22,7 @@ window.addEventListener("load", function() {
     });
 
 
-    Q.load(["fdi.png", "fletxaI.png", "fletxaD.png", "tick1.png", "puerta/1.jpg", "puerta/2.jpg", "puerta/3.jpg", "puerta/4.jpg", "puerta/5.jpg", "puerta/6.jpg", "puerta/7.jpg", "puerta/8.jpg", "puerta/9.jpg", "puerta/10.jpg", "puerta/11.jpg", "puerta/12.jpg", "titulo.png", "personaje.png", "player.json", "coins.mp3", "coins.ogg", "mas.png", "menos.png", "quiz.json", "profesor1.jpg", "profesor2.jpg"], function() {
+    Q.load(["fdi.png", "fletxaI.png", "fletxaD.png", "tick1.png", "puerta/1.jpg", "puerta/2.jpg", "puerta/3.jpg", "puerta/4.jpg", "puerta/5.jpg", "puerta/6.jpg", "puerta/7.jpg", "puerta/8.jpg", "puerta/9.jpg", "puerta/10.jpg", "puerta/11.jpg", "puerta/12.jpg", "titulo.png", "personaje.png", "player.json", "coins.mp3", "coins.ogg", "mas.png", "menos.png", "quiz.json", "profesor1a.png", "profesor2a.png"], function() {
         Q.loadTMX("level.tmx", function() {
             Q.compileSheets("personaje.png", "player.json");
             Q.stageScene("startGame");
@@ -62,7 +62,7 @@ window.addEventListener("load", function() {
         var label = stage.insert(new Q.UI.Text({ x: Q.width / 2, y: 15, size: 12, color: "white", label: "Energía: " + Q.state.get('energia') }));
         Q.state.on("change.energia", this, function(energia) {
             if (energia === 0) {
-                Q.state.set({ /*Player:primerNivelInicio.xPlayer, yPlayer: primerNivelInicio.yPlayer,*/ energia:50 });
+                Q.state.set({ energia:50 }); //quitar, esta para pruebas
                 Q.clearStages();
                 Q.stageScene("screenMain");
             }
@@ -83,7 +83,6 @@ window.addEventListener("load", function() {
         }));
 
         botonSalir.on("click", function() {
-            //Q.state.set({ xPlayer:primerNivelInicio.xPlayer, yPlayer: primerNivelInicio.yPlayer });                                                               
             Q.clearStages();
             Q.stageScene("screenMain");
         });
@@ -118,7 +117,7 @@ window.addEventListener("load", function() {
     Q.Sprite.extend("Profesor1", {
         init: function(p) {
             this._super(p, {
-                foto: "profesor1.jpg",
+                foto: "profesor1a.png",
                 vida: 10,
                 poder: 4,
                 velocidad: 3,
@@ -135,7 +134,7 @@ window.addEventListener("load", function() {
     Q.Sprite.extend("Profesor2", {
         init: function(p) {
             this._super(p, {
-                foto: "profesor2.jpg",
+                foto: "profesor2a.png",
                 vida: 13,
                 poder: 2,
                 velocidad: 3.5,
@@ -174,29 +173,29 @@ window.addEventListener("load", function() {
 
     Q.scene('batalla', function(stage) {
 
-        stage.insert(new Q.Repeater({ asset: stage.options.foto }));
+        stage.insert(new Q.Repeater({ asset: stage.options.foto}));
         var box = stage.insert(new Q.UI.Container({
             x: Q.width / 2,
             y: Q.height / 2,
             fill: "rgba(0,0,0,0.5)"
         }));
 
-        var button = box.insert(new Q.UI.Button({
+        var fight = box.insert(new Q.UI.Button({
             x: 0,
-            y: 0,
+            y: 100,
             fill: "#CCCCCC",
-            label: "Batalla"
+            label: "Fight"
         }));
         var quiz = box.insert(new Q.UI.Button({
             x: 0,
-            y: 60,
+            y: 160,
             fill: "#CCCCCC",
             label: "Quiz"
         }));
 
-        button.on("click", function() {
+        fight.on("click", function() {
             Q.clearStages();
-            Q.stageScene('level1');
+            Q.stageScene('fight');
         });
 
         quiz.on("click", function() {
@@ -1273,9 +1272,10 @@ window.addEventListener("load", function() {
 
 
     Q.scene('quiz', function(stage) {
-        var textPregunta, respuesta1, respuesta2, respuesta3, correcta,id;
+        var textPregunta, respuesta1, respuesta2, respuesta3, correcta, id;
         Q.stageScene("vidaPropia", 1);
         Q.stageScene("vidaProfesor", 2);
+        
         $.getJSON("data/quiz.json", function(datos) {
 
             id = Math.floor(Math.random() * (7 - 1) + 1);
@@ -1381,23 +1381,58 @@ window.addEventListener("load", function() {
         }));
 
         button.on("click", function() {
-            if (Q.state.p.vidaRestanteProfesor <= 0) {
-                console.log("has ganado");
-                Q.clearStages();
-                Q.stageScene("finBatalla", 1, { label: "Has ganado, intenta vencer a los demás profesores que quedan", win: true });
-
-            } else if (Q.state.p.vidaRestantePropia <= 0) {
-                console.log("has perdido");
-                Q.clearStages();
-                Q.stageScene("finBatalla", 1, { label: "Has perdido, regresa a casa y crea un ejercito mejor", win: false });
-
-            } else {
-                Q.clearStages();
-                Q.stageScene("quiz");
-            }
+            comprobarFinBatalla("quiz");
         });
 
         box.fit(20);
+    });
+
+
+    var comprobarFinBatalla = function(scene){
+        if (Q.state.p.vidaRestanteProfesor <= 0) {
+            Q.clearStages();
+            Q.stageScene("finBatalla", 1, { label: "Has ganado, intenta vencer a los demás profesores que quedan", win: true });
+
+        } else if (Q.state.p.vidaRestantePropia <= 0) {
+            Q.clearStages();
+            Q.stageScene("finBatalla", 1, { label: "Has perdido, regresa a casa y crea un ejercito mejor", win: false });
+        } else {
+            Q.clearStages();
+            Q.stageScene(scene);
+        }
+    };
+
+
+    Q.scene('fight', function(stage) {
+
+        Q.stageScene("vidaPropia", 1);
+        Q.stageScene("vidaProfesor", 2);
+
+        var box = stage.insert(new Q.UI.Container({
+            x: Q.width / 2,
+            y: Q.height / 2
+        }));
+
+        var button = box.insert(new Q.UI.Button({
+            x: 0,
+            y: 0,
+            size: 15,
+            fill: "#CCCCCC",
+            label: "Cervatana"
+        }));
+
+        setTimeout(function() {
+            Q.state.dec('vidaRestantePropia', 1.5); //poner al poder del profesor
+            comprobarFinBatalla("fight");
+        }, 3500); //poner a la velocidad del profesor
+
+        setTimeout(function() {  
+            button.on("click", function() {
+                Q.state.dec('vidaRestanteProfesor', 4); //poner al poder del alumno
+                comprobarFinBatalla("fight");
+            });
+        }, 1000); //poner a la velocidad del alumno
+
     });
 
 
