@@ -62,7 +62,7 @@ window.addEventListener("load", function() {
         var label = stage.insert(new Q.UI.Text({ x: Q.width / 2, y: 15, size: 12, color: "white", label: "Energía: " + Q.state.get('energia') }));
         Q.state.on("change.energia", this, function(energia) {
             if (energia === 0) {
-                Q.state.set({ xPlayer:primerNivelInicio.xPlayer, yPlayer: primerNivelInicio.yPlayer, energia:50 });
+                Q.state.set({ /*Player:primerNivelInicio.xPlayer, yPlayer: primerNivelInicio.yPlayer,*/ energia:50 });
                 Q.clearStages();
                 Q.stageScene("screenMain");
             }
@@ -83,7 +83,7 @@ window.addEventListener("load", function() {
         }));
 
         botonSalir.on("click", function() {
-            Q.state.set({ xPlayer:primerNivelInicio.xPlayer, yPlayer: primerNivelInicio.yPlayer });                                                               
+            //Q.state.set({ xPlayer:primerNivelInicio.xPlayer, yPlayer: primerNivelInicio.yPlayer });                                                               
             Q.clearStages();
             Q.stageScene("screenMain");
         });
@@ -436,13 +436,15 @@ window.addEventListener("load", function() {
         });
 
         botonSalir.on("click", function() {
-            if (Q.state.get('energia') > 0) {
-
-                Q.state.set({ "vidaRestantePropia": Q.state.p.vidaPropia });
+            if (Q.state.get('energia') > 0 && Q.state.get('equipoActual') > 0) {
+                Q.state.set({ "vidaRestantePropia": Q.state.p.vidaPropia, "xPlayer": primerNivelInicio.xPlayer, "yPlayer": primerNivelInicio.yPlayer });
                 Q.clearStages();
                 Q.stageScene("level1");
             } else {
-                Q.stageScene("materialInsuficiente", 1, { escena: "expedicion", label: "No tienes energía suficiente" });
+                if(Q.state.get('energia') <= 0)
+                    Q.stageScene("materialInsuficiente", 1, { escena: "expedicion", label: "No tienes energía suficiente" });
+                else if(Q.state.get('equipoActual') <= 0)
+                    Q.stageScene("materialInsuficiente", 1, { escena: "expedicion", label: "Debes reclutar a alumnos en tu equipo" });
             }
         });
 
@@ -499,10 +501,10 @@ window.addEventListener("load", function() {
 
         menosComputadores.on("click", function() {
             if (Q.state.p.equipoComputadores > 0) {
-                var computadores = new Q.AlumnoComputadores()
+                var computadores = new Q.AlumnoComputadores();
                 Q.state.dec("equipoComputadores", 1);
                 Q.state.dec("equipoActual", 1);
-                Q.state.dec("vidaPropia", computadores.vida)
+                Q.state.dec("vidaPropia", computadores.vida);
             }
         });
     });
@@ -1382,12 +1384,12 @@ window.addEventListener("load", function() {
             if (Q.state.p.vidaRestanteProfesor <= 0) {
                 console.log("has ganado");
                 Q.clearStages();
-                Q.stageScene("finBatalla", 1, { label: "Ha ganado, intenta vecer a los demas profesores que quedan", win: true });
+                Q.stageScene("finBatalla", 1, { label: "Has ganado, intenta vencer a los demás profesores que quedan", win: true });
 
             } else if (Q.state.p.vidaRestantePropia <= 0) {
                 console.log("has perdido");
                 Q.clearStages();
-                Q.stageScene("finBatalla", 1, { label: "Ha perdido,regresa a casa y crea un ejercito mejor", win: false });
+                Q.stageScene("finBatalla", 1, { label: "Has perdido, regresa a casa y crea un ejercito mejor", win: false });
 
             } else {
                 Q.clearStages();
@@ -1440,7 +1442,7 @@ window.addEventListener("load", function() {
     Q.scene("vidaPropia", function(stage) {
         var label = stage.insert(new Q.UI.Text({ x: Q.width / 2, y: 15, size: 12, color: "white", label: "Vida: " + Q.state.get('vidaRestantePropia') }));
         Q.state.on("change.vidaRestantePropia", this, function(vida) {
-
+            vida = (vida < 0)? 0 : vida;
             label.p.label = "Vida: " + vida;
         });
     });
@@ -1449,7 +1451,7 @@ window.addEventListener("load", function() {
     Q.scene("vidaProfesor", function(stage) {
         var label = stage.insert(new Q.UI.Text({ x: Q.width / 2, y: 25, size: 12, color: "white", label: "Vida profesor: " + Q.state.get('vidaRestanteProfesor') }));
         Q.state.on("change.vidaRestanteProfesor", this, function(vidaProfesor) {
-
+            vidaProfesor = (vidaProfesor < 0)? 0 : vidaProfesor;
             label.p.label = "Vida profesor: " + vidaProfesor;
         });
     });
