@@ -431,7 +431,7 @@ window.addEventListener("load", function() {
 
         botonSalir.on("click", function() {
             if (Q.state.get('energia') > 0) {
-                console.log(Q.state.p.vidaPropia)
+
                 Q.state.set({ "vidaRestantePropia": Q.state.p.vidaPropia })
                 Q.clearStages();
                 Q.stageScene("level1");
@@ -534,17 +534,17 @@ window.addEventListener("load", function() {
             asset: "fletxaI.png"
         }));
 
-        var botonTaquillas = box.insert(new Q.UI.Button({
-            x: -70,
-            y: -150,
-            w: 150,
-            fill: "#CCCCCC",
-            label: "Taquillas"
-        }));
+        // var botonTaquillas = box.insert(new Q.UI.Button({
+        //     x: -70,
+        //     y: -150,
+        //     w: 150,
+        //     fill: "#CCCCCC",
+        //     label: "Taquillas"
+        // }));
 
         var botonClase = box.insert(new Q.UI.Button({
             x: -70,
-            y: -90,
+            y: -150,
             w: 150,
             fill: "#CCCCCC",
             label: "Clase"
@@ -552,14 +552,14 @@ window.addEventListener("load", function() {
 
         var labelClase = box.insert(new Q.UI.Text({
             x: 50,
-            y: -105,
+            y: -165,
             label: "x50",
             size: 20
         }));
 
         var botonCocina = box.insert(new Q.UI.Button({
             x: -70,
-            y: -30,
+            y: -90,
             w: 150,
             fill: "#CCCCCC",
             label: "Cocina"
@@ -567,7 +567,7 @@ window.addEventListener("load", function() {
 
         var botonCafeteria = box.insert(new Q.UI.Button({
             x: -70,
-            y: 30,
+            y: -30,
             w: 150,
             fill: "#CCCCCC",
             label: "Cafeteria"
@@ -575,7 +575,7 @@ window.addEventListener("load", function() {
 
         var botonAparcamiento = box.insert(new Q.UI.Button({
             x: -70,
-            y: 90,
+            y: 30,
             w: 150,
             fill: "#CCCCCC",
             label: "Aparcamiento"
@@ -586,17 +586,17 @@ window.addEventListener("load", function() {
             Q.stageScene("screenMain");
         });
 
-        botonTaquillas.on("click", function() {
-            if (!Q.state.p.taquillas) {
-                dinero = comprobarDinero(1, "edificios");
-                if (dinero) {
-                    Q.state.p.taquillas = true;
-                    box.insert(new Q.UI.Button({ x: 50, y: -145, asset: "tick1.png" }));
-                    Q.state.dec("coins", 1);
-                    labelTaquillas.destroy();
-                }
-            }
-        });
+        // botonTaquillas.on("click", function() {
+        //     if (!Q.state.p.taquillas) {
+        //         dinero = comprobarDinero(1, "edificios");
+        //         if (dinero) {
+        //             Q.state.p.taquillas = true;
+        //             box.insert(new Q.UI.Button({ x: 50, y: -145, asset: "tick1.png" }));
+        //             Q.state.dec("coins", 1);
+        //             labelTaquillas.destroy();
+        //         }
+        //     }
+        // });
 
         botonClase.on("click", function() {
             dinero = comprobarDinero(50, "edificios");
@@ -611,7 +611,7 @@ window.addEventListener("load", function() {
                 dinero = comprobarDinero(50, "edificios");
                 if (dinero) {
                     Q.state.p.cocina = true;
-                    box.insert(new Q.UI.Button({ x: 50, y: -30, asset: "tick1.png" }));
+                    box.insert(new Q.UI.Button({ x: 50, y: -90, asset: "tick1.png" }));
                     Q.state.dec("coins", 50);
                     labelCocina.destroy();
                 }
@@ -623,41 +623,41 @@ window.addEventListener("load", function() {
                 dinero = comprobarDinero(50, "edificios");
                 if (dinero) {
                     Q.state.p.cafeteria = true;
-                    box.insert(new Q.UI.Button({ x: 50, y: 30, asset: "tick1.png" }));
+                    box.insert(new Q.UI.Button({ x: 50, y: -30, asset: "tick1.png" }));
                     Q.state.dec("coins", 50);
                     labelCafeteria.destroy();
                 }
             }
         });
 
-        if (Q.state.p.taquillas) {
-            box.insert(new Q.UI.Button({ x: 50, y: -145, asset: "tick1.png" }));
-        } else {
-            var labelTaquillas = box.insert(new Q.UI.Text({
-                x: 50,
-                y: -155,
-                label: "x1",
-                size: 20
-            }));
-        }
+        // if (Q.state.p.taquillas) {
+        //     box.insert(new Q.UI.Button({ x: 50, y: -145, asset: "tick1.png" }));
+        // } else {
+        //     var labelTaquillas = box.insert(new Q.UI.Text({
+        //         x: 50,
+        //         y: -155,
+        //         label: "x1",
+        //         size: 20
+        //     }));
+        // }
 
         if (Q.state.p.cocina) {
-            box.insert(new Q.UI.Button({ x: 50, y: -30, asset: "tick1.png" }));
+            box.insert(new Q.UI.Button({ x: 50, y: -90, asset: "tick1.png" }));
         } else {
             var labelCocina = box.insert(new Q.UI.Text({
                 x: 50,
-                y: -30,
+                y: -90,
                 label: "x50",
                 size: 20
             }));
         }
 
         if (Q.state.p.cafeteria) {
-            box.insert(new Q.UI.Button({ x: 50, y: 30, asset: "tick1.png" }));
+            box.insert(new Q.UI.Button({ x: 50, y: -30, asset: "tick1.png" }));
         } else {
             var labelCafeteria = box.insert(new Q.UI.Text({
                 x: 50,
-                y: 30,
+                y: -30,
                 label: "x50",
                 size: 20
             }));
@@ -1264,6 +1264,8 @@ window.addEventListener("load", function() {
     }
     Q.scene('quiz', function(stage) {
         var textPregunta, respuesta1, respuesta2, respuesta3, correcta;
+        Q.stageScene("vidaPropia", 1);
+        Q.stageScene("vidaProfesor", 2);
         $.getJSON("data/quiz.json", function(datos) {
 
             id = Math.floor(Math.random() * (3 - 1) + 1);
@@ -1339,8 +1341,7 @@ window.addEventListener("load", function() {
 
     Q.scene('comprobarQuiz', function(stage) {
         var mensaje
-        console.log(Q.state.p.vidaRestanteProfesor);
-        console.log(Q.state.p.vidaRestantePropia)
+
         if (stage.options.correcta == stage.options.respuesta) {
             Q.state.dec("vidaRestanteProfesor", 3)
             mensaje = "Has acertado";
@@ -1427,6 +1428,22 @@ window.addEventListener("load", function() {
         });
 
         box.fit(20);
+    });
+
+    Q.scene("vidaPropia", function(stage) {
+        var label = stage.insert(new Q.UI.Text({ x: Q.width / 2, y: 15, size: 12, color: "white", label: "Vida: " + Q.state.get('vidaRestantePropia') }));
+        Q.state.on("change.vidaRestantePropia", this, function(vida) {
+
+            label.p.label = "Vida: " + vida;
+        });
+    });
+
+    Q.scene("vidaProfesor", function(stage) {
+        var label = stage.insert(new Q.UI.Text({ x: Q.width / 2, y: 25, size: 12, color: "white", label: "Vida profesor: " + Q.state.get('vidaRestanteProfesor') }));
+        Q.state.on("change.vidaRestanteProfesor", this, function(vidaProfesor) {
+
+            label.p.label = "Vida profesor: " + vidaProfesor;
+        });
     });
     Q.scene('startGame', function(stage) {
 
