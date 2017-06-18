@@ -7,7 +7,9 @@ window.addEventListener("load", function() {
     const inicioNiveles = {
         uno: { xPlayer: 90, yPlayer: 925.5 },
         dos: { xPlayer: 90, yPlayer: 925.5 }
-    };                                             
+    };
+
+    var alumnosActuales = [];
 
     var Q = window.Q = Quintus({ audioSupported: ['mp3', 'ogg'] })
         .include("Sprites, Scenes, Input, Touch, UI, TMX, Anim, 2D, Audio")
@@ -64,7 +66,7 @@ window.addEventListener("load", function() {
         var label = stage.insert(new Q.UI.Text({ x: Q.width / 2, y: 15, size: 12, color: "white", label: "Energía: " + Q.state.get('energia') }));
         Q.state.on("change.energia", this, function(energia) {
             if (energia === 0) {
-                Q.state.set({ energia:50 }); //quitar, esta para pruebas
+                Q.state.set({ energia: 50 }); //quitar, esta para pruebas
                 Q.clearStages();
                 Q.stageScene("screenMain");
             }
@@ -175,7 +177,7 @@ window.addEventListener("load", function() {
 
     Q.scene('batalla', function(stage) {
 
-        stage.insert(new Q.Repeater({ asset: stage.options.foto}));
+        stage.insert(new Q.Repeater({ asset: stage.options.foto }));
         var box = stage.insert(new Q.UI.Container({
             x: Q.width / 2,
             y: Q.height / 2,
@@ -442,9 +444,9 @@ window.addEventListener("load", function() {
                 Q.clearStages();
                 Q.stageScene("level1");
             } else {
-                if(Q.state.get('energia') <= 0)
+                if (Q.state.get('energia') <= 0)
                     Q.stageScene("materialInsuficiente", 1, { escena: "expedicion", label: "No tienes energía suficiente" });
-                else if(Q.state.get('equipoActual') <= 0)
+                else if (Q.state.get('equipoActual') <= 0)
                     Q.stageScene("materialInsuficiente", 1, { escena: "expedicion", label: "Debes reclutar a alumnos en tu equipo" });
             }
         });
@@ -456,6 +458,7 @@ window.addEventListener("load", function() {
                 Q.state.inc("equipoSoftware", 1);
                 Q.state.inc("equipoActual", 1);
                 Q.state.inc("vidaPropia", software.vida);
+                alumnosActuales.push(software);
             }
 
         });
@@ -466,6 +469,7 @@ window.addEventListener("load", function() {
                 Q.state.dec("equipoSoftware", 1);
                 Q.state.dec("equipoActual", 1);
                 Q.state.dec("vidaPropia", software.vida);
+                sacarAlumnoDelEquipo(software);
             }
 
         });
@@ -477,6 +481,7 @@ window.addEventListener("load", function() {
                 Q.state.inc("equipoInformatica", 1);
                 Q.state.inc("equipoActual", 1);
                 Q.state.inc("vidaPropia", informatica.vida);
+                alumnosActuales.push(informatica);
             }
         });
 
@@ -486,6 +491,7 @@ window.addEventListener("load", function() {
                 Q.state.dec("equipoInformatica", 1);
                 Q.state.dec("equipoActual", 1);
                 Q.state.dec("vidaPropia", informatica.vida);
+                sacarAlumnoDelEquipo(informatica);
             }
 
         });
@@ -497,6 +503,7 @@ window.addEventListener("load", function() {
                 Q.state.inc("equipoComputadores", 1);
                 Q.state.inc("equipoActual", 1);
                 Q.state.inc("vidaPropia", computadores.vida);
+                alumnosActuales.push(computadores);
             }
         });
 
@@ -506,9 +513,24 @@ window.addEventListener("load", function() {
                 Q.state.dec("equipoComputadores", 1);
                 Q.state.dec("equipoActual", 1);
                 Q.state.dec("vidaPropia", computadores.vida);
+                sacarAlumnoDelEquipo(computadores);
             }
         });
     });
+
+
+    var sacarAlumnoDelEquipo = function(alumno) {
+        var i = alumnosActuales.length - 1;
+
+        while((JSON.stringify(alumnosActuales[i]) != JSON.stringify(alumno)) && (i >= 0)){
+            i--;
+        }
+
+        if(i > 0){
+            alumnosActuales.splice(i, 1);
+        }
+
+    };
 
 
     function comprobarExpedicion(tipoAlumno, equipoAlumno) {
@@ -1057,6 +1079,8 @@ window.addEventListener("load", function() {
             conocimientos = comprobarConocimientos(Q.state.p.gestion, Q.state.p.matematicas, alumnoS, "reclutar");
             if (conocimientos) {
                 Q.state.inc("alumnoSoftware", 1);
+                Q.state.dec("gestion", 4);
+                Q.state.dec("matematicas", 1);
             }
         });
 
@@ -1065,6 +1089,8 @@ window.addEventListener("load", function() {
             conocimientos = comprobarConocimientos(Q.state.p.ensamblador, Q.state.p.c, alumnoC, "reclutar");
             if (conocimientos) {
                 Q.state.inc("alumnoComputadores", 1);
+                Q.state.dec("ensamblador", 3);
+                Q.state.dec("c", 2);
             }
         });
 
@@ -1073,6 +1099,8 @@ window.addEventListener("load", function() {
             conocimientos = comprobarConocimientos(Q.state.p.cmasmas, Q.state.p.fisica, alumnoI, "reclutar");
             if (conocimientos) {
                 Q.state.inc("alumnoInformatica", 1);
+                Q.state.dec("cmasmas", 5);
+                Q.state.dec("fisica", 1);
             }
         });
         box.fit(20);
@@ -1277,7 +1305,7 @@ window.addEventListener("load", function() {
         var textPregunta, respuesta1, respuesta2, respuesta3, correcta, id;
         Q.stageScene("vidaPropia", 1);
         Q.stageScene("vidaProfesor", 2);
-        
+
         $.getJSON("data/quiz.json", function(datos) {
 
             id = Math.floor(Math.random() * (7 - 1) + 1);
@@ -1390,7 +1418,7 @@ window.addEventListener("load", function() {
     });
 
 
-    var comprobarFinBatalla = function(scene){
+    var comprobarFinBatalla = function(scene) {
         if (Q.state.p.vidaRestanteProfesor <= 0) {
             Q.clearStages();
             Q.stageScene("finBatalla", 1, { label: "Has ganado, intenta vencer a los demás profesores que quedan", win: true });
@@ -1420,7 +1448,7 @@ window.addEventListener("load", function() {
             y: 0,
             size: 15,
             fill: "#CCCCCC",
-            label: "Cervatana"
+            label: "Cerbatana"
         }));
 
         setTimeout(function() {
@@ -1428,7 +1456,7 @@ window.addEventListener("load", function() {
             comprobarFinBatalla("fight");
         }, 3500); //poner a la velocidad del profesor
 
-        setTimeout(function() {  
+        setTimeout(function() {
             button.on("click", function() {
                 Q.state.dec('vidaRestanteProfesor', 4); //poner al poder del alumno
                 comprobarFinBatalla("fight");
@@ -1479,7 +1507,7 @@ window.addEventListener("load", function() {
     Q.scene("vidaPropia", function(stage) {
         var label = stage.insert(new Q.UI.Text({ x: Q.width / 2, y: 15, size: 12, color: "white", label: "Vida: " + Q.state.get('vidaRestantePropia') }));
         Q.state.on("change.vidaRestantePropia", this, function(vida) {
-            vida = (vida < 0)? 0 : vida;
+            vida = (vida < 0) ? 0 : vida;
             label.p.label = "Vida: " + vida;
         });
     });
@@ -1488,7 +1516,7 @@ window.addEventListener("load", function() {
     Q.scene("vidaProfesor", function(stage) {
         var label = stage.insert(new Q.UI.Text({ x: Q.width / 2, y: 25, size: 12, color: "white", label: "Vida profesor: " + Q.state.get('vidaRestanteProfesor') }));
         Q.state.on("change.vidaRestanteProfesor", this, function(vidaProfesor) {
-            vidaProfesor = (vidaProfesor < 0)? 0 : vidaProfesor;
+            vidaProfesor = (vidaProfesor < 0) ? 0 : vidaProfesor;
             label.p.label = "Vida profesor: " + vidaProfesor;
         });
     });
@@ -1501,7 +1529,7 @@ window.addEventListener("load", function() {
             y: Q.height / 2
         }));
 
-        Q.state.reset({ coins: 200, taquillas: false, cmasmas: 0, gestion: 0, c: 0, ensamblador: 0, matematicas: 0, fisica: 0, alumnoSoftware: 1, alumnoComputadores: 0, alumnoInformatica: 1, tamañoEquipo: 2, equipoActual: 0, equipoSoftware: 0, equipoInformatica: 0, equipoComputadores: 0, cocinero: 0, camarero: 0, recolector: 0, cocina: false, cafeteria: false, totalTrabajadores: 0, trabajadoresActuales: 0, comida: 0, energia: 50, xPlayer: inicioNiveles.uno.xPlayer, yPlayer: inicioNiveles.uno.yPlayer, vidaProfesor: 0, vidaPropia: 0, vidaRestanteProfesor: 0, vidaRestantePropia: 0 });
+        Q.state.reset({ coins: 200, cmasmas: 0, gestion: 0, c: 0, ensamblador: 0, matematicas: 0, fisica: 0, alumnoSoftware: 1, alumnoComputadores: 0, alumnoInformatica: 1, tamañoEquipo: 2, equipoActual: 0, equipoSoftware: 0, equipoInformatica: 0, equipoComputadores: 0, cocinero: 0, camarero: 0, recolector: 0, cocina: false, cafeteria: false, totalTrabajadores: 0, trabajadoresActuales: 0, comida: 0, energia: 50, xPlayer: inicioNiveles.uno.xPlayer, yPlayer: inicioNiveles.uno.yPlayer, vidaProfesor: 0, vidaPropia: 0, vidaRestanteProfesor: 0, vidaRestantePropia: 0 });
 
         var button = box.insert(new Q.UI.Button({ asset: "puerta/1.jpg", scale: 1 / 2 }));
         var titulo = box.insert(new Q.UI.Button({ x: 0, y: -10, asset: "titulo.png" }));
