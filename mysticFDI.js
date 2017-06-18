@@ -148,7 +148,7 @@ window.addEventListener("load", function() {
             });
             this.on("acertar", function() {
 
-                this.p.sheet = "AceFallar"
+                this.p.sheet = "AceFallar";
             });
             this.on("win", function() {
 
@@ -156,7 +156,7 @@ window.addEventListener("load", function() {
             });
             this.on("perder", function() {
 
-                this.p.sheet = "AceWin"
+                this.p.sheet = "AceWin";
             });
 
 
@@ -187,7 +187,7 @@ window.addEventListener("load", function() {
             });
             this.on("acertar", function() {
 
-                this.p.sheet = "CloverFallar"
+                this.p.sheet = "CloverFallar";
             });
             this.on("win", function() {
 
@@ -195,7 +195,7 @@ window.addEventListener("load", function() {
             });
             this.on("perder", function() {
 
-                this.p.sheet = "CloverWin"
+                this.p.sheet = "CloverWin";
             });
 
 
@@ -226,19 +226,16 @@ window.addEventListener("load", function() {
 
     Q.scene('batalla', function(stage) {
 
-<<<<<<< HEAD
         batalla = true;
 
-        stage.insert(new Q.Repeater({ asset: stage.options.profesor.p.foto }));
-=======
-        var profesor = stage.options.profesor
+        var profesor = stage.options.profesor;
         profesor.p.x = 150;
         profesor.p.y = 230;
         profesor.p.h = 300;
         profesor.p.w = 300;
-        profesor.p.scale = 2
+        profesor.p.scale = 2;
         stage.insert(profesor);
->>>>>>> 355f2db2ef3bd0f3a455ccff49019d0b9caa27cf
+
         var box = stage.insert(new Q.UI.Container({
             x: Q.width / 2,
             y: Q.height / 2,
@@ -502,7 +499,7 @@ window.addEventListener("load", function() {
 
         botonSalir.on("click", function() {
             if (Q.state.get('energia') > 0 && Q.state.get('equipoActual') > 0) {
-                Q.state.set({ "vidaRestantePropia": Q.state.p.vidaPropia, "xPlayer": inicioNiveles.uno.xPlayer, "yPlayer": inicioNiveles.uno.yPlayer });
+                Q.state.set({ "vidaRestantePropia": Q.state.get("vidaPropia"), "xPlayer": inicioNiveles.uno.xPlayer, "yPlayer": inicioNiveles.uno.yPlayer });
                 Q.clearStages();
                 Q.stageScene("level1");
             } else {
@@ -584,19 +581,11 @@ window.addEventListener("load", function() {
     var sacarAlumnoDelEquipo = function(alumno) {
         var i = alumnosActuales.length - 1;
 
-<<<<<<< HEAD
-        while((alumnosActuales[i].especialidad.localeCompare(alumno.especialidad) !== 0) && (i >= 0)){
+        while ((alumnosActuales[i].especialidad.localeCompare(alumno.especialidad) !== 0) && (i >= 0)) {
             i--;
         }
 
-        if(i >= 0){
-=======
-        while ((JSON.stringify(alumnosActuales[i]) != JSON.stringify(alumno)) && (i >= 0)) {
-            i--;
-        }
-
-        if (i > 0) {
->>>>>>> 355f2db2ef3bd0f3a455ccff49019d0b9caa27cf
+        if (i >= 0) {
             alumnosActuales.splice(i, 1);
         }
     };
@@ -1431,7 +1420,7 @@ window.addEventListener("load", function() {
         var textPregunta, respuesta1, respuesta2, respuesta3, correcta, id;
         Q.stageScene("vidaPropia", 2);
         Q.stageScene("vidaProfesor", 3);
-        var profesor = stage.options.profesor
+        var profesor = stage.options.profesor;
 
         stage.insert(profesor);
 
@@ -1509,16 +1498,16 @@ window.addEventListener("load", function() {
 
     Q.scene('comprobarQuiz', function(stage) {
         var mensaje;
-        var profesor = stage.options.profesor1
+        var profesor = stage.options.profesor1;
         stage.insert(profesor);
 
         if (stage.options.correcta == stage.options.respuesta) {
             Q.state.dec("vidaRestanteProfesor", 3);
             mensaje = "Has acertado";
-            profesor.trigger('acertar')
+            profesor.trigger('acertar');
         } else {
             mensaje = "Has fallado";
-            profesor.trigger('fallar')
+            profesor.trigger('fallar');
 
             Q.state.dec("vidaRestantePropia", 3);
         }
@@ -1551,33 +1540,18 @@ window.addEventListener("load", function() {
         box.fit(20);
     });
 
-
-<<<<<<< HEAD
-    var comprobarFinBatalla = function(scene) {
+    var comprobarFinBatalla = function(scene, profesor) {
         if(batalla){
             if (Q.state.p.vidaRestanteProfesor <= 0) {
                 Q.clearStages();
-                Q.stageScene("finBatalla", 1, { label: "Has ganado, intenta vencer a los demás profesores que quedan", win: true });
+                Q.stageScene("finBatalla", 1, { label: "Has ganado, intenta vencer a los demás profesores que quedan", win: true, profesor1: profesor });
             } else if (Q.state.p.vidaRestantePropia <= 0) {
                 Q.clearStages();
-                Q.stageScene("finBatalla", 1, { label: "Has perdido, regresa a casa y crea un ejercito mejor", win: false });
+                Q.stageScene("finBatalla", 1, { label: "Has perdido, regresa a casa y crea un ejercito mejor", win: false, profesor1: profesor });
             } else if (scene.localeCompare("quiz") === 0){
                 Q.clearStages();
-                Q.stageScene(scene);
+                Q.stageScene(scene, 0, { profesor: profesor });
             }
-=======
-    var comprobarFinBatalla = function(scene, profesor) {
-        if (Q.state.p.vidaRestanteProfesor <= 0) {
-            Q.clearStages();
-            Q.stageScene("finBatalla", 1, { label: "Has ganado, intenta vencer a los demás profesores que quedan", win: true, profesor1: profesor });
-
-        } else if (Q.state.p.vidaRestantePropia <= 0) {
-            Q.clearStages();
-            Q.stageScene("finBatalla", 1, { label: "Has perdido, regresa a casa y crea un ejercito mejor", win: false, profesor1: profesor });
-        } else {
-            Q.clearStages();
-            Q.stageScene(scene, 0, { profesor: profesor });
->>>>>>> 355f2db2ef3bd0f3a455ccff49019d0b9caa27cf
         }
     };
 
@@ -1609,13 +1583,13 @@ window.addEventListener("load", function() {
 
         setTimeout(function() {
             Q.state.dec('vidaRestantePropia', fuerzaProfesor);
-            comprobarFinBatalla("fight");
+            comprobarFinBatalla("fight", stage.options.profesor);
         }, velocidadProfesor);
 
         setTimeout(function() {
             button.on("click", function() {
                 Q.state.dec('vidaRestanteProfesor', alumnosActuales[0].poder);
-                comprobarFinBatalla("fight");
+                comprobarFinBatalla("fight", stage.options.profesor);
             });
         }, velocidadAlumno1);
 
@@ -1633,7 +1607,7 @@ window.addEventListener("load", function() {
             setTimeout(function() {
                 button2.on("click", function() {
                     Q.state.dec('vidaRestanteProfesor', alumnosActuales[1].poder);
-                    comprobarFinBatalla("fight");
+                    comprobarFinBatalla("fight", stage.options.profesor);
                 });
             }, velocidadAlumno2);
         }
@@ -1642,20 +1616,19 @@ window.addEventListener("load", function() {
 
 
     Q.scene('finBatalla', function(stage) {
-<<<<<<< HEAD
+        
         batalla = false;
-        Q.state.set({ "vidaRestantePropia": Q.state.p.vidaPropia });
-=======
-        var profesor = stage.options.profesor1
+        Q.state.set({ "vidaRestantePropia": Q.state.get("vidaPropia") });
+
+        var profesor = stage.options.profesor1;
         stage.insert(profesor);
         if (stage.options.win) {
-            profesor.trigger("win")
+            profesor.trigger("win");
 
         } else {
-            profesor.trigger("perder")
+            profesor.trigger("perder");
 
         }
->>>>>>> 355f2db2ef3bd0f3a455ccff49019d0b9caa27cf
 
         var box = stage.insert(new Q.UI.Container({
             x: Q.width / 2,
@@ -1680,11 +1653,11 @@ window.addEventListener("load", function() {
 
         button.on("click", function() {
             if (stage.options.win) {
-                profesor.trigger("win")
+                profesor.trigger("win");
                 Q.clearStages();
                 Q.stageScene("level1");
             } else {
-                profesor.trigger("lost")
+                profesor.trigger("lost");
                 Q.clearStages();
                 Q.stageScene("screenMain");
             }
