@@ -19,6 +19,13 @@ window.addEventListener("load", function() {
         .controls().touch()
         .enableSound();
 
+    Q.animations('ace_anim', {
+        front: { frames: [1], rate: 1 / 2.5, loop: false },
+        acertar: { frames: [4], rate: 1 / 2.5, loop: false },
+        fallar: { frames: [3], rate: 1 / 2.5, loop: false },
+        win: { frames: [0], rate: 1 / 15, loop: false },
+        lost: { frames: [2], rate: 1 / 2.5, loop: false }
+    });
 
     Q.animations('player_anim', {
         front: { frames: [0, 1, 2, 3], rate: 1 / 2.5, loop: false },
@@ -28,9 +35,11 @@ window.addEventListener("load", function() {
     });
 
 
-    Q.load(["fdi.png", "fletxaI.png", "fletxaD.png", "tick1.png", "puerta/1.jpg", "puerta/2.jpg", "puerta/3.jpg", "puerta/4.jpg", "puerta/5.jpg", "puerta/6.jpg", "puerta/7.jpg", "puerta/8.jpg", "puerta/9.jpg", "puerta/10.jpg", "puerta/11.jpg", "puerta/12.jpg", "titulo.png", "personaje.png", "player.json", "coins.mp3", "coins.ogg", "mas.png", "menos.png", "quiz.json", "profesor1a.png", "profesor2a.png"], function() {
+    Q.load(["fdi.png", "fletxaI.png", "fletxaD.png", "tick1.png", "puerta/1.jpg", "puerta/2.jpg", "puerta/3.jpg", "puerta/4.jpg", "puerta/5.jpg", "puerta/6.jpg", "puerta/7.jpg", "puerta/8.jpg", "puerta/9.jpg", "puerta/10.jpg", "puerta/11.jpg", "puerta/12.jpg", "titulo.png", "personaje.png", "player.json", "coins.mp3", "coins.ogg", "mas.png", "menos.png", "quiz.json", "profesor1a.png", "profesor2a.png", "ace.png", "ace.json", "clover.png", "clover.json"], function() {
         Q.loadTMX("level.tmx", function() {
             Q.compileSheets("personaje.png", "player.json");
+            Q.compileSheets("ace.png", "ace.json");
+            Q.compileSheets("clover.png", "clover.json");
             Q.stageScene("startGame");
         });
     });
@@ -53,7 +62,8 @@ window.addEventListener("load", function() {
             y = (Math.random() * (860 - 92) + 92).toFixed(1);
 
             nProfesor = Math.floor(Math.random() * (3 - 1) + 1);
-            if (nProfesor === 1)
+
+            if (nProfesor == 1)
                 stage.insert(new Q.Profesor1({ x: parseInt(x), y: parseInt(y) }));
             else
                 stage.insert(new Q.Profesor2({ x: parseInt(x), y: parseInt(y) }));
@@ -124,13 +134,33 @@ window.addEventListener("load", function() {
         init: function(p) {
             this._super(p, {
                 foto: "profesor1a.png",
+                sheet: "Ace",
+                sprite: "ace_anim",
                 vida: 10,
                 poder: 4,
                 velocidad: 3,
                 scale: 1 / 7
             });
+            this.add('2d,aiBounce,animation,Profesor');
+            this.on("fallar", function() {
 
-            this.add('2d,aiBounce,Profesor');
+                this.p.sheet = "AceAcertar";
+            });
+            this.on("acertar", function() {
+
+                this.p.sheet = "AceFallar"
+            });
+            this.on("win", function() {
+
+                this.p.sheet = "AcePerder";
+            });
+            this.on("perder", function() {
+
+                this.p.sheet = "AceWin"
+            });
+
+
+
 
 
         }
@@ -141,13 +171,32 @@ window.addEventListener("load", function() {
         init: function(p) {
             this._super(p, {
                 foto: "profesor2a.png",
+                sheet: "Clover",
+
                 vida: 13,
                 poder: 2,
                 velocidad: 3.5,
                 scale: 1 / 7
             });
 
-            this.add('2d,aiBounce,Profesor');
+            this.add('2d,aiBounce,animation,Profesor');
+
+            this.on("fallar", function() {
+
+                this.p.sheet = "CloverAcertar";
+            });
+            this.on("acertar", function() {
+
+                this.p.sheet = "CloverFallar"
+            });
+            this.on("win", function() {
+
+                this.p.sheet = "CloverPerder";
+            });
+            this.on("perder", function() {
+
+                this.p.sheet = "CloverWin"
+            });
 
 
         }
@@ -177,9 +226,19 @@ window.addEventListener("load", function() {
 
     Q.scene('batalla', function(stage) {
 
+<<<<<<< HEAD
         batalla = true;
 
         stage.insert(new Q.Repeater({ asset: stage.options.profesor.p.foto }));
+=======
+        var profesor = stage.options.profesor
+        profesor.p.x = 150;
+        profesor.p.y = 230;
+        profesor.p.h = 300;
+        profesor.p.w = 300;
+        profesor.p.scale = 2
+        stage.insert(profesor);
+>>>>>>> 355f2db2ef3bd0f3a455ccff49019d0b9caa27cf
         var box = stage.insert(new Q.UI.Container({
             x: Q.width / 2,
             y: Q.height / 2,
@@ -207,7 +266,7 @@ window.addEventListener("load", function() {
 
         quiz.on("click", function() {
             Q.clearStages();
-            Q.stageScene('quiz');
+            Q.stageScene('quiz', 1, { profesor: profesor });
         });
         box.fit(20);
     });
@@ -525,11 +584,19 @@ window.addEventListener("load", function() {
     var sacarAlumnoDelEquipo = function(alumno) {
         var i = alumnosActuales.length - 1;
 
+<<<<<<< HEAD
         while((alumnosActuales[i].especialidad.localeCompare(alumno.especialidad) !== 0) && (i >= 0)){
             i--;
         }
 
         if(i >= 0){
+=======
+        while ((JSON.stringify(alumnosActuales[i]) != JSON.stringify(alumno)) && (i >= 0)) {
+            i--;
+        }
+
+        if (i > 0) {
+>>>>>>> 355f2db2ef3bd0f3a455ccff49019d0b9caa27cf
             alumnosActuales.splice(i, 1);
         }
     };
@@ -1362,8 +1429,11 @@ window.addEventListener("load", function() {
 
     Q.scene('quiz', function(stage) {
         var textPregunta, respuesta1, respuesta2, respuesta3, correcta, id;
-        Q.stageScene("vidaPropia", 1);
-        Q.stageScene("vidaProfesor", 2);
+        Q.stageScene("vidaPropia", 2);
+        Q.stageScene("vidaProfesor", 3);
+        var profesor = stage.options.profesor
+
+        stage.insert(profesor);
 
         $.getJSON("data/quiz.json", function(datos) {
 
@@ -1420,15 +1490,15 @@ window.addEventListener("load", function() {
                     }));
 
                     botonRespuesta1.on("click", function() {
-                        Q.stageScene("comprobarQuiz", 1, { respuesta: 1, correcta: correcta });
+                        Q.stageScene("comprobarQuiz", 1, { respuesta: 1, correcta: correcta, profesor1: profesor });
 
                     });
                     botonRespuesta2.on("click", function() {
-                        Q.stageScene("comprobarQuiz", 1, { respuesta: 2, correcta: correcta });
+                        Q.stageScene("comprobarQuiz", 1, { respuesta: 2, correcta: correcta, profesor1: profesor });
 
                     });
                     botonRespuesta3.on("click", function() {
-                        Q.stageScene("comprobarQuiz", 1, { respuesta: 3, correcta: correcta });
+                        Q.stageScene("comprobarQuiz", 1, { respuesta: 3, correcta: correcta, profesor1: profesor });
 
                     });
                 }
@@ -1439,12 +1509,17 @@ window.addEventListener("load", function() {
 
     Q.scene('comprobarQuiz', function(stage) {
         var mensaje;
+        var profesor = stage.options.profesor1
+        stage.insert(profesor);
 
         if (stage.options.correcta == stage.options.respuesta) {
             Q.state.dec("vidaRestanteProfesor", 3);
             mensaje = "Has acertado";
+            profesor.trigger('acertar')
         } else {
             mensaje = "Has fallado";
+            profesor.trigger('fallar')
+
             Q.state.dec("vidaRestantePropia", 3);
         }
 
@@ -1470,13 +1545,14 @@ window.addEventListener("load", function() {
         }));
 
         button.on("click", function() {
-            comprobarFinBatalla("quiz");
+            comprobarFinBatalla("quiz", profesor);
         });
 
         box.fit(20);
     });
 
 
+<<<<<<< HEAD
     var comprobarFinBatalla = function(scene) {
         if(batalla){
             if (Q.state.p.vidaRestanteProfesor <= 0) {
@@ -1489,6 +1565,19 @@ window.addEventListener("load", function() {
                 Q.clearStages();
                 Q.stageScene(scene);
             }
+=======
+    var comprobarFinBatalla = function(scene, profesor) {
+        if (Q.state.p.vidaRestanteProfesor <= 0) {
+            Q.clearStages();
+            Q.stageScene("finBatalla", 1, { label: "Has ganado, intenta vencer a los demás profesores que quedan", win: true, profesor1: profesor });
+
+        } else if (Q.state.p.vidaRestantePropia <= 0) {
+            Q.clearStages();
+            Q.stageScene("finBatalla", 1, { label: "Has perdido, regresa a casa y crea un ejercito mejor", win: false, profesor1: profesor });
+        } else {
+            Q.clearStages();
+            Q.stageScene(scene, 0, { profesor: profesor });
+>>>>>>> 355f2db2ef3bd0f3a455ccff49019d0b9caa27cf
         }
     };
 
@@ -1553,8 +1642,20 @@ window.addEventListener("load", function() {
 
 
     Q.scene('finBatalla', function(stage) {
+<<<<<<< HEAD
         batalla = false;
         Q.state.set({ "vidaRestantePropia": Q.state.p.vidaPropia });
+=======
+        var profesor = stage.options.profesor1
+        stage.insert(profesor);
+        if (stage.options.win) {
+            profesor.trigger("win")
+
+        } else {
+            profesor.trigger("perder")
+
+        }
+>>>>>>> 355f2db2ef3bd0f3a455ccff49019d0b9caa27cf
 
         var box = stage.insert(new Q.UI.Container({
             x: Q.width / 2,
@@ -1579,9 +1680,11 @@ window.addEventListener("load", function() {
 
         button.on("click", function() {
             if (stage.options.win) {
+                profesor.trigger("win")
                 Q.clearStages();
                 Q.stageScene("level1");
             } else {
+                profesor.trigger("lost")
                 Q.clearStages();
                 Q.stageScene("screenMain");
             }

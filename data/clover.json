@@ -1,0 +1,7 @@
+{
+    "Clover": { "sx": 252, "sy": 164, "tileW": 97, "tileH": 165, "frames": 1 },
+    "CloverAcertar": { "sx": 0, "sy": 172, "tileW": 109, "tileH": 175, "frames": 1 },
+    "CloverFallar": { "sx": 252, "sy": 0, "tileW": 102, "tileH": 163, "frames": 1 },
+    "CloverWin": { "sx": 138, "sy": 0, "tileW": 113, "tileH": 217, "frames": 1 },
+    "CloverPerder": { "sx": 0, "sy": 0, "tileW": 137, "tileH": 171, "frames": 1 }
+}
