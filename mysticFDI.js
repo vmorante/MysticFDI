@@ -7,7 +7,7 @@ window.addEventListener("load", function() {
     const inicioNiveles = {
         uno: { xPlayer: 90, yPlayer: 925.5 },
         dos: { xPlayer: 90, yPlayer: 925.5 }
-    };                                             
+    };
 
     var Q = window.Q = Quintus({ audioSupported: ['mp3', 'ogg'] })
         .include("Sprites, Scenes, Input, Touch, UI, TMX, Anim, 2D, Audio")
@@ -64,7 +64,7 @@ window.addEventListener("load", function() {
         var label = stage.insert(new Q.UI.Text({ x: Q.width / 2, y: 15, size: 12, color: "white", label: "Energía: " + Q.state.get('energia') }));
         Q.state.on("change.energia", this, function(energia) {
             if (energia === 0) {
-                Q.state.set({ energia:50 }); //quitar, esta para pruebas
+                Q.state.set({ energia: 50 }); //quitar, esta para pruebas
                 Q.clearStages();
                 Q.stageScene("screenMain");
             }
@@ -175,7 +175,7 @@ window.addEventListener("load", function() {
 
     Q.scene('batalla', function(stage) {
 
-        stage.insert(new Q.Repeater({ asset: stage.options.foto}));
+        stage.insert(new Q.Repeater({ asset: stage.options.foto }));
         var box = stage.insert(new Q.UI.Container({
             x: Q.width / 2,
             y: Q.height / 2,
@@ -442,9 +442,9 @@ window.addEventListener("load", function() {
                 Q.clearStages();
                 Q.stageScene("level1");
             } else {
-                if(Q.state.get('energia') <= 0)
+                if (Q.state.get('energia') <= 0)
                     Q.stageScene("materialInsuficiente", 1, { escena: "expedicion", label: "No tienes energía suficiente" });
-                else if(Q.state.get('equipoActual') <= 0)
+                else if (Q.state.get('equipoActual') <= 0)
                     Q.stageScene("materialInsuficiente", 1, { escena: "expedicion", label: "Debes reclutar a alumnos en tu equipo" });
             }
         });
@@ -1057,6 +1057,8 @@ window.addEventListener("load", function() {
             conocimientos = comprobarConocimientos(Q.state.p.gestion, Q.state.p.matematicas, alumnoS, "reclutar");
             if (conocimientos) {
                 Q.state.inc("alumnoSoftware", 1);
+                Q.state.dec("gestion", 4)
+                Q.state.dec("matematicas", 1)
             }
         });
 
@@ -1065,6 +1067,8 @@ window.addEventListener("load", function() {
             conocimientos = comprobarConocimientos(Q.state.p.ensamblador, Q.state.p.c, alumnoC, "reclutar");
             if (conocimientos) {
                 Q.state.inc("alumnoComputadores", 1);
+                Q.state.dec("ensamblador", 3)
+                Q.state.dec("c", 2)
             }
         });
 
@@ -1073,6 +1077,8 @@ window.addEventListener("load", function() {
             conocimientos = comprobarConocimientos(Q.state.p.cmasmas, Q.state.p.fisica, alumnoI, "reclutar");
             if (conocimientos) {
                 Q.state.inc("alumnoInformatica", 1);
+                Q.state.dec("cmasmas", 5)
+                Q.state.dec("fisica", 1)
             }
         });
         box.fit(20);
@@ -1277,7 +1283,7 @@ window.addEventListener("load", function() {
         var textPregunta, respuesta1, respuesta2, respuesta3, correcta, id;
         Q.stageScene("vidaPropia", 1);
         Q.stageScene("vidaProfesor", 2);
-        
+
         $.getJSON("data/quiz.json", function(datos) {
 
             id = Math.floor(Math.random() * (7 - 1) + 1);
@@ -1390,7 +1396,7 @@ window.addEventListener("load", function() {
     });
 
 
-    var comprobarFinBatalla = function(scene){
+    var comprobarFinBatalla = function(scene) {
         if (Q.state.p.vidaRestanteProfesor <= 0) {
             Q.clearStages();
             Q.stageScene("finBatalla", 1, { label: "Has ganado, intenta vencer a los demás profesores que quedan", win: true });
@@ -1428,7 +1434,7 @@ window.addEventListener("load", function() {
             comprobarFinBatalla("fight");
         }, 3500); //poner a la velocidad del profesor
 
-        setTimeout(function() {  
+        setTimeout(function() {
             button.on("click", function() {
                 Q.state.dec('vidaRestanteProfesor', 4); //poner al poder del alumno
                 comprobarFinBatalla("fight");
@@ -1479,7 +1485,7 @@ window.addEventListener("load", function() {
     Q.scene("vidaPropia", function(stage) {
         var label = stage.insert(new Q.UI.Text({ x: Q.width / 2, y: 15, size: 12, color: "white", label: "Vida: " + Q.state.get('vidaRestantePropia') }));
         Q.state.on("change.vidaRestantePropia", this, function(vida) {
-            vida = (vida < 0)? 0 : vida;
+            vida = (vida < 0) ? 0 : vida;
             label.p.label = "Vida: " + vida;
         });
     });
@@ -1488,7 +1494,7 @@ window.addEventListener("load", function() {
     Q.scene("vidaProfesor", function(stage) {
         var label = stage.insert(new Q.UI.Text({ x: Q.width / 2, y: 25, size: 12, color: "white", label: "Vida profesor: " + Q.state.get('vidaRestanteProfesor') }));
         Q.state.on("change.vidaRestanteProfesor", this, function(vidaProfesor) {
-            vidaProfesor = (vidaProfesor < 0)? 0 : vidaProfesor;
+            vidaProfesor = (vidaProfesor < 0) ? 0 : vidaProfesor;
             label.p.label = "Vida profesor: " + vidaProfesor;
         });
     });
