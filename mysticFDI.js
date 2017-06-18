@@ -162,12 +162,10 @@ window.addEventListener("load", function() {
 
             this.entity.on("hit.sprite", function(collision) {
                 if (collision.obj.isA("Player")) {
-                    console.log(this.p.vida);
-                    console.log(this);
                     Q.state.set({ xPlayer: collision.obj.p.x, yPlayer: collision.obj.p.y, vidaRestanteProfesor: this.p.vida, vidaProfesor: this.p.vida });
 
                     Q.clearStages();
-                    Q.stageScene("batalla", 1, { foto: this.p.foto });
+                    Q.stageScene("batalla", 1, { profesor: this });
                 }
             });
         }
@@ -177,7 +175,7 @@ window.addEventListener("load", function() {
 
     Q.scene('batalla', function(stage) {
 
-        stage.insert(new Q.Repeater({ asset: stage.options.foto }));
+        stage.insert(new Q.Repeater({ asset: stage.options.profesor.p.foto }));
         var box = stage.insert(new Q.UI.Container({
             x: Q.width / 2,
             y: Q.height / 2,
@@ -190,6 +188,7 @@ window.addEventListener("load", function() {
             fill: "#CCCCCC",
             label: "Fight"
         }));
+
         var quiz = box.insert(new Q.UI.Button({
             x: 0,
             y: 160,
@@ -199,7 +198,7 @@ window.addEventListener("load", function() {
 
         fight.on("click", function() {
             Q.clearStages();
-            Q.stageScene('fight');
+            Q.stageScene('fight', 0, { profesor: stage.options.profesor });
         });
 
         quiz.on("click", function() {
@@ -1418,7 +1417,7 @@ window.addEventListener("load", function() {
     });
 
 
-    var comprobarFinBatalla = function(scene) {
+    var comprobarFinBatalla = function(scene, profesor) {
         if (Q.state.p.vidaRestanteProfesor <= 0) {
             Q.clearStages();
             Q.stageScene("finBatalla", 1, { label: "Has ganado, intenta vencer a los demás profesores que quedan", win: true });
@@ -1428,12 +1427,17 @@ window.addEventListener("load", function() {
             Q.stageScene("finBatalla", 1, { label: "Has perdido, regresa a casa y crea un ejercito mejor", win: false });
         } else {
             Q.clearStages();
-            Q.stageScene(scene);
+            Q.stageScene(scene, 0, { profesor: profesor });
         }
     };
 
 
     Q.scene('fight', function(stage) {
+        var velocidadProfesor = stage.options.profesor.p.velocidad * 1000,
+            fuerzaProfesor = stage.options.profesor.p.poder,
+            fotoProfesor = stage.options.profesor.p.foto;
+
+        stage.insert(new Q.Repeater({ asset: fotoProfesor }));
 
         Q.stageScene("vidaPropia", 1);
         Q.stageScene("vidaProfesor", 2);
@@ -1452,14 +1456,14 @@ window.addEventListener("load", function() {
         }));
 
         setTimeout(function() {
-            Q.state.dec('vidaRestantePropia', 1.5); //poner al poder del profesor
-            comprobarFinBatalla("fight");
-        }, 3500); //poner a la velocidad del profesor
+            Q.state.dec('vidaRestantePropia', fuerzaProfesor);
+            comprobarFinBatalla("fight", stage.options.profesor);
+        }, velocidadProfesor);
 
         setTimeout(function() {
             button.on("click", function() {
                 Q.state.dec('vidaRestanteProfesor', 4); //poner al poder del alumno
-                comprobarFinBatalla("fight");
+                comprobarFinBatalla("fight", stage.options.profesor);
             });
         }, 1000); //poner a la velocidad del alumno
 
