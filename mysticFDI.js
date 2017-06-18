@@ -4,8 +4,10 @@
 
 window.addEventListener("load", function() {
 
-    const primerNivelInicio = { xPlayer: 90, yPlayer: 925.5 };
-    const segundoNivelInicio = { xPlayer: 90, yPlayer: 925.5 };                                              
+    const inicioNiveles = {
+        uno: { xPlayer: 90, yPlayer: 925.5 },
+        dos: { xPlayer: 90, yPlayer: 925.5 }
+    };                                             
 
     var Q = window.Q = Quintus({ audioSupported: ['mp3', 'ogg'] })
         .include("Sprites, Scenes, Input, Touch, UI, TMX, Anim, 2D, Audio")
@@ -436,7 +438,7 @@ window.addEventListener("load", function() {
 
         botonSalir.on("click", function() {
             if (Q.state.get('energia') > 0 && Q.state.get('equipoActual') > 0) {
-                Q.state.set({ "vidaRestantePropia": Q.state.p.vidaPropia, "xPlayer": primerNivelInicio.xPlayer, "yPlayer": primerNivelInicio.yPlayer });
+                Q.state.set({ "vidaRestantePropia": Q.state.p.vidaPropia, "xPlayer": inicioNiveles.uno.xPlayer, "yPlayer": inicioNiveles.uno.yPlayer });
                 Q.clearStages();
                 Q.stageScene("level1");
             } else {
@@ -1499,7 +1501,7 @@ window.addEventListener("load", function() {
             y: Q.height / 2
         }));
 
-        Q.state.reset({ coins: 200, taquillas: false, cmasmas: 0, gestion: 0, c: 0, ensamblador: 0, matematicas: 0, fisica: 0, alumnoSoftware: 1, alumnoComputadores: 0, alumnoInformatica: 1, tamañoEquipo: 2, equipoActual: 0, equipoSoftware: 0, equipoInformatica: 0, equipoComputadores: 0, cocinero: 0, camarero: 0, recolector: 0, cocina: false, cafeteria: false, totalTrabajadores: 0, trabajadoresActuales: 0, comida: 0, energia: 50, xPlayer: primerNivelInicio.xPlayer, yPlayer: primerNivelInicio.yPlayer, vidaProfesor: 0, vidaPropia: 0, vidaRestanteProfesor: 0, vidaRestantePropia: 0 });
+        Q.state.reset({ coins: 200, taquillas: false, cmasmas: 0, gestion: 0, c: 0, ensamblador: 0, matematicas: 0, fisica: 0, alumnoSoftware: 1, alumnoComputadores: 0, alumnoInformatica: 1, tamañoEquipo: 2, equipoActual: 0, equipoSoftware: 0, equipoInformatica: 0, equipoComputadores: 0, cocinero: 0, camarero: 0, recolector: 0, cocina: false, cafeteria: false, totalTrabajadores: 0, trabajadoresActuales: 0, comida: 0, energia: 50, xPlayer: inicioNiveles.uno.xPlayer, yPlayer: inicioNiveles.uno.yPlayer, vidaProfesor: 0, vidaPropia: 0, vidaRestanteProfesor: 0, vidaRestantePropia: 0 });
 
         var button = box.insert(new Q.UI.Button({ asset: "puerta/1.jpg", scale: 1 / 2 }));
         var titulo = box.insert(new Q.UI.Button({ x: 0, y: -10, asset: "titulo.png" }));
