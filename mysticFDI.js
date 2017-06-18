@@ -33,10 +33,11 @@ window.addEventListener("load", function() {
     });
 
 
-    Q.load(["fdi.png", "fletxaI.png", "fletxaD.png", "tick1.png", "puerta/1.jpg", "puerta/2.jpg", "puerta/3.jpg", "puerta/4.jpg", "puerta/5.jpg", "puerta/6.jpg", "puerta/7.jpg", "puerta/8.jpg", "puerta/9.jpg", "puerta/10.jpg", "puerta/11.jpg", "puerta/12.jpg", "titulo.png", "personaje.png", "player.json", "coins.mp3", "coins.ogg", "mas.png", "menos.png", "quiz.json", "profesor1a.png", "profesor2a.png", "ace.png", "ace.json"], function() {
+    Q.load(["fdi.png", "fletxaI.png", "fletxaD.png", "tick1.png", "puerta/1.jpg", "puerta/2.jpg", "puerta/3.jpg", "puerta/4.jpg", "puerta/5.jpg", "puerta/6.jpg", "puerta/7.jpg", "puerta/8.jpg", "puerta/9.jpg", "puerta/10.jpg", "puerta/11.jpg", "puerta/12.jpg", "titulo.png", "personaje.png", "player.json", "coins.mp3", "coins.ogg", "mas.png", "menos.png", "quiz.json", "profesor1a.png", "profesor2a.png", "ace.png", "ace.json", "clover.png", "clover.json"], function() {
         Q.loadTMX("level.tmx", function() {
             Q.compileSheets("personaje.png", "player.json");
             Q.compileSheets("ace.png", "ace.json");
+            Q.compileSheets("clover.png", "clover.json");
             Q.stageScene("startGame");
         });
     });
@@ -59,8 +60,8 @@ window.addEventListener("load", function() {
             y = (Math.random() * (860 - 92) + 92).toFixed(1);
 
             nProfesor = Math.floor(Math.random() * (3 - 1) + 1);
-            nProfesor = 1
-            if (nProfesor === 1)
+
+            if (nProfesor == 1)
                 stage.insert(new Q.Profesor1({ x: parseInt(x), y: parseInt(y) }));
             else
                 stage.insert(new Q.Profesor2({ x: parseInt(x), y: parseInt(y) }));
@@ -157,29 +158,48 @@ window.addEventListener("load", function() {
             });
 
 
-            this.add('2d,aiBounce,animation,Profesor');
+
 
 
         }
 
     });
 
-    /*  Q.Sprite.extend("Profesor2", {
-         init: function(p) {
-             this._super(p, {
-                 foto: "profesor2a.png",
-                 vida: 13,
-                 poder: 2,
-                 velocidad: 3.5,
-                 scale: 1 / 7
-             });
+    Q.Sprite.extend("Profesor2", {
+        init: function(p) {
+            this._super(p, {
+                foto: "profesor2a.png",
+                sheet: "Clover",
 
-             this.add('2d,aiBounce,Profesor');
+                vida: 13,
+                poder: 2,
+                velocidad: 3.5,
+                scale: 1 / 7
+            });
+
+            this.add('2d,aiBounce,animation,Profesor');
+
+            this.on("fallar", function() {
+
+                this.p.sheet = "CloverAcertar";
+            });
+            this.on("acertar", function() {
+
+                this.p.sheet = "CloverFallar"
+            });
+            this.on("win", function() {
+
+                this.p.sheet = "CloverPerder";
+            });
+            this.on("perder", function() {
+
+                this.p.sheet = "CloverWin"
+            });
 
 
-         }
+        }
 
-     }); */
+    });
 
     Q.component("Profesor", {
 
