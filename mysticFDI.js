@@ -1078,8 +1078,8 @@ window.addEventListener("load", function() {
             conocimientos = comprobarConocimientos(Q.state.p.gestion, Q.state.p.matematicas, alumnoS, "reclutar");
             if (conocimientos) {
                 Q.state.inc("alumnoSoftware", 1);
-                Q.state.dec("gestion", 4);
-                Q.state.dec("matematicas", 1);
+                Q.state.dec(alumnoS.getNombreConocimiento1(), alumnoS.getConocimiento1());
+                Q.state.dec(alumnoS.getNombreConocimiento2(), alumnoS.getConocimiento2());
             }
         });
 
@@ -1088,8 +1088,8 @@ window.addEventListener("load", function() {
             conocimientos = comprobarConocimientos(Q.state.p.ensamblador, Q.state.p.c, alumnoC, "reclutar");
             if (conocimientos) {
                 Q.state.inc("alumnoComputadores", 1);
-                Q.state.dec("ensamblador", 3);
-                Q.state.dec("c", 2);
+                Q.state.dec(alumnoC.getNombreConocimiento1(), alumnoC.getConocimiento1());
+                Q.state.dec(alumnoC.getNombreConocimiento2(), alumnoC.getConocimiento2());
             }
         });
 
@@ -1098,8 +1098,8 @@ window.addEventListener("load", function() {
             conocimientos = comprobarConocimientos(Q.state.p.cmasmas, Q.state.p.fisica, alumnoI, "reclutar");
             if (conocimientos) {
                 Q.state.inc("alumnoInformatica", 1);
-                Q.state.dec("cmasmas", 5);
-                Q.state.dec("fisica", 1);
+                Q.state.dec(alumnoI.getNombreConocimiento1(), alumnoI.getConocimiento1());
+                Q.state.dec(alumnoI.getNombreConocimiento2(), alumnoI.getConocimiento2());
             }
         });
         box.fit(20);
@@ -1109,39 +1109,96 @@ window.addEventListener("load", function() {
     //clases
     Q.Class.extend("AlumnoSoftware", {
         init: function() {
+            this.especialidad = "Software";
             this.vida = 3;
             this.velocidad = 4;
             this.poder = 2;
             //gestion
+            this.nombreConocimiento1 = "gestion";
             this.conocimiento1 = 4;
             //matematicas
+            this.nombreConocimiento2 = "matematicas";
             this.conocimiento2 = 1;
+        },
+
+        getConocimiento1: function() {
+            return this.conocimiento1;
+        },
+
+        getConocimiento2: function() {
+            return this.conocimiento2;
+        },
+
+        getNombreConocimiento1: function() {
+            return this.nombreConocimiento1;
+        },
+
+        getNombreConocimiento2: function() {
+            return this.nombreConocimiento2;
         }
     });
 
 
     Q.Class.extend("AlumnoInformatica", {
         init: function() {
+            this.especialidad = "Informatica";
             this.vida = 3;
             this.velocidad = 4;
             this.poder = 2;
             //c++
+            this.nombreConocimiento1 = "cmasmas";
             this.conocimiento1 = 5;
             //fisica
+            this.nombreConocimiento2 = "fisica";
             this.conocimiento2 = 1;
+        },
+
+        getConocimiento1: function() {
+            return this.conocimiento1;
+        },
+
+        getConocimiento2: function() {
+            return this.conocimiento2;
+        },
+
+        getNombreConocimiento1: function() {
+            return this.nombreConocimiento1;
+        },
+
+        getNombreConocimiento2: function() {
+            return this.nombreConocimiento2;
         }
     });
 
 
     Q.Class.extend("AlumnoComputadores", {
         init: function() {
+            this.especialidad = "Computadores";
             this.vida = 3;
             this.velocidad = 4;
             this.poder = 2;
-            //ensamblado
+            //ensamblador
+            this.nombreConocimiento1 = "ensamblador";
             this.conocimiento1 = 3;
             //c
+            this.nombreConocimiento1 = "c";
             this.conocimiento2 = 2;
+        },
+
+        getConocimiento1: function() {
+            return this.conocimiento1;
+        },
+
+        getConocimiento2: function() {
+            return this.conocimiento2;
+        },
+
+        getNombreConocimiento1: function() {
+            return this.nombreConocimiento1;
+        },
+
+        getNombreConocimiento2: function() {
+            return this.nombreConocimiento2;
         }
     });
 
