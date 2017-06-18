@@ -1,0 +1,7 @@
+{
+    "Gumshoe": { "sx": 0, "sy": 170, "tileW": 158, "tileH": 180, "frames": 1 },
+    "GumshoeAcertar": { "sx": 318, "sy": 0, "tileW": 158, "tileH": 180, "frames": 1 },
+    "GumshoeFallar": { "sx": 0, "sy": 0, "tileW": 204, "tileH": 169, "frames": 1 },
+    "GumshoeWin": { "sx": 159, "sy": 170, "tileW": 158, "tileH": 176, "frames": 1 },
+    "GumshoePerder": { "sx": 318, "sy": 181, "tileW": 154, "tileH": 172, "frames": 1 }
+}

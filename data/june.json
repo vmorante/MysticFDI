@@ -1,0 +1,7 @@
+{
+	"June":{"sx":80,"sy":0,"tileW":75,"tileH":162,"frames":1},
+	"JuneAcertar":{"sx":231,"sy":0,"tileW":69,"tileH":166,"frames":1},
+	"JuneFallar":{"sx":0,"sy":0,"tileW":79,"tileH":168,"frames":1},
+	"JuneWin":{"sx":80,"sy":163,"tileW":69,"tileH":163,"frames":1},
+	"JunePerder":{"sx":156,"sy":0,"tileW":74,"tileH":168,"frames":1}
+}

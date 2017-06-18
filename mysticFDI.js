@@ -19,13 +19,7 @@ window.addEventListener("load", function() {
         .controls().touch()
         .enableSound();
 
-    Q.animations('ace_anim', {
-        front: { frames: [1], rate: 1 / 2.5, loop: false },
-        acertar: { frames: [4], rate: 1 / 2.5, loop: false },
-        fallar: { frames: [3], rate: 1 / 2.5, loop: false },
-        win: { frames: [0], rate: 1 / 15, loop: false },
-        lost: { frames: [2], rate: 1 / 2.5, loop: false }
-    });
+   
 
     Q.animations('player_anim', {
         front: { frames: [0, 1, 2, 3], rate: 1 / 2.5, loop: false },
@@ -35,11 +29,14 @@ window.addEventListener("load", function() {
     });
 
 
-    Q.load(["fdi.png", "fletxaI.png", "fletxaD.png", "tick1.png", "puerta/1.jpg", "puerta/2.jpg", "puerta/3.jpg", "puerta/4.jpg", "puerta/5.jpg", "puerta/6.jpg", "puerta/7.jpg", "puerta/8.jpg", "puerta/9.jpg", "puerta/10.jpg", "puerta/11.jpg", "puerta/12.jpg", "titulo.png", "personaje.png", "player.json", "coins.mp3", "coins.ogg", "mas.png", "menos.png", "quiz.json", "profesor1a.png", "profesor2a.png", "ace.png", "ace.json", "clover.png", "clover.json"], function() {
+    Q.load(["fdi.png", "fletxaI.png", "fletxaD.png", "tick1.png", "puerta/1.jpg", "puerta/2.jpg", "puerta/3.jpg", "puerta/4.jpg", "puerta/5.jpg", "puerta/6.jpg", "puerta/7.jpg", "puerta/8.jpg", "puerta/9.jpg", "puerta/10.jpg", "puerta/11.jpg", "puerta/12.jpg", "titulo.png", "personaje.png", "player.json", "coins.mp3", "coins.ogg", "mas.png", "menos.png", "quiz.json", "profesor1a.png", "profesor2a.png", "ace.png", "ace.json", "clover.png", "clover.json", "gumshoe.png", "gumshoe.json", "june.png", "june.json", "ema.png", "ema.json"], function() {
         Q.loadTMX("level.tmx", function() {
             Q.compileSheets("personaje.png", "player.json");
             Q.compileSheets("ace.png", "ace.json");
             Q.compileSheets("clover.png", "clover.json");
+			  Q.compileSheets("gumshoe.png", "gumshoe.json");
+            Q.compileSheets("june.png", "june.json");
+            Q.compileSheets("ema.png", "ema.json");
             Q.stageScene("startGame");
         });
     });
@@ -61,12 +58,18 @@ window.addEventListener("load", function() {
             x = (Math.random() * (570 - 90) + 90).toFixed(1);
             y = (Math.random() * (860 - 92) + 92).toFixed(1);
 
-            nProfesor = Math.floor(Math.random() * (3 - 1) + 1);
+          nProfesor = Math.floor(Math.random() * (6 - 1) + 1);
 
             if (nProfesor == 1)
                 stage.insert(new Q.Profesor1({ x: parseInt(x), y: parseInt(y) }));
-            else
+            else if (nProfesor == 2)
                 stage.insert(new Q.Profesor2({ x: parseInt(x), y: parseInt(y) }));
+            else if (nProfesor == 3)
+                stage.insert(new Q.Profesor3({ x: parseInt(x), y: parseInt(y) }));
+            else if (nProfesor == 4)
+                stage.insert(new Q.Profesor4({ x: parseInt(x), y: parseInt(y) }));
+            else if (nProfesor == 5)
+                stage.insert(new Q.Profesor5({ x: parseInt(x), y: parseInt(y) }));
 
         }
 
@@ -135,34 +138,14 @@ window.addEventListener("load", function() {
             this._super(p, {
                 foto: "profesor1a.png",
                 sheet: "Ace",
-                sprite: "ace_anim",
+               
+                name: "Ace",
                 vida: 10,
                 poder: 4,
                 velocidad: 3,
                 scale: 1 / 7
             });
             this.add('2d,aiBounce,animation,Profesor');
-            this.on("fallar", function() {
-
-                this.p.sheet = "AceAcertar";
-            });
-            this.on("acertar", function() {
-
-                this.p.sheet = "AceFallar";
-            });
-            this.on("win", function() {
-
-                this.p.sheet = "AcePerder";
-            });
-            this.on("perder", function() {
-
-                this.p.sheet = "AceWin";
-            });
-
-
-
-
-
         }
 
     });
@@ -172,7 +155,7 @@ window.addEventListener("load", function() {
             this._super(p, {
                 foto: "profesor2a.png",
                 sheet: "Clover",
-
+                name: "Clover",
                 vida: 13,
                 poder: 2,
                 velocidad: 3.5,
@@ -181,28 +164,58 @@ window.addEventListener("load", function() {
 
             this.add('2d,aiBounce,animation,Profesor');
 
-            this.on("fallar", function() {
-
-                this.p.sheet = "CloverAcertar";
-            });
-            this.on("acertar", function() {
-
-                this.p.sheet = "CloverFallar";
-            });
-            this.on("win", function() {
-
-                this.p.sheet = "CloverPerder";
-            });
-            this.on("perder", function() {
-
-                this.p.sheet = "CloverWin";
-            });
-
-
         }
 
     });
+    Q.Sprite.extend("Profesor3", {
+        init: function(p) {
+            this._super(p, {
+                foto: "profesor1a.png",
+                sheet: "Gumshoe",
+                name: "Gumshoe",
 
+                vida: 10,
+                poder: 4,
+                velocidad: 3,
+                scale: 1 / 7
+            });
+            this.add('2d,aiBounce,animation,Profesor');
+
+        }
+    });
+    Q.Sprite.extend("Profesor4", {
+        init: function(p) {
+            this._super(p, {
+                foto: "profesor1a.png",
+                sheet: "June",
+                name: "June",
+
+                vida: 10,
+                poder: 4,
+                velocidad: 3,
+                scale: 1 / 7
+            });
+            this.add('2d,aiBounce,animation,Profesor');
+
+        }
+    });
+
+    Q.Sprite.extend("Profesor5", {
+        init: function(p) {
+            this._super(p, {
+                foto: "profesor1a.png",
+                sheet: "Ema",
+                name: "Ema",
+
+                vida: 10,
+                poder: 4,
+                velocidad: 3,
+                scale: 1 / 7
+            });
+            this.add('2d,aiBounce,animation,Profesor');
+
+        }
+    });
     Q.component("Profesor", {
 
         added: function() {
@@ -210,6 +223,23 @@ window.addEventListener("load", function() {
             this.entity.p.w = 12;
             this.entity.p.h = 12;
             this.entity.p.gravity = 0;
+			
+			 this.entity.on("fallar", function() {
+
+                this.p.sheet = this.p.name + "Acertar";
+            });
+            this.entity.on("acertar", function() {
+
+                this.p.sheet = this.p.name + "Fallar"
+            });
+            this.entity.on("win", function() {
+
+                this.p.sheet = this.p.name + "Perder";
+            });
+            this.entity.on("perder", function() {
+
+                this.p.sheet = this.p.name + "Win"
+            });
 
             this.entity.on("hit.sprite", function(collision) {
                 if (collision.obj.isA("Player")) {

@@ -1,0 +1,7 @@
+{
+	"Ema":{"sx":121,"sy":0,"tileW":101,"tileH":171,"frames":1},
+	"EmaAcertar":{"sx":0,"sy":0,"tileW":120,"tileH":167,"frames":1},
+	"EmaFallar":{"sx":223,"sy":0,"tileW":101,"tileH":171,"frames":1},
+	"EmaWin":{"sx":0,"sy":168,"tileW":115,"tileH":168,"frames":1},
+	"EmaPerder":{"sx":116,"sy":172,"tileW":90,"tileH":154,"frames":1}
+}
