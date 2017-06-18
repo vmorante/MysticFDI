@@ -1,0 +1,7 @@
+{
+    "Ace": { "sx": 211, "sy": 0, "tileW": 161, "tileH": 208, "frames": 1 },
+    "AceAcertar": { "sx": 194, "sy": 209, "tileW": 185, "tileH": 208, "frames": 1 },
+    "AceFallar": { "sx": 0, "sy": 209, "tileW": 193, "tileH": 208, "frames": 1 },
+    "AceWin": { "sx": 0, "sy": 0, "tileW": 210, "tileH": 208, "frames": 1 },
+    "AcePerder": { "sx": 373, "sy": 0, "tileW": 147, "tileH": 208, "frames": 1 }
+}
