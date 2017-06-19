@@ -1,5 +1,4 @@
 - Sprite en mapa que te da energia extra(Vero)
-- No quitar energia de cocineros cuando esta en el mapa
 - Crear malo final
 - Mejorar imagenes del fondo del fight
 - Una pantalla de créditos en la que aparezcan los nombres de los integrantes
