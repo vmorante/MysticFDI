@@ -3,3 +3,7 @@
 - No quitar energia de cocineros cuando esta en el mapa
 - Crear malo final
 - Mejorar imagenes del fondo del fight
+
+
+EXTRAS-----------------------
+ - Dialogo amenazador cuando colisionas con profe
