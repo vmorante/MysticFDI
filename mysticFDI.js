@@ -9,7 +9,6 @@ window.addEventListener("load", function() {
         dos: { xPlayer: 90, yPlayer: 925.5 }
     };
 
-    var batalla = false;
 
     var alumnosActuales = [];
 
@@ -43,6 +42,8 @@ window.addEventListener("load", function() {
 
 
     Q.scene("level1", function(stage) {
+        Q.state.set('enMapa', true);
+        console.log(Q.state.p.enMapa);
         Q.stageTMX("level.tmx", stage);
         Q.stageScene("salirDelMapa", 1);
         Q.stageScene("energia", 2);
@@ -82,6 +83,8 @@ window.addEventListener("load", function() {
         Q.state.on("change.energia", this, function(energia) {
             if (energia === 0) {
                 Q.state.set({ energia: 50 }); //quitar, esta para pruebas
+                Q.state.set('enMapa', false);
+                console.log(Q.state.p.enMapa);
                 Q.clearStages();
                 Q.stageScene("screenMain");
             }
@@ -102,6 +105,8 @@ window.addEventListener("load", function() {
         }));
 
         botonSalir.on("click", function() {
+            Q.state.set('enMapa', false);
+            console.log(Q.state.p.enMapa);
             Q.clearStages();
             Q.stageScene("screenMain");
         });
@@ -256,8 +261,7 @@ window.addEventListener("load", function() {
 
     Q.scene('batalla', function(stage) {
 
-        batalla = true;
-        Q.state.set({ "vidaRestantePropia": Q.state.get("vidaPropia") });
+        Q.state.set({ "vidaRestantePropia": Q.state.get("vidaPropia"), "enBatalla": true });
 
         var profesor = stage.options.profesor;
         profesor.p.x = 150;
@@ -1444,28 +1448,30 @@ window.addEventListener("load", function() {
         var contador_s = 0;
         var cronometro = setInterval(
             function() {
-                if (contador_s == 10) {
-                    contador_s = 0;
+                if(!Q.state.p.enMapa){
+                    if (contador_s == 10) {
+                        contador_s = 0;
 
-                    if (Q.state.p.cocinero > 0) {
-                        Q.state.inc("comida", Q.state.p.cocinero);
-                    }
+                        if (Q.state.p.cocinero > 0) {
+                            Q.state.inc("comida", Q.state.p.cocinero);
+                        }
 
-                    if (Q.state.p.camarero > 0) {
-                        if (Q.state.p.comida >= 2 * Q.state.p.camarero) {
-                            Q.state.dec("comida", Q.state.p.camarero * 2);
-                            Q.state.inc("energia", Q.state.p.camarero);
+                        if (Q.state.p.camarero > 0) {
+                            if (Q.state.p.comida >= 2 * Q.state.p.camarero) {
+                                Q.state.dec("comida", Q.state.p.camarero * 2);
+                                Q.state.inc("energia", Q.state.p.camarero);
+                            }
+                        }
+
+                        if (Q.state.p.recolector > 0) {
+                            if (Q.state.p.energia >= Q.state.p.recolector) {
+                                Q.state.dec("energia", Q.state.p.recolector);
+                                Q.state.inc("coins", Q.state.p.recolector);
+                            }
                         }
                     }
-
-                    if (Q.state.p.recolector > 0) {
-                        if (Q.state.p.energia >= Q.state.p.recolector) {
-                            Q.state.dec("energia", Q.state.p.recolector);
-                            Q.state.inc("coins", Q.state.p.recolector);
-                        }
-                    }
+                    contador_s++;
                 }
-                contador_s++;
             }, 1000);
     }
 
@@ -1650,7 +1656,7 @@ window.addEventListener("load", function() {
         var tiempo = setInterval(function() {
 
             if(t >= velocidadProfesor) {
-                if(batalla){
+                if(Q.state.get('enBatalla')){
                     Q.state.dec('vidaRestantePropia', fuerzaProfesor);
                     if (Q.state.p.vidaRestantePropia <= 0) {
                         Q.clearStages();
@@ -1690,8 +1696,8 @@ window.addEventListener("load", function() {
             t += 0.5;
             t2 += 0.5;
             t3 += 0.5;
-            
-            if(!batalla){
+
+            if(!Q.state.get('enBatalla')){
                 clearInterval(tiempo);
             }
         }, 500);
@@ -1700,7 +1706,7 @@ window.addEventListener("load", function() {
 
     Q.scene('finBatalla', function(stage) {
 
-        batalla = false;
+        Q.state.set('enBatalla', false);
 
         var profesor = stage.options.profesor1;
         stage.insert(profesor);
@@ -1741,6 +1747,8 @@ window.addEventListener("load", function() {
                 Q.stageScene("level1");
             } else {
                 profesor.trigger("lost");
+                Q.state.set('enMapa', false);
+                console.log(Q.state.p.enMapa);
                 Q.clearStages();
                 Q.stageScene("screenMain");
             }
@@ -1776,7 +1784,7 @@ window.addEventListener("load", function() {
             y: Q.height / 2
         }));
 
-        Q.state.reset({ coins: 200, cmasmas: 0, gestion: 0, c: 0, ensamblador: 0, matematicas: 0, fisica: 0, alumnoSoftware: 1, alumnoComputadores: 0, alumnoInformatica: 1, tamañoEquipo: 2, equipoActual: 0, equipoSoftware: 0, equipoInformatica: 0, equipoComputadores: 0, cocinero: 0, camarero: 0, recolector: 0, cocina: false, cafeteria: false, totalTrabajadores: 0, trabajadoresActuales: 0, comida: 0, energia: 50, xPlayer: inicioNiveles.uno.xPlayer, yPlayer: inicioNiveles.uno.yPlayer, vidaProfesor: 0, vidaPropia: 0, vidaRestanteProfesor: 0, vidaRestantePropia: 0 });
+        Q.state.reset({ coins: 200, cmasmas: 0, gestion: 0, c: 0, ensamblador: 0, matematicas: 0, fisica: 0, alumnoSoftware: 1, alumnoComputadores: 0, alumnoInformatica: 1, tamañoEquipo: 2, equipoActual: 0, equipoSoftware: 0, equipoInformatica: 0, equipoComputadores: 0, cocinero: 0, camarero: 0, recolector: 0, cocina: false, cafeteria: false, totalTrabajadores: 0, trabajadoresActuales: 0, comida: 0, energia: 50, xPlayer: inicioNiveles.uno.xPlayer, yPlayer: inicioNiveles.uno.yPlayer, vidaProfesor: 0, vidaPropia: 0, vidaRestanteProfesor: 0, vidaRestantePropia: 0, enBatalla: false, enMapa: false });
 
         var button = box.insert(new Q.UI.Button({ asset: "puerta/1.jpg", scale: 1 / 2 }));
         var titulo = box.insert(new Q.UI.Button({ x: 0, y: -10, asset: "titulo.png" }));
