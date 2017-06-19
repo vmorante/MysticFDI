@@ -1706,6 +1706,7 @@ window.addEventListener("load", function() {
         stage.insert(profesor);
         if (stage.options.win) {
             profesor.trigger("win");
+            Q.state.inc('energia', 15);
 
         } else {
             profesor.trigger("perder");

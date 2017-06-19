@@ -1,11 +1,11 @@
 - Sprite en mapa que te da energia extra
-- Dar energia extra despues de cada victoria (Alex)
 - No quitar energia de cocineros cuando esta en el mapa
 - Crear malo final
 - Mejorar imagenes del fondo del fight
 - Una pantalla de créditos en la que aparezcan los nombres de los integrantes
   del grupos así como las referencias a los artistas y juegos de los que se
   hayan sacado los recursos gráficos.
+- Cambiar mapa (Alex)
 
 
 EXTRAS-----------------------
