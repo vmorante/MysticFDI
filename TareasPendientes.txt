@@ -1,4 +1,4 @@
-- Sprite en mapa que te da energia extra
+- Sprite en mapa que te da energia extra(Vero)
 - No quitar energia de cocineros cuando esta en el mapa
 - Crear malo final
 - Mejorar imagenes del fondo del fight
