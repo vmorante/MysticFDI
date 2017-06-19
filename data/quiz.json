@@ -1,17 +1,17 @@
 {
     "lista": [{
             "id": 1,
-            "pregunta": "En un lenguaje débilmente tipado",
-            "correcta": 1,
+            "pregunta": "El número 1010 en binario se representa en decimal como",
+            "correcta": 3,
             "respuestas": {
                 "respuesta1": {
                     "id": 1,
-                    "respuesta": " Un valor de un tipo puede ser tratado como de otro tipo "
+                    "respuesta": "8 "
 
                 },
                 "respuesta2": {
                     "id": 2,
-                    "respuesta": "Un valor de un tipo nunca puede ser tratado como de otro tipo"
+                    "respuesta": "12"
 
 
                 },
@@ -149,6 +149,109 @@
                 "respuesta3": {
                     "id": 3,
                     "respuesta": "Tipos de datos "
+
+
+                }
+            }
+
+        },
+        {
+            "id": 7,
+            "pregunta": "Para incluir una biblioteca en c++ se utiliza la siguiente sentencia",
+            "correcta": 2,
+            "respuestas": {
+                "respuesta1": {
+                    "id": 1,
+                    "respuesta": "# include (stdlib) "
+
+                },
+                "respuesta2": {
+                    "id": 2,
+                    "respuesta": "# include <stdlib>  "
+
+
+                },
+
+                "respuesta3": {
+                    "id": 3,
+                    "respuesta": "cout << biblioteca "
+
+
+                }
+            }
+
+        },
+        {
+            "id": 8,
+            "pregunta": " La definición de una variable se realiza de la siguiente manera",
+            "correcta": 2,
+            "respuestas": {
+                "respuesta1": {
+                    "id": 1,
+                    "respuesta": "include variable1"
+
+                },
+                "respuesta2": {
+                    "id": 2,
+                    "respuesta": "int variable1  "
+
+
+                },
+
+                "respuesta3": {
+                    "id": 3,
+                    "respuesta": "const int variable1=25 "
+
+
+                }
+            }
+
+        },
+        {
+            "id": 9,
+            "pregunta": " En el proceso de Compilar, pueden aparecer 2 tipos de errores",
+            "correcta": 1,
+            "respuestas": {
+                "respuesta1": {
+                    "id": 1,
+                    "respuesta": "Errores de compilación y de ejecución"
+
+                },
+                "respuesta2": {
+                    "id": 2,
+                    "respuesta": "Errores de entrada y salida  "
+
+
+                },
+
+                "respuesta3": {
+                    "id": 3,
+                    "respuesta": "Errores de compilación y salida "
+
+
+                }
+            }
+        },
+        {
+            "id": 10,
+            "pregunta": " La sentencia en C++: const float PI=3.14; hace referencia a:",
+            "correcta": 2,
+            "respuestas": {
+                "respuesta1": {
+                    "id": 1,
+                    "respuesta": "Una variable"
+
+                },
+                "respuesta2": {
+                    "id": 2,
+                    "respuesta": "Una constante  "
+
+
+                },
+
+                "respuesta3": {
+                    "id": 3,
+                    "respuesta": "Una biblioteca "
 
 
                 }
