@@ -141,9 +141,7 @@ window.addEventListener("load", function() {
     Q.Sprite.extend("Profesor1", {
         init: function(p) {
             this._super(p, {
-                foto: "profesor1a.png",
                 sheet: "Ace",
-
                 name: "Ace",
                 vida: 10,
                 poder: 4,
@@ -158,7 +156,6 @@ window.addEventListener("load", function() {
     Q.Sprite.extend("Profesor2", {
         init: function(p) {
             this._super(p, {
-                foto: "profesor2a.png",
                 sheet: "Clover",
                 name: "Clover",
                 vida: 13,
@@ -175,10 +172,8 @@ window.addEventListener("load", function() {
     Q.Sprite.extend("Profesor3", {
         init: function(p) {
             this._super(p, {
-                foto: "profesor1a.png",
                 sheet: "Gumshoe",
                 name: "Gumshoe",
-
                 vida: 10,
                 poder: 4,
                 velocidad: 3,
@@ -191,10 +186,8 @@ window.addEventListener("load", function() {
     Q.Sprite.extend("Profesor4", {
         init: function(p) {
             this._super(p, {
-                foto: "profesor1a.png",
                 sheet: "June",
                 name: "June",
-
                 vida: 10,
                 poder: 4,
                 velocidad: 3.5,
@@ -208,10 +201,8 @@ window.addEventListener("load", function() {
     Q.Sprite.extend("Profesor5", {
         init: function(p) {
             this._super(p, {
-                foto: "profesor1a.png",
                 sheet: "Ema",
                 name: "Ema",
-
                 vida: 10,
                 poder: 4,
                 velocidad: 3,
@@ -1229,6 +1220,7 @@ window.addEventListener("load", function() {
             this.vida = 4;
             this.velocidad = 3;
             this.poder = 2;
+            this.ataque = "Avión de papel";
             //gestion
             this.nombreConocimiento1 = "gestion";
             this.conocimiento1 = 4;
@@ -1261,6 +1253,7 @@ window.addEventListener("load", function() {
             this.vida = 4.5;
             this.velocidad = 3;
             this.poder = 2;
+            this.ataque = "Cerbatana";
             //c++
             this.nombreConocimiento1 = "cmasmas";
             this.conocimiento1 = 5;
@@ -1293,6 +1286,7 @@ window.addEventListener("load", function() {
             this.vida = 4;
             this.velocidad = 3;
             this.poder = 2;
+            this.ataque = "Borrador";
             //ensamblador
             this.nombreConocimiento1 = "ensamblador";
             this.conocimiento1 = 3;
@@ -1614,15 +1608,17 @@ window.addEventListener("load", function() {
 
 
     Q.scene('fight', function(stage) {
-        var t = 0, t2 = 0, t3 = 0;
-        var velocidadProfesor = (10 - stage.options.profesor.p.velocidad),
-            fuerzaProfesor = stage.options.profesor.p.poder,
-            fotoProfesor = stage.options.profesor.p.foto,
+        var t = 0, 
+            t2 = 0, 
+            t3 = 0,
+            profesor = stage.options.profesor,
+            velocidadProfesor = (10 - profesor.p.velocidad),
+            fuerzaProfesor = profesor.p.poder,
             velocidadAlumno1 = (10 - (alumnosActuales[0].velocidad) * 2),
             velocidadAlumno2,
             button2;
 
-        stage.insert(new Q.Repeater({ asset: fotoProfesor }));
+        stage.insert(profesor);
 
         Q.stageScene("vidaPropia", 1);
         Q.stageScene("vidaProfesor", 2);
@@ -1636,8 +1632,8 @@ window.addEventListener("load", function() {
             x: 0,
             y: 60,
             size: 15,
-            fill: "#CCCCCC",
-            label: "Cerbatana"
+            fill: "#FFFFFF",
+            label: alumnosActuales[0].ataque
         }));
 
 
@@ -1648,8 +1644,8 @@ window.addEventListener("load", function() {
                 x: 0,
                 y: 120,
                 size: 15,
-                fill: "#CCCCCC",
-                label: "Cerbatana2"
+                fill: "#FFFFFF",
+                label: alumnosActuales[1].ataque
             }));
         }
 

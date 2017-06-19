@@ -1,6 +1,5 @@
 - Sprite en mapa que te da energia extra(Vero)
 - Crear malo final
-- Mejorar imagenes del fondo del fight
 - Una pantalla de créditos en la que aparezcan los nombres de los integrantes
   del grupos así como las referencias a los artistas y juegos de los que se
   hayan sacado los recursos gráficos.
