@@ -157,7 +157,7 @@ window.addEventListener("load", function() {
                 sheet: "Clover",
                 name: "Clover",
                 vida: 13,
-                poder: 2,
+                poder: 3,
                 velocidad: 3.5,
                 scale: 1 / 7
             });
@@ -192,7 +192,7 @@ window.addEventListener("load", function() {
 
                 vida: 10,
                 poder: 4,
-                velocidad: 3,
+                velocidad: 3.5,
                 scale: 1 / 7
             });
             this.add('2d,aiBounce,animation,Profesor');
@@ -230,7 +230,7 @@ window.addEventListener("load", function() {
             });
             this.entity.on("acertar", function() {
 
-                this.p.sheet = this.p.name + "Fallar"
+                this.p.sheet = this.p.name + "Fallar";
             });
             this.entity.on("win", function() {
 
@@ -238,7 +238,7 @@ window.addEventListener("load", function() {
             });
             this.entity.on("perder", function() {
 
-                this.p.sheet = this.p.name + "Win"
+                this.p.sheet = this.p.name + "Win";
             });
 
             this.entity.on("hit.sprite", function(collision) {
@@ -257,6 +257,7 @@ window.addEventListener("load", function() {
     Q.scene('batalla', function(stage) {
 
         batalla = true;
+        Q.state.set({ "vidaRestantePropia": Q.state.get("vidaPropia") });
 
         var profesor = stage.options.profesor;
         profesor.p.x = 150;
@@ -1199,8 +1200,8 @@ window.addEventListener("load", function() {
     Q.Class.extend("AlumnoSoftware", {
         init: function() {
             this.especialidad = "Software";
-            this.vida = 3;
-            this.velocidad = 4;
+            this.vida = 4;
+            this.velocidad = 3;
             this.poder = 2;
             //gestion
             this.nombreConocimiento1 = "gestion";
@@ -1231,8 +1232,8 @@ window.addEventListener("load", function() {
     Q.Class.extend("AlumnoInformatica", {
         init: function() {
             this.especialidad = "Informatica";
-            this.vida = 3;
-            this.velocidad = 4;
+            this.vida = 4.5;
+            this.velocidad = 3;
             this.poder = 2;
             //c++
             this.nombreConocimiento1 = "cmasmas";
@@ -1263,8 +1264,8 @@ window.addEventListener("load", function() {
     Q.Class.extend("AlumnoComputadores", {
         init: function() {
             this.especialidad = "Computadores";
-            this.vida = 3;
-            this.velocidad = 4;
+            this.vida = 4;
+            this.velocidad = 3;
             this.poder = 2;
             //ensamblador
             this.nombreConocimiento1 = "ensamblador";
@@ -1564,34 +1565,30 @@ window.addEventListener("load", function() {
         }));
 
         button.on("click", function() {
-            comprobarFinBatalla("quiz", profesor);
-        });
-
-        box.fit(20);
-    });
-
-    var comprobarFinBatalla = function(scene, profesor) {
-        if(batalla){
             if (Q.state.p.vidaRestanteProfesor <= 0) {
                 Q.clearStages();
                 Q.stageScene("finBatalla", 1, { label: "Has ganado, intenta vencer a los demás profesores que quedan", win: true, profesor1: profesor });
             } else if (Q.state.p.vidaRestantePropia <= 0) {
                 Q.clearStages();
                 Q.stageScene("finBatalla", 1, { label: "Has perdido, regresa a casa y crea un ejercito mejor", win: false, profesor1: profesor });
-            } else if (scene.localeCompare("quiz") === 0){
+            } else {
                 Q.clearStages();
-                Q.stageScene(scene, 0, { profesor: profesor });
+                Q.stageScene("quiz", 0, { profesor: profesor });
             }
-        }
-    };
+        });
+
+        box.fit(20);
+    });
 
 
     Q.scene('fight', function(stage) {
-        var velocidadProfesor = (10 - stage.options.profesor.p.velocidad) * 1000,
+        var t = 0, t2 = 0, t3 = 0;
+        var velocidadProfesor = (10 - stage.options.profesor.p.velocidad),
             fuerzaProfesor = stage.options.profesor.p.poder,
             fotoProfesor = stage.options.profesor.p.foto,
-            velocidadAlumno1 = (10 - (alumnosActuales[0].velocidad) * 2) * 1000,
-            velocidadAlumno2;
+            velocidadAlumno1 = (10 - (alumnosActuales[0].velocidad) * 2),
+            velocidadAlumno2,
+            button2;
 
         stage.insert(new Q.Repeater({ asset: fotoProfesor }));
 
@@ -1611,44 +1608,71 @@ window.addEventListener("load", function() {
             label: "Cerbatana"
         }));
 
-        setTimeout(function() {
-            Q.state.dec('vidaRestantePropia', fuerzaProfesor);
-            comprobarFinBatalla("fight", stage.options.profesor);
-        }, velocidadProfesor);
-
-        setTimeout(function() {
-            button.on("click", function() {
-                Q.state.dec('vidaRestanteProfesor', alumnosActuales[0].poder);
-                comprobarFinBatalla("fight", stage.options.profesor);
-            });
-        }, velocidadAlumno1);
-
         if(alumnosActuales.length === 2){
-            velocidadAlumno2 = (10 - (alumnosActuales[1].velocidad) * 2) * 1000;
+            velocidadAlumno2 = (10 - (alumnosActuales[1].velocidad) * 2);
 
-            var button2 = box.insert(new Q.UI.Button({
+            button2 = box.insert(new Q.UI.Button({
                 x: 0,
                 y: 120,
                 size: 15,
                 fill: "#CCCCCC",
                 label: "Cerbatana2"
             }));
-
-            setTimeout(function() {
-                button2.on("click", function() {
-                    Q.state.dec('vidaRestanteProfesor', alumnosActuales[1].poder);
-                    comprobarFinBatalla("fight", stage.options.profesor);
-                });
-            }, velocidadAlumno2);
         }
 
+        var tiempo = setInterval(function() {
+
+            if(t >= velocidadProfesor) {
+                if(batalla){
+                    Q.state.dec('vidaRestantePropia', fuerzaProfesor);
+                    if (Q.state.p.vidaRestantePropia <= 0) {
+                        Q.clearStages();
+                        Q.stageScene("finBatalla", 1, { label: "Has perdido, regresa a casa y crea un ejercito mejor", win: false, profesor1: stage.options.profesor });
+                    }
+                }
+                t = 0;
+            }
+        
+
+        
+            button.on("click", function() {
+                if(t2 >= velocidadAlumno1){
+                    Q.state.dec('vidaRestanteProfesor', alumnosActuales[0].poder);
+                    if (Q.state.p.vidaRestanteProfesor <= 0) {
+                        Q.clearStages();
+                        Q.stageScene("finBatalla", 1, { label: "Has ganado, intenta vencer a los demás profesores que quedan", win: true, profesor1: stage.options.profesor });
+                    }
+                    t2 = 0;
+                }
+            });
+        
+            if(alumnosActuales.length === 2){
+
+                button2.on("click", function() {
+                    if(t3 >= velocidadAlumno2){
+                        Q.state.dec('vidaRestanteProfesor', alumnosActuales[1].poder);
+                        if (Q.state.p.vidaRestanteProfesor <= 0) {
+                            Q.clearStages();
+                            Q.stageScene("finBatalla", 1, { label: "Has ganado, intenta vencer a los demás profesores que quedan", win: true, profesor1: stage.options.profesor });
+                        }
+                        t3 = 0;
+                    }
+                });
+            }
+
+            t += 0.5;
+            t2 += 0.5;
+            t3 += 0.5;
+            
+            if(!batalla){
+                clearInterval(tiempo);
+            }
+        }, 500);
     });
 
 
     Q.scene('finBatalla', function(stage) {
-        
         batalla = false;
-        Q.state.set({ "vidaRestantePropia": Q.state.get("vidaPropia") });
 
         var profesor = stage.options.profesor1;
         stage.insert(profesor);
