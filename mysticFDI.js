@@ -19,7 +19,7 @@ window.addEventListener("load", function() {
         .controls().touch()
         .enableSound();
 
-   
+
 
     Q.animations('player_anim', {
         front: { frames: [0, 1, 2, 3], rate: 1 / 2.5, loop: false },
@@ -34,7 +34,7 @@ window.addEventListener("load", function() {
             Q.compileSheets("personaje.png", "player.json");
             Q.compileSheets("ace.png", "ace.json");
             Q.compileSheets("clover.png", "clover.json");
-			  Q.compileSheets("gumshoe.png", "gumshoe.json");
+            Q.compileSheets("gumshoe.png", "gumshoe.json");
             Q.compileSheets("june.png", "june.json");
             Q.compileSheets("ema.png", "ema.json");
             Q.stageScene("startGame");
@@ -58,7 +58,7 @@ window.addEventListener("load", function() {
             x = (Math.random() * (570 - 90) + 90).toFixed(1);
             y = (Math.random() * (860 - 92) + 92).toFixed(1);
 
-          nProfesor = Math.floor(Math.random() * (6 - 1) + 1);
+            nProfesor = Math.floor(Math.random() * (6 - 1) + 1);
 
             if (nProfesor == 1)
                 stage.insert(new Q.Profesor1({ x: parseInt(x), y: parseInt(y) }));
@@ -138,7 +138,7 @@ window.addEventListener("load", function() {
             this._super(p, {
                 foto: "profesor1a.png",
                 sheet: "Ace",
-               
+
                 name: "Ace",
                 vida: 10,
                 poder: 4,
@@ -223,8 +223,8 @@ window.addEventListener("load", function() {
             this.entity.p.w = 12;
             this.entity.p.h = 12;
             this.entity.p.gravity = 0;
-			
-			 this.entity.on("fallar", function() {
+
+            this.entity.on("fallar", function() {
 
                 this.p.sheet = this.p.name + "Acertar";
             });
@@ -301,7 +301,7 @@ window.addEventListener("load", function() {
 
     Q.scene('screenMain', function(stage) {
 
-        stage.insert(new Q.Repeater({ asset: "fdi.png" }));
+        stage.insert(new Q.Repeater({ asset: "fdi.png", opacity: 0.8 }));
 
         var box = stage.insert(new Q.UI.Container({
             x: Q.width / 2,
@@ -311,8 +311,10 @@ window.addEventListener("load", function() {
         var label = box.insert(new Q.UI.Text({
             x: 0,
             y: -225,
-            label: "Organizacion",
-            size: 20
+            label: "Organización",
+            size: 20,
+            color: "white"
+
         }));
 
         var flechaI = box.insert(new Q.UI.Button({
@@ -333,6 +335,7 @@ window.addEventListener("load", function() {
             w: 150,
             fill: "#CCCCCC",
             label: "Alquimia"
+
         }));
 
         var botonEdificios = box.insert(new Q.UI.Button({
@@ -341,6 +344,7 @@ window.addEventListener("load", function() {
             w: 150,
             fill: "#CCCCCC",
             label: "Edificios"
+
         }));
 
         var botonAprender = box.insert(new Q.UI.Button({
@@ -349,6 +353,7 @@ window.addEventListener("load", function() {
             w: 150,
             fill: "#CCCCCC",
             label: "Aprender"
+
         }));
 
         var botonReclutar = box.insert(new Q.UI.Button({
@@ -359,63 +364,63 @@ window.addEventListener("load", function() {
             label: "Reclutar"
         }));
         //coins
-        var labelCoins = stage.insert(new Q.UI.Text({ x: 250, y: 80, size: 17, label: "Coins: " + Q.state.p.coins }));
+        var labelCoins = stage.insert(new Q.UI.Text({ x: 250, y: 80, color: "white", size: 17, label: "Coins: " + Q.state.p.coins }));
 
         Q.state.on("change.coins", this, function(coins) {
             labelCoins.p.label = "Coins: " + coins;
         });
 
         //c++
-        var labelCmasmas = stage.insert(new Q.UI.Text({ x: 250, y: 110, size: 17, label: "C++: " + Q.state.p.cmasmas }));
+        var labelCmasmas = stage.insert(new Q.UI.Text({ x: 250, y: 110, color: "white", size: 17, label: "C++: " + Q.state.p.cmasmas }));
 
         Q.state.on("change.cmasmas", this, function(cmasmas) {
             labelCmasmas.p.label = "C++: " + cmasmas;
         });
 
         //gestion
-        var labelGestion = stage.insert(new Q.UI.Text({ x: 250, y: 140, size: 17, label: "Gestión: " + Q.state.p.gestion }));
+        var labelGestion = stage.insert(new Q.UI.Text({ x: 250, y: 140, color: "white", size: 17, label: "Gestión: " + Q.state.p.gestion }));
 
         Q.state.on("change.gestion", this, function(gestion) {
             labelGestion.p.label = "Gestión: " + gestion;
         });
 
         //c
-        var labelC = stage.insert(new Q.UI.Text({ x: 250, y: 170, size: 17, label: "C: " + Q.state.p.c }));
+        var labelC = stage.insert(new Q.UI.Text({ x: 250, y: 170, color: "white", size: 17, label: "C: " + Q.state.p.c }));
 
         Q.state.on("change.gestion", this, function(c) {
             labelC.p.label = "C: " + c;
         });
 
         //ensamblador
-        var labelEnsamblador = stage.insert(new Q.UI.Text({ x: 250, y: 200, size: 17, label: "Ensamblador: " + Q.state.p.ensamblador }));
+        var labelEnsamblador = stage.insert(new Q.UI.Text({ x: 250, y: 200, color: "white", size: 17, label: "Ensamblador: " + Q.state.p.ensamblador }));
 
         Q.state.on("change.gestion", this, function(ensamblador) {
             labelEnsamblador.p.label = "Ensamblador: " + ensamblador;
         });
 
         //matematicas
-        var labelMatematicas = stage.insert(new Q.UI.Text({ x: 250, y: 230, size: 17, label: "Matemáticas: " + Q.state.p.matematicas }));
+        var labelMatematicas = stage.insert(new Q.UI.Text({ x: 250, y: 230, color: "white", size: 17, label: "Matemáticas: " + Q.state.p.matematicas }));
 
         Q.state.on("change.matematicas", this, function(matematicas) {
             labelMatematicas.p.label = "Matemáticas: " + matematicas;
         });
 
         //fisica
-        var labelFisica = stage.insert(new Q.UI.Text({ x: 250, y: 260, size: 17, label: "Física: " + Q.state.p.fisica }));
+        var labelFisica = stage.insert(new Q.UI.Text({ x: 250, y: 260, size: 17, color: "white", label: "Física: " + Q.state.p.fisica }));
 
         Q.state.on("change.fisica", this, function(fisica) {
             labelFisica.p.label = "Física: " + fisica;
         });
 
         //comida
-        var labelComida = stage.insert(new Q.UI.Text({ x: 250, y: 290, size: 17, label: "Comida: " + Q.state.p.comida }));
+        var labelComida = stage.insert(new Q.UI.Text({ x: 250, y: 290, size: 17, color: "white", label: "Comida: " + Q.state.p.comida }));
 
         Q.state.on("change.comida", this, function(comida) {
             labelComida.p.label = "Comida: " + comida;
         });
 
         //energia
-        var labelEnergia = stage.insert(new Q.UI.Text({ x: 250, y: 320, size: 17, label: "Energia: " + Q.state.p.energia }));
+        var labelEnergia = stage.insert(new Q.UI.Text({ x: 250, y: 320, size: 17, color: "white", label: "Energia: " + Q.state.p.energia }));
 
         Q.state.on("change.energia", this, function(energia) {
             labelEnergia.p.label = "Energia: " + energia;
@@ -468,7 +473,8 @@ window.addEventListener("load", function() {
             x: 0,
             y: -225,
             label: "Expedición",
-            size: 20
+            size: 20,
+            color: "white"
         }));
 
         var flechaD = box.insert(new Q.UI.Button({
@@ -494,19 +500,19 @@ window.addEventListener("load", function() {
         }));
 
         var masSoftware = box.insert(new Q.UI.Button({ x: 20, y: -150, asset: "mas.png" }));
-        box.insert(new Q.UI.Text({ x: 85, y: -160, label: "A. software", size: 11 }));
-        var textSoftware = box.insert(new Q.UI.Text({ x: 85, y: -150, label: "N: " + Q.state.p.equipoSoftware, size: 11 }));
+        box.insert(new Q.UI.Text({ x: 85, y: -160, label: "A. software", color: "white", size: 13 }));
+        var textSoftware = box.insert(new Q.UI.Text({ x: 85, y: -150, color: "white", label: "N: " + Q.state.p.equipoSoftware, size: 13 }));
         var menosSoftware = box.insert(new Q.UI.Button({ x: 145, y: -150, asset: "menos.png" }));
 
         var masInformatica = box.insert(new Q.UI.Button({ x: 20, y: -110, asset: "mas.png" }));
-        box.insert(new Q.UI.Text({ x: 85, y: -120, label: "A. informatica", size: 11 }));
-        var textInformatica = box.insert(new Q.UI.Text({ x: 85, y: -110, label: "N: " + Q.state.p.equipoInformatica, size: 11 }));
+        box.insert(new Q.UI.Text({ x: 85, y: -120, label: "A. informatica", color: "white", size: 13 }));
+        var textInformatica = box.insert(new Q.UI.Text({ x: 85, y: -110, color: "white", label: "N: " + Q.state.p.equipoInformatica, size: 13 }));
 
         var menosInformatica = box.insert(new Q.UI.Button({ x: 145, y: -110, asset: "menos.png" }));
 
         var masComputadores = box.insert(new Q.UI.Button({ x: 20, y: -70, asset: "mas.png" }));
-        box.insert(new Q.UI.Text({ x: 85, y: -80, label: "A. computadores", size: 11 }));
-        var textComputadores = box.insert(new Q.UI.Text({ x: 85, y: -70, label: "N: " + Q.state.p.equipoComputadores, size: 11 }));
+        box.insert(new Q.UI.Text({ x: 85, y: -80, label: "A. computadores", color: "white", size: 13 }));
+        var textComputadores = box.insert(new Q.UI.Text({ x: 85, y: -70, color: "white", label: "N: " + Q.state.p.equipoComputadores, size: 13 }));
 
         var menosComputadores = box.insert(new Q.UI.Button({ x: 145, y: -70, asset: "menos.png" }));
 
@@ -632,7 +638,7 @@ window.addEventListener("load", function() {
 
 
     Q.scene('edificios', function(stage) {
-        stage.insert(new Q.Repeater({ asset: "fdi.png" }));
+        stage.insert(new Q.Repeater({ asset: "fdi.png", opacity: 0.8 }));
         var dinero = false;
 
         var box = stage.insert(new Q.UI.Container({
@@ -644,7 +650,8 @@ window.addEventListener("load", function() {
             x: 0,
             y: -225,
             label: "Edificios",
-            size: 20
+            size: 20,
+            color: "white"
         }));
 
         var flechaI = box.insert(new Q.UI.Button({
@@ -673,7 +680,8 @@ window.addEventListener("load", function() {
             x: 50,
             y: -165,
             label: "x50",
-            size: 20
+            size: 20,
+            color: "white"
         }));
 
         var botonCocina = box.insert(new Q.UI.Button({
@@ -692,13 +700,13 @@ window.addEventListener("load", function() {
             label: "Cafeteria"
         }));
 
-        var botonAparcamiento = box.insert(new Q.UI.Button({
+        /*var botonAparcamiento = box.insert(new Q.UI.Button({
             x: -70,
             y: 30,
             w: 150,
             fill: "#CCCCCC",
             label: "Aparcamiento"
-        }));
+        }));*/
 
         flechaI.on("click", function() {
             Q.clearStages();
@@ -767,6 +775,7 @@ window.addEventListener("load", function() {
                 x: 50,
                 y: -90,
                 label: "x50",
+                color: "white",
                 size: 20
             }));
         }
@@ -778,6 +787,7 @@ window.addEventListener("load", function() {
                 x: 50,
                 y: -30,
                 label: "x50",
+                color: "white",
                 size: 20
             }));
         }
@@ -786,7 +796,7 @@ window.addEventListener("load", function() {
 
     Q.scene('aprender', function(stage) {
         var dinero = false;
-        stage.insert(new Q.Repeater({ asset: "fdi.png" }));
+        stage.insert(new Q.Repeater({ asset: "fdi.png", opacity: 0.8 }));
 
         var box = stage.insert(new Q.UI.Container({
             x: Q.width / 2,
@@ -798,7 +808,8 @@ window.addEventListener("load", function() {
             x: 0,
             y: -225,
             label: "Aprender",
-            size: 20
+            size: 20,
+            color: "white"
         }));
 
         var flechaI = box.insert(new Q.UI.Button({
@@ -819,7 +830,8 @@ window.addEventListener("load", function() {
             x: 70,
             y: -160,
             label: "x80",
-            size: 20
+            size: 20,
+            color: "white"
         }));
 
         var botonEnsamblador = box.insert(new Q.UI.Button({
@@ -834,7 +846,8 @@ window.addEventListener("load", function() {
             x: 70,
             y: -100,
             label: "x150",
-            size: 20
+            size: 20,
+            color: "white"
         }));
 
         var botonGestion = box.insert(new Q.UI.Button({
@@ -849,7 +862,8 @@ window.addEventListener("load", function() {
             x: 70,
             y: -40,
             label: "x50",
-            size: 20
+            size: 20,
+            color: "white"
         }));
 
         var botonMatematicas = box.insert(new Q.UI.Button({
@@ -864,7 +878,8 @@ window.addEventListener("load", function() {
             x: 70,
             y: 20,
             label: "x150",
-            size: 20
+            size: 20,
+            color: "white"
         }));
 
         var botonC = box.insert(new Q.UI.Button({
@@ -879,7 +894,8 @@ window.addEventListener("load", function() {
             x: 70,
             y: 80,
             label: "x120",
-            size: 20
+            size: 20,
+            color: "white"
         }));
 
         var botonFisica = box.insert(new Q.UI.Button({
@@ -894,7 +910,8 @@ window.addEventListener("load", function() {
             x: 70,
             y: 140,
             label: "x50",
-            size: 20
+            size: 20,
+            color: "white"
         }));
 
         flechaI.on("click", function() {
@@ -953,7 +970,7 @@ window.addEventListener("load", function() {
 
 
     Q.scene('reclutar', function(stage) {
-        stage.insert(new Q.Repeater({ asset: "fdi.png" }));
+        stage.insert(new Q.Repeater({ asset: "fdi.png", opacity: 0.8 }));
         var posicionY = -150;
         var box = stage.insert(new Q.UI.Container({
             x: Q.width / 2,
@@ -997,10 +1014,10 @@ window.addEventListener("load", function() {
             }));
 
             var alumnoS = new Q.AlumnoSoftware();
-            box.insert(new Q.UI.Text({ x: 45, y: posicionY, size: 12, label: "Vida: " + alumnoS.vida }));
-            box.insert(new Q.UI.Text({ x: 45, y: posicionY - 15, size: 12, label: "Poder: " + alumnoS.poder }));
-            var labelSN = box.insert(new Q.UI.Text({ x: 115, y: posicionY, size: 12, label: "N: " + Q.state.p.alumnoSoftware }));
-            box.insert(new Q.UI.Text({ x: 115, y: posicionY - 15, size: 12, label: "Velocidad: " + alumnoS.velocidad }));
+            box.insert(new Q.UI.Text({ x: 45, y: posicionY, size: 12, color: "white", label: "Vida: " + alumnoS.vida }));
+            box.insert(new Q.UI.Text({ x: 45, y: posicionY - 15, size: 12, color: "white", label: "Poder: " + alumnoS.poder }));
+            var labelSN = box.insert(new Q.UI.Text({ x: 115, y: posicionY, color: "white", size: 12, label: "N: " + Q.state.p.alumnoSoftware }));
+            box.insert(new Q.UI.Text({ x: 115, y: posicionY - 15, size: 12, color: "white", label: "Velocidad: " + alumnoS.velocidad }));
 
             Q.state.on("change.alumnoSoftware", this, function(alumnoSoftware) {
                 labelSN.p.label = "N: " + alumnoSoftware;
@@ -1018,10 +1035,10 @@ window.addEventListener("load", function() {
             }));
 
             var alumnoI = new Q.AlumnoInformatica();
-            box.insert(new Q.UI.Text({ x: 45, y: posicionY, size: 12, label: "Vida: " + alumnoI.vida }));
-            box.insert(new Q.UI.Text({ x: 45, y: posicionY - 15, size: 12, label: "Poder: " + alumnoI.poder }));
-            var labelIN = box.insert(new Q.UI.Text({ x: 115, y: posicionY, size: 12, label: "N: " + Q.state.p.alumnoInformatica }));
-            box.insert(new Q.UI.Text({ x: 115, y: posicionY - 15, size: 12, label: "Velocidad: " + alumnoI.velocidad }));
+            box.insert(new Q.UI.Text({ x: 45, y: posicionY, size: 12, color: "white", label: "Vida: " + alumnoI.vida }));
+            box.insert(new Q.UI.Text({ x: 45, y: posicionY - 15, size: 12, color: "white", label: "Poder: " + alumnoI.poder }));
+            var labelIN = box.insert(new Q.UI.Text({ x: 115, y: posicionY, color: "white", size: 12, label: "N: " + Q.state.p.alumnoInformatica }));
+            box.insert(new Q.UI.Text({ x: 115, y: posicionY - 15, size: 12, color: "white", label: "Velocidad: " + alumnoI.velocidad }));
 
             Q.state.on("change.alumnoInformatica", this, function(alumnoInformatica) {
                 labelIN.p.label = "N: " + alumnoInformatica;
@@ -1039,10 +1056,10 @@ window.addEventListener("load", function() {
             }));
 
             var alumnoC = new Q.AlumnoComputadores();
-            box.insert(new Q.UI.Text({ x: 45, y: posicionY, size: 12, label: "Vida: " + alumnoC.vida }));
-            box.insert(new Q.UI.Text({ x: 45, y: posicionY - 15, size: 12, label: "Poder: " + alumnoC.poder }));
-            var labelCN = box.insert(new Q.UI.Text({ x: 115, y: posicionY, size: 12, label: "N: " + Q.state.p.alumnoComputadores }));
-            box.insert(new Q.UI.Text({ x: 115, y: posicionY - 15, size: 12, label: "Velocidad: " + alumnoC.velocidad }));
+            box.insert(new Q.UI.Text({ x: 45, y: posicionY, size: 12, color: "white", label: "Vida: " + alumnoC.vida }));
+            box.insert(new Q.UI.Text({ x: 45, y: posicionY - 15, size: 12, color: "white", label: "Poder: " + alumnoC.poder }));
+            var labelCN = box.insert(new Q.UI.Text({ x: 115, y: posicionY, color: "white", size: 12, label: "N: " + Q.state.p.alumnoComputadores }));
+            box.insert(new Q.UI.Text({ x: 115, y: posicionY - 15, size: 12, color: "white", label: "Velocidad: " + alumnoC.velocidad }));
 
             Q.state.on("change.alumnoComputadores", this, function(alumnoComputadores) {
                 labelCN.p.label = "N: " + alumnoComputadores;
@@ -1111,7 +1128,8 @@ window.addEventListener("load", function() {
         var box = stage.insert(new Q.UI.Container({
             x: Q.width / 2,
             y: Q.height / 2,
-            fill: "#F0F8FF"
+            fill: "#F0F8FF",
+
         }));
 
         var software = box.insert(new Q.UI.Button({
@@ -1120,12 +1138,13 @@ window.addEventListener("load", function() {
             size: 8,
             fill: "#CCCCCC",
             label: "Elegir",
-            font: 10
+            font: 10,
+            h: 20
         }));
 
         var label = box.insert(new Q.UI.Text({
             x: 10,
-            size: 10,
+            size: 13,
             y: -60,
             label: "Alumno de software x4 Gestion, x1 Matemáticas"
         }));
@@ -1136,12 +1155,13 @@ window.addEventListener("load", function() {
             size: 8,
             fill: "#CCCCCC",
             label: "Elegir",
-            font: 10
+            font: 10,
+            h: 20
         }));
 
         label = box.insert(new Q.UI.Text({
             x: 0,
-            size: 10,
+            size: 13,
             y: 0,
             label: "Alumno de computadores x3 Ensamblador, x2 C"
         }));
@@ -1152,12 +1172,13 @@ window.addEventListener("load", function() {
             size: 8,
             fill: "#CCCCCC",
             label: "Elegir",
-            font: 10
+            font: 10,
+            h: 20
         }));
 
         label = box.insert(new Q.UI.Text({
             x: 10,
-            size: 10,
+            size: 13,
             y: 60,
             label: "Alumno de informatica x5 C++, x1 Física"
         }));
@@ -1294,7 +1315,7 @@ window.addEventListener("load", function() {
 
     Q.scene('casa', function(stage) {
 
-        stage.insert(new Q.Repeater({ asset: "fdi.png" }));
+        stage.insert(new Q.Repeater({ asset: "fdi.png", opacity: 0.8 }));
         var box = stage.insert(new Q.UI.Container({
             x: Q.width / 2,
             y: Q.height / 2,
@@ -1304,7 +1325,8 @@ window.addEventListener("load", function() {
             x: 0,
             y: -225,
             label: "Casa",
-            size: 20
+            size: 20,
+            color: "white"
         }));
 
         var flechaI = box.insert(new Q.UI.Button({
@@ -1313,25 +1335,25 @@ window.addEventListener("load", function() {
             asset: "fletxaI.png"
         }));
 
-        var labelTrabajadores = box.insert(new Q.UI.Text({ x: -80, y: -150, size: 12, label: "Total Trabajadores: " + Q.state.p.totalTrabajadores }));
+        var labelTrabajadores = box.insert(new Q.UI.Text({ x: -80, y: -150, color: "white", size: 14, label: "Total Trabajadores: " + Q.state.p.totalTrabajadores }));
 
         Q.state.on("change.totalTrabajadores", this, function(totalTrabajadores) {
             labelTrabajadores.p.label = "Total trabajadores: " + totalTrabajadores;
         });
 
         var masCocinero = box.insert(new Q.UI.Button({ x: 20, y: -150, asset: "mas.png" }));
-        box.insert(new Q.UI.Text({ x: 85, y: -160, label: "Cocinero", size: 11 }));
-        var textCocinero = box.insert(new Q.UI.Text({ x: 85, y: -150, label: "N: " + Q.state.p.cocinero, size: 11 }));
+        box.insert(new Q.UI.Text({ x: 85, y: -160, color: "white", label: "Cocinero", size: 14 }));
+        var textCocinero = box.insert(new Q.UI.Text({ x: 85, y: -150, color: "white", label: "N: " + Q.state.p.cocinero, size: 14 }));
         var menosCocinero = box.insert(new Q.UI.Button({ x: 145, y: -150, asset: "menos.png" }));
 
         var masCamarero = box.insert(new Q.UI.Button({ x: 20, y: -110, asset: "mas.png" }));
-        box.insert(new Q.UI.Text({ x: 85, y: -120, label: "Camarero", size: 11 }));
-        var textCamarero = box.insert(new Q.UI.Text({ x: 85, y: -110, label: "N: " + Q.state.p.camarero, size: 11 }));
+        box.insert(new Q.UI.Text({ x: 85, y: -120, color: "white", label: "Camarero", size: 14 }));
+        var textCamarero = box.insert(new Q.UI.Text({ x: 85, y: -110, color: "white", label: "N: " + Q.state.p.camarero, size: 14 }));
         var menosCamarero = box.insert(new Q.UI.Button({ x: 145, y: -110, asset: "menos.png" }));
 
         var masRecolector = box.insert(new Q.UI.Button({ x: 20, y: -70, asset: "mas.png" }));
-        box.insert(new Q.UI.Text({ x: 85, y: -80, label: "Recolector", size: 11 }));
-        var textRecolector = box.insert(new Q.UI.Text({ x: 85, y: -70, label: "N: " + Q.state.p.recolector, size: 11 }));
+        box.insert(new Q.UI.Text({ x: 85, y: -80, color: "white", label: "Recolector", size: 14 }));
+        var textRecolector = box.insert(new Q.UI.Text({ x: 85, y: -70, color: "white", label: "N: " + Q.state.p.recolector, size: 14 }));
         var menosRecolector = box.insert(new Q.UI.Button({ x: 145, y: -70, asset: "menos.png" }));
 
         Q.state.on("change.cocinero", this, function(cocinero) {
@@ -1571,14 +1593,14 @@ window.addEventListener("load", function() {
     });
 
     var comprobarFinBatalla = function(scene, profesor) {
-        if(batalla){
+        if (batalla) {
             if (Q.state.p.vidaRestanteProfesor <= 0) {
                 Q.clearStages();
                 Q.stageScene("finBatalla", 1, { label: "Has ganado, intenta vencer a los demás profesores que quedan", win: true, profesor1: profesor });
             } else if (Q.state.p.vidaRestantePropia <= 0) {
                 Q.clearStages();
                 Q.stageScene("finBatalla", 1, { label: "Has perdido, regresa a casa y crea un ejercito mejor", win: false, profesor1: profesor });
-            } else if (scene.localeCompare("quiz") === 0){
+            } else if (scene.localeCompare("quiz") === 0) {
                 Q.clearStages();
                 Q.stageScene(scene, 0, { profesor: profesor });
             }
@@ -1623,7 +1645,7 @@ window.addEventListener("load", function() {
             });
         }, velocidadAlumno1);
 
-        if(alumnosActuales.length === 2){
+        if (alumnosActuales.length === 2) {
             velocidadAlumno2 = (10 - (alumnosActuales[1].velocidad) * 2) * 1000;
 
             var button2 = box.insert(new Q.UI.Button({
@@ -1646,7 +1668,7 @@ window.addEventListener("load", function() {
 
 
     Q.scene('finBatalla', function(stage) {
-        
+
         batalla = false;
         Q.state.set({ "vidaRestantePropia": Q.state.get("vidaPropia") });
 
