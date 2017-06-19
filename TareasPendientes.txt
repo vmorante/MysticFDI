@@ -3,7 +3,12 @@
 - No quitar energia de cocineros cuando esta en el mapa
 - Crear malo final
 - Mejorar imagenes del fondo del fight
+- Una pantalla de créditos en la que aparezcan los nombres de los integrantes
+  del grupos así como las referencias a los artistas y juegos de los que se
+  hayan sacado los recursos gráficos.
 
 
 EXTRAS-----------------------
  - Dialogo amenazador cuando colisionas con profe
+ - Que aparezca una frase durante un tiempo diciendo que has aumentado de energia con el cocinero, que has comprado tal...
+ - Solucionar la etiqueta que muestra el numero de recolectores
