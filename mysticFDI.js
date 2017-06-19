@@ -730,6 +730,7 @@ window.addEventListener("load", function() {
             if (dinero) {
                 Q.state.inc("totalTrabajadores", 3);
                 Q.state.dec("coins", 50);
+                Q.stageScene("materialInsuficiente", 1, { escena: "edificios", label: "Ha añadido 3 trabajadores que podrá asignar" });
             }
         });
 
@@ -1498,36 +1499,39 @@ window.addEventListener("load", function() {
                         x: 0,
                         y: -30,
                         label: textPregunta,
-                        size: 10,
+                        size: 14,
                         color: "white"
                     }));
 
                     var botonRespuesta1 = box.insert(new Q.UI.Button({
                         x: 0,
                         y: 30,
-                        font: 10,
+                        font: 12,
                         w: 150,
                         fill: "#CCCCCC",
-                        label: respuesta1
+                        label: respuesta1,
+                        w: 280
                     }));
 
                     var botonRespuesta2 = box.insert(new Q.UI.Button({
                         x: 0,
                         y: 90,
-                        font: 10,
+                        font: 12,
                         w: 150,
                         size: 30,
                         fill: "#CCCCCC",
-                        label: respuesta2
+                        label: respuesta2,
+                        w: 280
                     }));
 
                     var botonRespuesta3 = box.insert(new Q.UI.Button({
                         x: 0,
                         y: 150,
                         w: 150,
-                        font: 10,
+                        font: 12,
                         fill: "#CCCCCC",
-                        label: respuesta3
+                        label: respuesta3,
+                        w: 280
                     }));
 
                     botonRespuesta1.on("click", function() {
