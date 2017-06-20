@@ -9,4 +9,3 @@
 EXTRAS-----------------------
  - Dialogo amenazador cuando colisionas con profe
  - Que aparezca una frase durante un tiempo diciendo que has aumentado de energia con el cocinero, que has comprado tal...
- - Solucionar la etiqueta que muestra el numero de recolectores

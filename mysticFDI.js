@@ -43,7 +43,6 @@ window.addEventListener("load", function() {
 
     Q.scene("level1", function(stage) {
         Q.state.set('enMapa', true);
-        console.log(Q.state.p.enMapa);
         Q.stageTMX("level.tmx", stage);
         Q.stageScene("salirDelMapa", 1);
         Q.stageScene("energia", 2);
@@ -84,7 +83,6 @@ window.addEventListener("load", function() {
             if (energia === 0) {
                 Q.state.set({ energia: 50 }); //quitar, esta para pruebas
                 Q.state.set('enMapa', false);
-                console.log(Q.state.p.enMapa);
                 Q.clearStages();
                 Q.stageScene("screenMain");
             }
@@ -106,7 +104,6 @@ window.addEventListener("load", function() {
 
         botonSalir.on("click", function() {
             Q.state.set('enMapa', false);
-            console.log(Q.state.p.enMapa);
             Q.clearStages();
             Q.stageScene("screenMain");
         });
@@ -1365,7 +1362,7 @@ window.addEventListener("load", function() {
         });
 
         Q.state.on("change.recolector", this, function(recolector) {
-            textRecolector.label = "N: " + recolector;
+            textRecolector.p.label = "N: " + recolector;
         });
 
         flechaI.on("click", function() {
@@ -1744,7 +1741,6 @@ window.addEventListener("load", function() {
             } else {
                 profesor.trigger("lost");
                 Q.state.set('enMapa', false);
-                console.log(Q.state.p.enMapa);
                 Q.clearStages();
                 Q.stageScene("screenMain");
             }
