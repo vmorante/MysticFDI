@@ -5,8 +5,7 @@
 window.addEventListener("load", function() {
 
     const inicioNiveles = {
-        uno: { xPlayer: 90, yPlayer: 925.5 },
-        dos: { xPlayer: 90, yPlayer: 925.5 }
+        uno: { xPlayer: 50, yPlayer: 989.5 }
     };
 
 
@@ -49,14 +48,14 @@ window.addEventListener("load", function() {
         var player = stage.insert(new Q.Player({ x: Q.state.get('xPlayer'), y: Q.state.get('yPlayer'), scale: 1 / 7 }));
 
         var nProfesor,
-            n = ((Math.random() * 10) + 5).toFixed(0),
+            n = ((Math.random() * 15) + 5).toFixed(0),
             x = 0,
             y = 0,
             i = 0;
 
         for (i; i < n; i++) {
-            x = (Math.random() * (570 - 90) + 90).toFixed(1);
-            y = (Math.random() * (860 - 92) + 92).toFixed(1);
+            x = (Math.random() * (1400 - 50) + 50).toFixed(1);
+            y = (Math.random() * (989.5 - 125) + 125).toFixed(1);
 
             nProfesor = Math.floor(Math.random() * (6 - 1) + 1);
 
@@ -68,7 +67,7 @@ window.addEventListener("load", function() {
                 stage.insert(new Q.Profesor3({ x: parseInt(x), y: parseInt(y) }));
             else if (nProfesor == 4)
                 stage.insert(new Q.Profesor4({ x: parseInt(x), y: parseInt(y) }));
-            else if (nProfesor == 5)
+            else
                 stage.insert(new Q.Profesor5({ x: parseInt(x), y: parseInt(y) }));
 
         }
@@ -925,7 +924,7 @@ window.addEventListener("load", function() {
             dinero = comprobarDinero(50, "aprender");
             if (dinero) {
                 Q.state.dec("coins", 50);
-                Q.state.inc("gestion", 1); //200w 333h
+                Q.state.inc("gestion", 1);
             }
         });
 
@@ -1505,7 +1504,6 @@ window.addEventListener("load", function() {
                         x: 0,
                         y: 30,
                         font: 12,
-                        w: 150,
                         fill: "#CCCCCC",
                         label: respuesta1,
                         w: 280
@@ -1515,7 +1513,6 @@ window.addEventListener("load", function() {
                         x: 0,
                         y: 90,
                         font: 12,
-                        w: 150,
                         size: 30,
                         fill: "#CCCCCC",
                         label: respuesta2,
@@ -1525,7 +1522,6 @@ window.addEventListener("load", function() {
                     var botonRespuesta3 = box.insert(new Q.UI.Button({
                         x: 0,
                         y: 150,
-                        w: 150,
                         font: 12,
                         fill: "#CCCCCC",
                         label: respuesta3,
@@ -1776,7 +1772,7 @@ window.addEventListener("load", function() {
             y: Q.height / 2
         }));
 
-        Q.state.reset({ coins: 200, cmasmas: 0, gestion: 0, c: 0, ensamblador: 0, matematicas: 0, fisica: 0, alumnoSoftware: 1, alumnoComputadores: 0, alumnoInformatica: 1, tamañoEquipo: 2, equipoActual: 0, equipoSoftware: 0, equipoInformatica: 0, equipoComputadores: 0, cocinero: 0, camarero: 0, recolector: 0, cocina: false, cafeteria: false, totalTrabajadores: 0, trabajadoresActuales: 0, comida: 0, energia: 50, xPlayer: inicioNiveles.uno.xPlayer, yPlayer: inicioNiveles.uno.yPlayer, vidaProfesor: 0, vidaPropia: 0, vidaRestanteProfesor: 0, vidaRestantePropia: 0, enBatalla: false, enMapa: false });
+        Q.state.reset({ coins: 200, cmasmas: 0, gestion: 0, c: 0, ensamblador: 0, matematicas: 0, fisica: 0, alumnoSoftware: 1, alumnoComputadores: 0, alumnoInformatica: 1, tamañoEquipo: 2, equipoActual: 0, equipoSoftware: 0, equipoInformatica: 0, equipoComputadores: 0, cocinero: 0, camarero: 0, recolector: 0, cocina: false, cafeteria: false, totalTrabajadores: 0, trabajadoresActuales: 0, comida: 0, energia: 250, xPlayer: inicioNiveles.uno.xPlayer, yPlayer: inicioNiveles.uno.yPlayer, vidaProfesor: 0, vidaPropia: 0, vidaRestanteProfesor: 0, vidaRestantePropia: 0, enBatalla: false, enMapa: false });
 
         var button = box.insert(new Q.UI.Button({ asset: "puerta/1.jpg", scale: 1 / 2 }));
         var titulo = box.insert(new Q.UI.Button({ x: 0, y: -10, asset: "titulo.png" }));
