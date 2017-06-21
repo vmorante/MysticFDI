@@ -27,7 +27,7 @@ window.addEventListener("load", function() {
     });
 
 
-    Q.load(["fdi.png", "fletxaI.png", "fletxaD.png", "tick1.png", "puerta/1.jpg", "puerta/2.jpg", "puerta/3.jpg", "puerta/4.jpg", "puerta/5.jpg", "puerta/6.jpg", "puerta/7.jpg", "puerta/8.jpg", "puerta/9.jpg", "puerta/10.jpg", "puerta/11.jpg", "puerta/12.jpg", "titulo.png", "personaje.png", "player.json", "coins.mp3", "coins.ogg", "mas.png", "menos.png", "quiz.json", "profesor1a.png", "profesor2a.png", "ace.png", "ace.json", "clover.png", "clover.json", "gumshoe.png", "gumshoe.json", "june.png", "june.json", "ema.png", "ema.json"], function() {
+    Q.load(["fdi.png", "fletxaI.png", "fletxaD.png", "tick1.png", "puerta/1.jpg", "puerta/2.jpg", "puerta/3.jpg", "puerta/4.jpg", "puerta/5.jpg", "puerta/6.jpg", "puerta/7.jpg", "puerta/8.jpg", "puerta/9.jpg", "puerta/10.jpg", "puerta/11.jpg", "puerta/12.jpg", "titulo.png", "personaje.png", "player.json", "coins.mp3", "coins.ogg", "mas.png", "menos.png", "quiz.json", "profesor1a.png", "profesor2a.png", "ace.png", "ace.json", "clover.png", "clover.json", "gumshoe.png", "gumshoe.json", "june.png", "june.json", "ema.png", "ema.json", "energia.png"], function() {
         Q.loadTMX("level.tmx", function() {
             Q.compileSheets("personaje.png", "player.json");
             Q.compileSheets("ace.png", "ace.json");
@@ -48,10 +48,11 @@ window.addEventListener("load", function() {
         var player = stage.insert(new Q.Player({ x: Q.state.get('xPlayer'), y: Q.state.get('yPlayer'), scale: 1 / 7 }));
 
         var nProfesor,
-            n = ((Math.random() * 15) + 5).toFixed(0),
+            n = ((Math.random() * 20) + 10).toFixed(0),
             x = 0,
             y = 0,
-            i = 0;
+            i = 0,
+            nEnergia = ((Math.random() * 30) + 10).toFixed(0);
 
         for (i; i < n; i++) {
             x = (Math.random() * (1400 - 50) + 50).toFixed(1);
@@ -70,6 +71,12 @@ window.addEventListener("load", function() {
             else
                 stage.insert(new Q.Profesor5({ x: parseInt(x), y: parseInt(y) }));
 
+        }
+        i = 0
+        for (i; i < nEnergia; i++) {
+            x = (Math.random() * (1400 - 50) + 50).toFixed(1);
+            y = (Math.random() * (989.5 - 125) + 125).toFixed(1);
+            stage.insert(new Q.Energia({ x: parseInt(x), y: parseInt(y) }));
         }
 
         stage.add("viewport").follow(player);
@@ -243,6 +250,31 @@ window.addEventListener("load", function() {
             });
         }
 
+    });
+
+    Q.Sprite.extend("Energia", {
+        init: function(p) {
+            this._super(p, {
+                asset: "energia.png",
+                scale: 1 / 22,
+                gravity: 0
+            });
+
+            this.add('2d,aiBounce')
+
+            this.on("bump.left, bump.right, bump.bottom, bump.top", function(collision) {
+                if (collision.obj.isA("Player")) {
+                    //Q.input.on("fire", this, function() {
+                    Q.state.inc("energia", 5);
+                    this.destroy();
+
+
+
+                    // })
+                }
+            });
+
+        }
     });
 
 
@@ -1438,7 +1470,7 @@ window.addEventListener("load", function() {
         var contador_s = 0;
         var cronometro = setInterval(
             function() {
-                if(!Q.state.p.enMapa){
+                if (!Q.state.p.enMapa) {
                     if (contador_s == 10) {
                         contador_s = 0;
 
@@ -1601,8 +1633,8 @@ window.addEventListener("load", function() {
 
 
     Q.scene('fight', function(stage) {
-        var t = 0, 
-            t2 = 0, 
+        var t = 0,
+            t2 = 0,
             t3 = 0,
             profesor = stage.options.profesor,
             velocidadProfesor = (10 - profesor.p.velocidad),
@@ -1630,7 +1662,7 @@ window.addEventListener("load", function() {
         }));
 
 
-        if(alumnosActuales.length === 2){
+        if (alumnosActuales.length === 2) {
             velocidadAlumno2 = (10 - (alumnosActuales[1].velocidad) * 2);
 
             button2 = box.insert(new Q.UI.Button({
@@ -1644,8 +1676,8 @@ window.addEventListener("load", function() {
 
         var tiempo = setInterval(function() {
 
-            if(t >= velocidadProfesor) {
-                if(Q.state.get('enBatalla')){
+            if (t >= velocidadProfesor) {
+                if (Q.state.get('enBatalla')) {
                     Q.state.dec('vidaRestantePropia', fuerzaProfesor);
                     if (Q.state.p.vidaRestantePropia <= 0) {
                         Q.clearStages();
@@ -1654,11 +1686,11 @@ window.addEventListener("load", function() {
                 }
                 t = 0;
             }
-        
 
-        
+
+
             button.on("click", function() {
-                if(t2 >= velocidadAlumno1){
+                if (t2 >= velocidadAlumno1) {
                     Q.state.dec('vidaRestanteProfesor', alumnosActuales[0].poder);
                     if (Q.state.p.vidaRestanteProfesor <= 0) {
                         Q.clearStages();
@@ -1667,11 +1699,11 @@ window.addEventListener("load", function() {
                     t2 = 0;
                 }
             });
-        
-            if(alumnosActuales.length === 2){
+
+            if (alumnosActuales.length === 2) {
 
                 button2.on("click", function() {
-                    if(t3 >= velocidadAlumno2){
+                    if (t3 >= velocidadAlumno2) {
                         Q.state.dec('vidaRestanteProfesor', alumnosActuales[1].poder);
                         if (Q.state.p.vidaRestanteProfesor <= 0) {
                             Q.clearStages();
@@ -1686,7 +1718,7 @@ window.addEventListener("load", function() {
             t2 += 0.5;
             t3 += 0.5;
 
-            if(!Q.state.get('enBatalla')){
+            if (!Q.state.get('enBatalla')) {
                 clearInterval(tiempo);
             }
         }, 500);
