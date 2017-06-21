@@ -177,8 +177,8 @@ window.addEventListener("load", function() {
             this._super(p, {
                 sheet: "Gumshoe",
                 name: "Gumshoe",
-                vida: 10,
-                poder: 4,
+                vida: 15,
+                poder: 2,
                 velocidad: 3,
                 scale: 1 / 7
             });
@@ -191,9 +191,9 @@ window.addEventListener("load", function() {
             this._super(p, {
                 sheet: "June",
                 name: "June",
-                vida: 10,
+                vida: 7,
                 poder: 4,
-                velocidad: 3.5,
+                velocidad: 5.5,
                 scale: 1 / 7
             });
             this.add('2d,aiBounce,animation,Profesor');
@@ -206,9 +206,9 @@ window.addEventListener("load", function() {
             this._super(p, {
                 sheet: "Ema",
                 name: "Ema",
-                vida: 10,
-                poder: 4,
-                velocidad: 3,
+                vida: 15,
+                poder: 1,
+                velocidad: 2,
                 scale: 1 / 7
             });
             this.add('2d,aiBounce,animation,Profesor');
@@ -1284,8 +1284,8 @@ window.addEventListener("load", function() {
         init: function() {
             this.especialidad = "Informatica";
             this.vida = 4.5;
-            this.velocidad = 3;
-            this.poder = 2;
+            this.velocidad = 1;
+            this.poder = 4;
             this.ataque = "Cerbatana";
             //c++
             this.nombreConocimiento1 = "cmasmas";
@@ -1316,9 +1316,9 @@ window.addEventListener("load", function() {
     Q.Class.extend("AlumnoComputadores", {
         init: function() {
             this.especialidad = "Computadores";
-            this.vida = 4;
-            this.velocidad = 3;
-            this.poder = 2;
+            this.vida = 6;
+            this.velocidad = 2;
+            this.poder = 1;
             this.ataque = "Borrador";
             //ensamblador
             this.nombreConocimiento1 = "ensamblador";
@@ -1810,7 +1810,7 @@ window.addEventListener("load", function() {
         var label1 = box.insert(new Q.UI.Text({ x: 0, y: -160, color: "white", label: "Mystic FDI" }));
         var label2 = box.insert(new Q.UI.Text({ x: 0, y: -120, color: "white", label: "Verónica Morante Pindado" }));
         var label3 = box.insert(new Q.UI.Text({ x: 0, y: -80, color: "white", label: "Alejandro Pidal Gallego" }));
-        var label4 = box.insert(new Q.UI.Text({ x: 0, y: -40, color: "white", label: "Recursos gráficos" }));
+        var label4 = box.insert(new Q.UI.Text({ x: 0, y: -40, color: "white", label: "Recursos gráficos:" }));
         var label5 = box.insert(new Q.UI.Text({ x: 0, y: 0, color: "white", label: "http://spritedatabase.net/" }));
         var label6 = box.insert(new Q.UI.Text({ x: 0, y: 40, color: "white", label: "Juego:999" }));
         var label7 = box.insert(new Q.UI.Text({ x: 0, y: 80, color: "white", label: "Juego:Phoenix wright" }));
