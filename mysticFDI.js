@@ -507,12 +507,12 @@ window.addEventListener("load", function() {
             asset: "fletxaD.png"
         }));
 
-        var botonLogros = box.insert(new Q.UI.Button({
+        var botonCreditos = box.insert(new Q.UI.Button({
             x: -70,
             y: -150,
             w: 150,
             fill: "#CCCCCC",
-            label: "Logros"
+            label: "Creditos"
         }));
 
         var botonSalir = box.insert(new Q.UI.Button({
@@ -570,6 +570,11 @@ window.addEventListener("load", function() {
             }
         });
 
+        botonCreditos.on("click", function() {
+            Q.clearStages();
+            Q.stageScene("creditos");
+
+        });
         masSoftware.on("click", function() {
             posible = comprobarExpedicion(Q.state.p.alumnoSoftware, Q.state.p.equipoSoftware);
             if (posible) {
@@ -1795,7 +1800,21 @@ window.addEventListener("load", function() {
             label.p.label = "Vida profesor: " + vidaProfesor;
         });
     });
+    Q.scene('creditos', function(stage) {
 
+        var box = stage.insert(new Q.UI.Container({
+            x: Q.width / 2,
+            y: Q.height / 2
+        }));
+
+        var label1 = box.insert(new Q.UI.Text({ x: 0, y: -160, color: "white", label: "Mystic FDI" }));
+        var label2 = box.insert(new Q.UI.Text({ x: 0, y: -120, color: "white", label: "Verónica Morante Pindado" }));
+        var label3 = box.insert(new Q.UI.Text({ x: 0, y: -80, color: "white", label: "Alejandro Pidal Gallego" }));
+        var label4 = box.insert(new Q.UI.Text({ x: 0, y: -40, color: "white", label: "Recursos gráficos" }));
+        var label5 = box.insert(new Q.UI.Text({ x: 0, y: 0, color: "white", label: "http://spritedatabase.net/" }));
+        var label6 = box.insert(new Q.UI.Text({ x: 0, y: 40, color: "white", label: "Juego:999" }));
+        var label7 = box.insert(new Q.UI.Text({ x: 0, y: 80, color: "white", label: "Juego:Phoenix wright" }));
+    })
 
     Q.scene('startGame', function(stage) {
 
