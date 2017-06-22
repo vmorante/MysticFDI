@@ -1,7 +1,7 @@
 
 # [MysticFDI](https://vmorante.github.io/MysticFDI/)
 
-https://vmorante.github.io/MysticFDI/ --> Juega y pruébalo
+https://vmorante.github.io/MysticFDI/ --> ¿Te atreves a jugarlo y a salvar a la facultad?
 
 Juego en javascript con motor Quintus
 
@@ -17,6 +17,8 @@ Juego en javascript con motor Quintus
 **Modos:**					Un jugador
 
 **Edad:**					7+
+
+**Autores:**  Verónica Morante Pindado y Alejandro Pidal Gallego
 
 
 
@@ -97,7 +99,8 @@ Podrás asignar a los trabajadores:
 
 ### **Referentes y fuentes**
 **Mystic castle**: Es el juego principal en el que nos basamos. Es un RGP basado en mapas que tienes que ir recorriendo, mientras mejoras a tu ejército y consigues recursos para subsistir.
-**Fuentes**
+
+**Fuentes:**
 * http://spritedatabase.net/
 * Juego 999
 * Juego Phoenix Wright
