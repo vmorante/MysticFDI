@@ -59,6 +59,8 @@ El usuario **pierde** , si cuando está en el mapa se queda **sin energía o si 
 
 **Quiz**: El alumno también se podrá enfrentar a los enemigos respondiendo preguntas relacionadas con la informática, si acierta una pregunta quita 3 puntos de vida al enemigo, si falla pierde el tres puntos de vida.
 
+**Quiz**: El alumno se enfrenta a un profesor. El profesor cada x segundos(dependiendo de la velocidad del profesor) le quitará tanta vida al alumno como poder tenga el profesor. Según los alumnos que tengas reclutados aparecerán tantos botones, y estos serán la manera de atacar. Solo se podrá accionar el boton cada x segundos(dependiendo de la velocidad del alumno).
+
 ### **Diseño e implementación**
 **Tecnología**: Quintus
 #### **Clases y componentes**
@@ -66,6 +68,8 @@ El usuario **pierde** , si cuando está en el mapa se queda **sin energía o si 
 **Alumno**: Tres clases diferentes con sus puntos de vida, poder y velocidad.
 
 **Profesor**: Cada profesor tiene vida, poder y velocidad diferente, pero tienen las mismas funciones generales.
+
+**ProfesorJefe**: Similar al profesor normal, pero con mas vida y con la característica de jefe.
 
 
 ### **Pantallas principal**
@@ -83,7 +87,7 @@ Podrás comprar diferentes conocimientos para mejorar a los alumnos
 
 **Reclutar**
 
-Podrás comprar trs tipos de alumnos gracias a los conocimientos adquiridos
+Podrás comprar tres tipos de alumnos gracias a los conocimientos adquiridos
 
 **Casa**
 Podrás asignar a los trabajadores:
@@ -92,7 +96,7 @@ Podrás asignar a los trabajadores:
   * Recolector : Produce 1 de monedas y consume 1 de energía
   
  **Expedición**
-  Podrás seleccionar los alumnos con los que quieres explorar el mapa, en el nivel 1 **máximo 2**
+  Podrás seleccionar los alumnos con los que quieres explorar el mapa, en el nivel 1 **máximo 2 alumnos**
 
 ### Equipo de trabajo y reparto de tareas
 
@@ -104,4 +108,5 @@ Podrás asignar a los trabajadores:
 * http://spritedatabase.net/
 * Juego 999
 * Juego Phoenix Wright
+* https://es.pinterest.com/pin/413838653237917594/
 
