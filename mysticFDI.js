@@ -5,7 +5,7 @@
 window.addEventListener("load", function() {
 
     const inicioNiveles = {
-        uno: { xPlayer: 50, yPlayer: 989.5 }
+        uno: { xPlayer: 50, yPlayer: 989.5, victoriasParaSalirJefe: 10, xJefe: 1322, yJefe: 125.5 }
     };
 
 
@@ -27,7 +27,7 @@ window.addEventListener("load", function() {
     });
 
 
-    Q.load(["fdi.png", "fletxaI.png", "fletxaD.png", "tick1.png", "puerta/1.jpg", "puerta/2.jpg", "puerta/3.jpg", "puerta/4.jpg", "puerta/5.jpg", "puerta/6.jpg", "puerta/7.jpg", "puerta/8.jpg", "puerta/9.jpg", "puerta/10.jpg", "puerta/11.jpg", "puerta/12.jpg", "titulo.png", "personaje.png", "player.json", "coins.mp3", "coins.ogg", "mas.png", "menos.png", "quiz.json", "profesor1a.png", "profesor2a.png", "ace.png", "ace.json", "clover.png", "clover.json", "gumshoe.png", "gumshoe.json", "june.png", "june.json", "ema.png", "ema.json", "energia.png"], function() {
+    Q.load(["fdi.png", "fletxaI.png", "fletxaD.png", "tick1.png", "puerta/1.jpg", "puerta/2.jpg", "puerta/3.jpg", "puerta/4.jpg", "puerta/5.jpg", "puerta/6.jpg", "puerta/7.jpg", "puerta/8.jpg", "puerta/9.jpg", "puerta/10.jpg", "puerta/11.jpg", "puerta/12.jpg", "titulo.png", "personaje.png", "player.json", "coins.mp3", "coins.ogg", "mas.png", "menos.png", "quiz.json", "profesor1a.png", "profesor2a.png", "ace.png", "ace.json", "clover.png", "clover.json", "gumshoe.png", "gumshoe.json", "june.png", "june.json", "ema.png", "ema.json", "energia.png", "profeJefe.png"], function() {
         Q.loadTMX("level.tmx", function() {
             Q.compileSheets("personaje.png", "player.json");
             Q.compileSheets("ace.png", "ace.json");
@@ -48,15 +48,15 @@ window.addEventListener("load", function() {
         var player = stage.insert(new Q.Player({ x: Q.state.get('xPlayer'), y: Q.state.get('yPlayer'), scale: 1 / 7 }));
 
         var nProfesor,
-            n = ((Math.random() * 20) + 10).toFixed(0),
+            n = ((Math.random() * 20) + 10),
             x = 0,
             y = 0,
             i = 0,
-            nEnergia = ((Math.random() * 30) + 10).toFixed(0);
+            nEnergia = ((Math.random() * 20) + 10);
 
         for (i; i < n; i++) {
-            x = (Math.random() * (1400 - 50) + 50).toFixed(1);
-            y = (Math.random() * (989.5 - 125) + 125).toFixed(1);
+            x = (Math.random() * (1400 - 50) + 50);
+            y = (Math.random() * (989.5 - 125) + 125);
 
             nProfesor = Math.floor(Math.random() * (6 - 1) + 1);
 
@@ -72,12 +72,24 @@ window.addEventListener("load", function() {
                 stage.insert(new Q.Profesor5({ x: parseInt(x), y: parseInt(y) }));
 
         }
-        i = 0
+
+
+        i = 0;
         for (i; i < nEnergia; i++) {
-            x = (Math.random() * (1400 - 50) + 50).toFixed(1);
-            y = (Math.random() * (989.5 - 125) + 125).toFixed(1);
+            x = (Math.random() * (1400 - 50) + 50);
+            y = (Math.random() * (989.5 - 125) + 125);
             stage.insert(new Q.Energia({ x: parseInt(x), y: parseInt(y) }));
         }
+
+        Q.state.on("change.victorias", this, function(victorias) {
+                if(!Q.state.p.jefe && victorias === Q.state.p.victoriasHastaJefe){
+                    Q.state.set('jefe', true);
+                }
+        });
+
+        if(Q.state.p.jefe)
+            stage.insert(new Q.ProfesorJefe({ x: parseInt(Q.state.p.xJefe), y: parseInt(Q.state.p.yJefe) }));
+
 
         stage.add("viewport").follow(player);
     });
@@ -87,7 +99,6 @@ window.addEventListener("load", function() {
         var label = stage.insert(new Q.UI.Text({ x: Q.width / 2, y: 15, size: 12, color: "white", label: "Energía: " + Q.state.get('energia') }));
         Q.state.on("change.energia", this, function(energia) {
             if (energia === 0) {
-                Q.state.set({ energia: 50 }); //quitar, esta para pruebas
                 Q.state.set('enMapa', false);
                 Q.clearStages();
                 Q.stageScene("screenMain");
@@ -141,6 +152,34 @@ window.addEventListener("load", function() {
             });
         }
     });
+
+
+    Q.Sprite.extend("ProfesorJefe", {
+        init: function(p) {
+            this._super(p, {
+                asset: "profeJefe.png",
+                name: "Jefazo",
+                vida: 15,
+                poder: 4,
+                velocidad: 4.5,
+                gravity: 0,
+                jefe: true
+            });
+            this.add('2d,aiBounce,animation');
+
+            this.on("hit.sprite", function(collision) {
+                if (collision.obj.isA("Player")) {
+                    Q.state.set({ xPlayer: collision.obj.p.x, yPlayer: collision.obj.p.y, vidaRestanteProfesor: this.p.vida, vidaProfesor: this.p.vida });
+
+                    Q.clearStages();
+                    Q.stageScene("batalla", 1, { profesor: this });
+                }
+            });
+        }
+
+    });
+
+
     Q.Sprite.extend("Profesor1", {
         init: function(p) {
             this._super(p, {
@@ -256,11 +295,11 @@ window.addEventListener("load", function() {
         init: function(p) {
             this._super(p, {
                 asset: "energia.png",
-                scale: 1 / 22,
+                scale: 1 / 40,
                 gravity: 0
             });
 
-            this.add('2d,aiBounce')
+            this.add('2d,aiBounce');
 
             this.on("bump.left, bump.right, bump.bottom, bump.top", function(collision) {
                 if (collision.obj.isA("Player")) {
@@ -312,7 +351,7 @@ window.addEventListener("load", function() {
 
         fight.on("click", function() {
             Q.clearStages();
-            Q.stageScene('fight', 0, { profesor: stage.options.profesor });
+            Q.stageScene('fight', 0, { profesor: profesor });
         });
 
         quiz.on("click", function() {
@@ -1730,6 +1769,25 @@ window.addEventListener("load", function() {
     });
 
 
+    Q.scene('finDeJuego', function(stage) {
+        var box = stage.insert(new Q.UI.Container({
+            x: Q.width / 2,
+            y: Q.height / 2
+        }));
+
+        var label1 = box.insert(new Q.UI.Text({ x: 0, y: -180, color: "white", label: "Mystic FDI", size: 30 }));
+        var label2 = box.insert(new Q.UI.Text({ x: 0, y: -80, color: "white", label: "¡ENHORABUENA!", size: 20 }));
+        var label3 = box.insert(new Q.UI.Text({ x: 0, y: -50, color: "white", label: "¡HAS CONSEGUIDO GANAR!", size: 20 }));
+
+        var label4 = box.insert(new Q.UI.Text({ x: 0, y: 120, color: "white", label: "Pulsa enter para volver a empezar", size: 15 }));
+
+        Q.input.on("confirm", function() {
+            Q.clearStages();
+            Q.stageScene("startGame");
+        });
+    });
+
+
     Q.scene('finBatalla', function(stage) {
 
         Q.state.set('enBatalla', false);
@@ -1737,9 +1795,16 @@ window.addEventListener("load", function() {
         var profesor = stage.options.profesor1;
         stage.insert(profesor);
         if (stage.options.win) {
+            if(profesor.p.jefe){
+                Q.clearStages();
+                Q.stageScene("finDeJuego");
+            }
+
             profesor.trigger("win");
             Q.state.inc('energia', 15);
-
+            if(Q.state.p.victorias < Q.state.p.victoriasHastaJefe){
+                Q.state.inc('victorias', 1);
+            }
         } else {
             profesor.trigger("perder");
 
@@ -1783,7 +1848,6 @@ window.addEventListener("load", function() {
         box.fit(20);
     });
 
-
     Q.scene("vidaPropia", function(stage) {
         var label = stage.insert(new Q.UI.Text({ x: Q.width / 2, y: 15, size: 12, color: "white", label: "Vida: " + Q.state.get('vidaRestantePropia') }));
         Q.state.on("change.vidaRestantePropia", this, function(vida) {
@@ -1814,7 +1878,14 @@ window.addEventListener("load", function() {
         var label5 = box.insert(new Q.UI.Text({ x: 0, y: 0, color: "white", label: "http://spritedatabase.net/" }));
         var label6 = box.insert(new Q.UI.Text({ x: 0, y: 40, color: "white", label: "Juego:999" }));
         var label7 = box.insert(new Q.UI.Text({ x: 0, y: 80, color: "white", label: "Juego:Phoenix wright" }));
-    })
+        var label8 = box.insert(new Q.UI.Text({ x: 0, y: 140, color: "white", label: "Pulsa enter para volver a empezar", size: 15 }));
+
+        Q.input.on("confirm", function() {
+            Q.stageScene("expedicion");
+        });
+
+        
+    });
 
     Q.scene('startGame', function(stage) {
 
@@ -1823,8 +1894,7 @@ window.addEventListener("load", function() {
             y: Q.height / 2
         }));
 
-        Q.state.reset({ coins: 200, cmasmas: 0, gestion: 0, c: 0, ensamblador: 0, matematicas: 0, fisica: 0, alumnoSoftware: 1, alumnoComputadores: 0, alumnoInformatica: 1, tamañoEquipo: 2, equipoActual: 0, equipoSoftware: 0, equipoInformatica: 0, equipoComputadores: 0, cocinero: 0, camarero: 0, recolector: 0, cocina: false, cafeteria: false, totalTrabajadores: 0, trabajadoresActuales: 0, comida: 0, energia: 250, xPlayer: inicioNiveles.uno.xPlayer, yPlayer: inicioNiveles.uno.yPlayer, vidaProfesor: 0, vidaPropia: 0, vidaRestanteProfesor: 0, vidaRestantePropia: 0, enBatalla: false, enMapa: false });
-
+        Q.state.reset({ coins: 200, cmasmas: 0, gestion: 0, c: 0, ensamblador: 0, matematicas: 0, fisica: 0, alumnoSoftware: 1, alumnoComputadores: 0, alumnoInformatica: 1, tamañoEquipo: 2, equipoActual: 0, equipoSoftware: 0, equipoInformatica: 0, equipoComputadores: 0, cocinero: 0, camarero: 0, recolector: 0, cocina: false, cafeteria: false, totalTrabajadores: 0, trabajadoresActuales: 0, comida: 0, energia: 250, xPlayer: inicioNiveles.uno.xPlayer, yPlayer: inicioNiveles.uno.yPlayer, vidaProfesor: 0, vidaPropia: 0, vidaRestanteProfesor: 0, vidaRestantePropia: 0, enBatalla: false, enMapa: false, victoriasHastaJefe: inicioNiveles.uno.victoriasParaSalirJefe, victorias: 0, xJefe: inicioNiveles.uno.xJefe, yJefe: inicioNiveles.uno.yJefe, jefe: false });
         var button = box.insert(new Q.UI.Button({ asset: "puerta/1.jpg", scale: 1 / 2 }));
         var titulo = box.insert(new Q.UI.Button({ x: 0, y: -10, asset: "titulo.png" }));
         var label1 = box.insert(new Q.UI.Button({ x: 0, y: 190, h: 80, fill: "#CCCCCC", label: "Haz clic o presiona enter" }));
