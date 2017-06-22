@@ -804,11 +804,11 @@ window.addEventListener("load", function() {
 
         botonCocina.on("click", function() {
             if (!Q.state.p.cocina) {
-                dinero = comprobarDinero(50, "edificios");
+                dinero = comprobarDinero(20, "edificios");
                 if (dinero) {
                     Q.state.p.cocina = true;
                     box.insert(new Q.UI.Button({ x: 50, y: -90, asset: "tick1.png" }));
-                    Q.state.dec("coins", 50);
+                    Q.state.dec("coins", 20);
                     labelCocina.destroy();
                 }
             }
@@ -816,11 +816,11 @@ window.addEventListener("load", function() {
 
         botonCafeteria.on("click", function() {
             if (!Q.state.p.cafeteria) {
-                dinero = comprobarDinero(50, "edificios");
+                dinero = comprobarDinero(20, "edificios");
                 if (dinero) {
                     Q.state.p.cafeteria = true;
                     box.insert(new Q.UI.Button({ x: 50, y: -30, asset: "tick1.png" }));
-                    Q.state.dec("coins", 50);
+                    Q.state.dec("coins", 20);
                     labelCafeteria.destroy();
                 }
             }
@@ -843,7 +843,7 @@ window.addEventListener("load", function() {
             var labelCocina = box.insert(new Q.UI.Text({
                 x: 50,
                 y: -90,
-                label: "x50",
+                label: "x20",
                 color: "white",
                 size: 20
             }));
@@ -855,7 +855,7 @@ window.addEventListener("load", function() {
             var labelCafeteria = box.insert(new Q.UI.Text({
                 x: 50,
                 y: -30,
-                label: "x50",
+                label: "x20",
                 color: "white",
                 size: 20
             }));
@@ -898,7 +898,7 @@ window.addEventListener("load", function() {
         var labelCmasmas = box.insert(new Q.UI.Text({
             x: 70,
             y: -160,
-            label: "x80",
+            label: "x20",
             size: 20,
             color: "white"
         }));
@@ -914,7 +914,7 @@ window.addEventListener("load", function() {
         var labelEnsamblador = box.insert(new Q.UI.Text({
             x: 70,
             y: -100,
-            label: "x150",
+            label: "x90",
             size: 20,
             color: "white"
         }));
@@ -930,7 +930,7 @@ window.addEventListener("load", function() {
         var labelGestion = box.insert(new Q.UI.Text({
             x: 70,
             y: -40,
-            label: "x50",
+            label: "x10",
             size: 20,
             color: "white"
         }));
@@ -946,7 +946,7 @@ window.addEventListener("load", function() {
         var labelMatematicas = box.insert(new Q.UI.Text({
             x: 70,
             y: 20,
-            label: "x150",
+            label: "x90",
             size: 20,
             color: "white"
         }));
@@ -962,7 +962,7 @@ window.addEventListener("load", function() {
         var labelC = box.insert(new Q.UI.Text({
             x: 70,
             y: 80,
-            label: "x120",
+            label: "x60",
             size: 20,
             color: "white"
         }));
@@ -978,7 +978,7 @@ window.addEventListener("load", function() {
         var labelFisica = box.insert(new Q.UI.Text({
             x: 70,
             y: 140,
-            label: "x50",
+            label: "x10",
             size: 20,
             color: "white"
         }));
@@ -989,39 +989,39 @@ window.addEventListener("load", function() {
         });
 
         botonCmasmas.on("click", function() {
-            dinero = comprobarDinero(80, "aprender");
+            dinero = comprobarDinero(20, "aprender");
             if (dinero) {
-                Q.state.dec("coins", 80);
+                Q.state.dec("coins", 20);
                 Q.state.inc("cmasmas", 1);
             }
         });
 
         botonGestion.on("click", function() {
-            dinero = comprobarDinero(50, "aprender");
+            dinero = comprobarDinero(10, "aprender");
             if (dinero) {
-                Q.state.dec("coins", 50);
+                Q.state.dec("coins", 10);
                 Q.state.inc("gestion", 1);
             }
         });
 
         botonC.on("click", function() {
-            dinero = comprobarDinero(120, "aprender");
+            dinero = comprobarDinero(60, "aprender");
             if (dinero) {
-                Q.state.dec("coins", 120);
+                Q.state.dec("coins", 60);
                 Q.state.inc("c", 1);
             }
         });
 
         botonEnsamblador.on("click", function() {
-            dinero = comprobarDinero(150, "aprender");
+            dinero = comprobarDinero(90, "aprender");
             if (dinero) {
-                Q.state.dec("coins", 150);
+                Q.state.dec("coins", 90);
                 Q.state.inc("ensamblador", 1);
             }
         });
 
         botonMatematicas.on("click", function() {
-            dinero = comprobarDinero(150, "aprender");
+            dinero = comprobarDinero(90, "aprender");
             if (dinero) {
                 Q.state.dec("coins", 150);
                 Q.state.inc("matematicas", 1);
@@ -1029,9 +1029,9 @@ window.addEventListener("load", function() {
         });
 
         botonFisica.on("click", function() {
-            dinero = comprobarDinero(50, "aprender");
+            dinero = comprobarDinero(10, "aprender");
             if (dinero) {
-                Q.state.dec("coins", 50);
+                Q.state.dec("coins", 10);
                 Q.state.inc("fisica", 1);
             }
         });
@@ -1572,14 +1572,14 @@ window.addEventListener("load", function() {
                         x: 0,
                         y: -30,
                         label: textPregunta,
-                        size: 14,
+                        size: 12,
                         color: "white"
                     }));
 
                     var botonRespuesta1 = box.insert(new Q.UI.Button({
                         x: 0,
                         y: 30,
-                        font: 12,
+                        font: 11,
                         fill: "#CCCCCC",
                         label: respuesta1,
                         w: 280
@@ -1588,7 +1588,7 @@ window.addEventListener("load", function() {
                     var botonRespuesta2 = box.insert(new Q.UI.Button({
                         x: 0,
                         y: 90,
-                        font: 12,
+                        font: 11,
                         size: 30,
                         fill: "#CCCCCC",
                         label: respuesta2,
@@ -1598,7 +1598,7 @@ window.addEventListener("load", function() {
                     var botonRespuesta3 = box.insert(new Q.UI.Button({
                         x: 0,
                         y: 150,
-                        font: 12,
+                        font: 11,
                         fill: "#CCCCCC",
                         label: respuesta3,
                         w: 280
@@ -1826,13 +1826,14 @@ window.addEventListener("load", function() {
 
         var label = box.insert(new Q.UI.Text({
             x: 10,
-            size: 10,
+            size: 12,
             y: -10 - button.p.h,
             label: stage.options.label
         }));
 
         button.on("click", function() {
             if (stage.options.win) {
+                Q.state.inc("coins", 100);
                 profesor.trigger("win");
                 Q.clearStages();
                 Q.stageScene("level1");
@@ -1870,6 +1871,15 @@ window.addEventListener("load", function() {
             x: Q.width / 2,
             y: Q.height / 2
         }));
+        var flechaI = box.insert(new Q.UI.Button({
+            x: -110,
+            y: -210,
+            asset: "fletxaI.png"
+        }));
+        flechaI.on("click", function() {
+            Q.clearStages();
+            Q.stageScene("expedicion");
+        });
 
         var label1 = box.insert(new Q.UI.Text({ x: 0, y: -160, color: "white", label: "Mystic FDI" }));
         var label2 = box.insert(new Q.UI.Text({ x: 0, y: -120, color: "white", label: "Verónica Morante Pindado" }));
