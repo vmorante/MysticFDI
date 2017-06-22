@@ -5,7 +5,8 @@ https://vmorante.github.io/MysticFDI/ --> Juega y pruébalo
 
 Juego en javascript con motor Quintus
 
-**Ficha de Juego**
+**Ficha de Juego**                                     
+
 
 **Título:**					Mystic FDI
 
@@ -31,6 +32,12 @@ Tendrás que mejorar tus habilidades en informática si quieres llegar al fin. P
 ### **Ambientación**
 Tras las vacaciones de verano, nombre del personaje, regresa a la facultad para comenzar las clases, pero no la recordaba así. En esta aventura ,nombre, tendrá que aliarse con otros alumnos, mejorar sus conocimientos en informática y luchar para  que todo vuelva a la normalidad. No lo tendrá fácil, ya que los profesores harán todo lo posible para interponerse en su camino.
 
+## Objetivo del juego
+
+El usuario **gana si vence al boss final** que se encuentra en el mapa,se puede luchar contra él, cuando vences a un numero determinado de profesores
+
+El usuario **pierde** , si cuando está en el mapa se queda **sin energía o si pierda contra cualquier enemigo**. Al perder regresa a la pantalla principal
+
 
 
 ## **Mecánicas Centrales**
@@ -50,15 +57,19 @@ Tras las vacaciones de verano, nombre del personaje, regresa a la facultad para 
 
 **Quiz**: El alumno también se podrá enfrentar a los enemigos respondiendo preguntas relacionadas con la informática, si acierta una pregunta quita 3 puntos de vida al enemigo, si falla pierde el tres puntos de vida.
 
-### **Clases y componentes**
+### **Diseño e implementación**
+**Tecnología**: Quintus
+#### **Clases y componentes**
 
 **Alumno**: Tres clases diferentes con sus puntos de vida, poder y velocidad.
-** Profesor**: Cada profesor tiene vida, poder y velocidad diferente, pero tienen las mismas funciones generales.
+
+**Profesor**: Cada profesor tiene vida, poder y velocidad diferente, pero tienen las mismas funciones generales.
+
 
 ### **Pantallas principal**
 **Alquimia**: Si das clic puedas conseguir monedas.
 
-** Edificios**:
+**Edificios**:
 
   * Clase: Cada vez que compres una, desbloqueas a tres trabajadores.
   * Cocina: Desbloquea a los cocineros
@@ -69,6 +80,7 @@ Tras las vacaciones de verano, nombre del personaje, regresa a la facultad para 
 Podrás comprar diferentes conocimientos para mejorar a los alumnos
 
 **Reclutar**
+
 Podrás comprar trs tipos de alumnos gracias a los conocimientos adquiridos
 
 **Casa**
@@ -80,7 +92,13 @@ Podrás asignar a los trabajadores:
  **Expedición**
   Podrás seleccionar los alumnos con los que quieres explorar el mapa, en el nivel 1 **máximo 2**
 
+### Equipo de trabajo y reparto de tareas
 
 
-### **Referentes**
+### **Referentes y fuentes**
 **Mystic castle**: Es el juego principal en el que nos basamos. Es un RGP basado en mapas que tienes que ir recorriendo, mientras mejoras a tu ejército y consigues recursos para subsistir.
+**Fuentes**
+* http://spritedatabase.net/
+* Juego 999
+* Juego Phoenix Wright
+
