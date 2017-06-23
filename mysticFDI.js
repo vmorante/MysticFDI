@@ -1174,7 +1174,7 @@ window.addEventListener("load", function() {
             x: 10,
             size: 13,
             y: -60,
-            label: "Alumno de software x4 Gestion, x1 Matemáticas"
+            label: "Alumno de software x4 Gestión, x1 Matemáticas"
         }));
 
         var computadores = box.insert(new Q.UI.Button({
@@ -1208,7 +1208,7 @@ window.addEventListener("load", function() {
             x: 10,
             size: 13,
             y: 60,
-            label: "Alumno de informatica x5 C++, x1 Física"
+            label: "Alumno de informática x5 C++, x1 Física"
         }));
 
         software.on("click", function() {
@@ -1218,6 +1218,7 @@ window.addEventListener("load", function() {
                 Q.state.inc("alumnoSoftware", 1);
                 Q.state.dec(alumnoS.getNombreConocimiento1(), alumnoS.getConocimiento1());
                 Q.state.dec(alumnoS.getNombreConocimiento2(), alumnoS.getConocimiento2());
+                Q.stageScene("informacion", 1, { escena: "reclutar", label: "Tienes un nuevo amigo de software" });
             }
         });
 
@@ -1228,6 +1229,7 @@ window.addEventListener("load", function() {
                 Q.state.inc("alumnoComputadores", 1);
                 Q.state.dec(alumnoC.getNombreConocimiento1(), alumnoC.getConocimiento1());
                 Q.state.dec(alumnoC.getNombreConocimiento2(), alumnoC.getConocimiento2());
+                Q.stageScene("informacion", 1, { escena: "reclutar", label: "Tienes un nuevo amigo de computadores" });
             }
         });
 
@@ -1238,6 +1240,7 @@ window.addEventListener("load", function() {
                 Q.state.inc("alumnoInformatica", 1);
                 Q.state.dec(alumnoI.getNombreConocimiento1(), alumnoI.getConocimiento1());
                 Q.state.dec(alumnoI.getNombreConocimiento2(), alumnoI.getConocimiento2());
+                Q.stageScene("informacion", 1, { escena: "reclutar", label: "Tienes un nuevo amigo de informática" });
             }
         });
         box.fit(20);
