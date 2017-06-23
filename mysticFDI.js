@@ -48,11 +48,11 @@ window.addEventListener("load", function() {
         var player = stage.insert(new Q.Player({ x: Q.state.get('xPlayer'), y: Q.state.get('yPlayer'), scale: 1 / 7 }));
 
         var nProfesor,
-            n = ((Math.random() * 20) + 10),
+            n = ((Math.random() * 60) + 40),
             x = 0,
             y = 0,
             i = 0,
-            nEnergia = ((Math.random() * 20) + 10);
+            nEnergia = ((Math.random() * 40) + 20);
 
         for (i; i < n; i++) {
             x = (Math.random() * (1400 - 50) + 50);
@@ -1876,7 +1876,7 @@ window.addEventListener("load", function() {
         var label5 = box.insert(new Q.UI.Text({ x: 0, y: 0, color: "white", label: "http://spritedatabase.net/" }));
         var label6 = box.insert(new Q.UI.Text({ x: 0, y: 40, color: "white", label: "Juego:999" }));
         var label7 = box.insert(new Q.UI.Text({ x: 0, y: 80, color: "white", label: "Juego:Phoenix wright" }));
-        var label8 = box.insert(new Q.UI.Text({ x: 0, y: 140, color: "white", label: "Pulsa enter para volver a empezar", size: 15 }));
+        var label8 = box.insert(new Q.UI.Text({ x: 0, y: 140, color: "white", label: "Pulsa enter para volver", size: 15 }));
 
         Q.input.on("confirm", function() {
             Q.stageScene("expedicion");
@@ -1892,7 +1892,7 @@ window.addEventListener("load", function() {
             y: Q.height / 2
         }));
 
-        Q.state.reset({ coins: 200, cmasmas: 0, gestion: 0, c: 0, ensamblador: 0, matematicas: 0, fisica: 0, alumnoSoftware: 1, alumnoComputadores: 0, alumnoInformatica: 1, tamañoEquipo: 2, equipoActual: 0, equipoSoftware: 0, equipoInformatica: 0, equipoComputadores: 0, cocinero: 0, camarero: 0, recolector: 0, cocina: false, cafeteria: false, totalTrabajadores: 0, trabajadoresActuales: 0, comida: 0, energia: 250, xPlayer: inicioNiveles.uno.xPlayer, yPlayer: inicioNiveles.uno.yPlayer, vidaProfesor: 0, vidaPropia: 0, vidaRestanteProfesor: 0, vidaRestantePropia: 0, enBatalla: false, enMapa: false, victoriasHastaJefe: inicioNiveles.uno.victoriasParaSalirJefe, victorias: 0, xJefe: inicioNiveles.uno.xJefe, yJefe: inicioNiveles.uno.yJefe, jefe: false });
+        Q.state.reset({ coins: 100, cmasmas: 0, gestion: 0, c: 0, ensamblador: 0, matematicas: 0, fisica: 0, alumnoSoftware: 0, alumnoComputadores: 0, alumnoInformatica: 0, tamañoEquipo: 2, equipoActual: 0, equipoSoftware: 0, equipoInformatica: 0, equipoComputadores: 0, cocinero: 0, camarero: 0, recolector: 0, cocina: false, cafeteria: false, totalTrabajadores: 0, trabajadoresActuales: 0, comida: 0, energia: 50, xPlayer: inicioNiveles.uno.xPlayer, yPlayer: inicioNiveles.uno.yPlayer, vidaProfesor: 0, vidaPropia: 0, vidaRestanteProfesor: 0, vidaRestantePropia: 0, enBatalla: false, enMapa: false, victoriasHastaJefe: inicioNiveles.uno.victoriasParaSalirJefe, victorias: 0, xJefe: inicioNiveles.uno.xJefe, yJefe: inicioNiveles.uno.yJefe, jefe: false });
         var button = box.insert(new Q.UI.Button({ asset: "puerta/1.jpg", scale: 1 / 2 }));
         var titulo = box.insert(new Q.UI.Button({ x: 0, y: -10, asset: "titulo.png" }));
         var label1 = box.insert(new Q.UI.Button({ x: 0, y: 190, h: 80, fill: "#CCCCCC", label: "Haz clic o presiona enter" }));
