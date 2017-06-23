@@ -541,7 +541,7 @@ window.addEventListener("load", function() {
             y: -150,
             w: 150,
             fill: "#CCCCCC",
-            label: "Creditos"
+            label: "Créditos"
         }));
 
         var botonSalir = box.insert(new Q.UI.Button({
