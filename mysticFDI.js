@@ -27,7 +27,7 @@ window.addEventListener("load", function() {
     });
 
 
-    Q.load(["fdi.png", "fletxaI.png", "fletxaD.png", "tick1.png", "puerta/1.jpg", "puerta/2.jpg", "puerta/3.jpg", "puerta/4.jpg", "puerta/5.jpg", "puerta/6.jpg", "puerta/7.jpg", "puerta/8.jpg", "puerta/9.jpg", "puerta/10.jpg", "puerta/11.jpg", "puerta/12.jpg", "titulo.png", "personaje.png", "player.json", "coins.mp3", "coins.ogg", "mas.png", "menos.png", "quiz.json", "profesor1a.png", "profesor2a.png", "ace.png", "ace.json", "clover.png", "clover.json", "gumshoe.png", "gumshoe.json", "june.png", "june.json", "ema.png", "ema.json", "energia.png", "profeJefe.png", "golpe.mp3", "victoria.mp3", "derrota.mp3", "aplausos.mp3"], function() {
+    Q.load(["fdi.png", "fletxaI.png", "fletxaD.png", "tick1.png", "puerta/1.jpg", "puerta/2.jpg", "puerta/3.jpg", "puerta/4.jpg", "puerta/5.jpg", "puerta/6.jpg", "puerta/7.jpg", "puerta/8.jpg", "puerta/9.jpg", "puerta/10.jpg", "puerta/11.jpg", "puerta/12.jpg", "titulo.png", "personaje.png", "player.json", "coins.mp3", "coins.ogg", "mas.png", "menos.png", "quiz.json", "profesor1a.png", "profesor2a.png", "ace.png", "ace.json", "clover.png", "clover.json", "gumshoe.png", "gumshoe.json", "june.png", "june.json", "ema.png", "ema.json", "energia.png", "profeJefe.png", "musicatenebrosa.mp3","golpe.mp3", "victoria.mp3", "derrota.mp3", "aplausos.mp3"], function() {
         Q.loadTMX("level.tmx", function() {
             Q.compileSheets("personaje.png", "player.json");
             Q.compileSheets("ace.png", "ace.json");
@@ -82,12 +82,12 @@ window.addEventListener("load", function() {
         }
 
         Q.state.on("change.victorias", this, function(victorias) {
-                if(!Q.state.p.jefe && victorias === Q.state.p.victoriasHastaJefe){
-                    Q.state.set('jefe', true);
-                }
+            if (!Q.state.p.jefe && victorias === Q.state.p.victoriasHastaJefe) {
+                Q.state.set('jefe', true);
+            }
         });
 
-        if(Q.state.p.jefe)
+        if (Q.state.p.jefe)
             stage.insert(new Q.ProfesorJefe({ x: parseInt(Q.state.p.xJefe), y: parseInt(Q.state.p.yJefe) }));
 
 
@@ -250,7 +250,7 @@ window.addEventListener("load", function() {
 
             this.entity.p.gravity = 0;
 
-            if(!this.entity.p.jefe){
+            if (!this.entity.p.jefe) {
                 this.entity.p.w = 12;
                 this.entity.p.h = 12;
                 this.entity.p.hidden = true;
@@ -315,7 +315,7 @@ window.addEventListener("load", function() {
         profesor.p.y = 230;
         profesor.p.h = 300;
         profesor.p.w = 300;
-        profesor.p.hidden=false;
+        profesor.p.hidden = false;
         profesor.p.scale = 2;
         stage.insert(profesor);
 
@@ -591,6 +591,8 @@ window.addEventListener("load", function() {
                 Q.state.set({ "vidaRestantePropia": Q.state.get("vidaPropia"), "xPlayer": inicioNiveles.uno.xPlayer, "yPlayer": inicioNiveles.uno.yPlayer });
                 Q.clearStages();
                 Q.stageScene("level1");
+                Q.audio.stop();
+
             } else {
                 if (Q.state.get('energia') <= 0)
                     Q.stageScene("materialInsuficiente", 1, { escena: "expedicion", label: "No tienes energía suficiente" });
@@ -1790,7 +1792,7 @@ window.addEventListener("load", function() {
         var profesor = stage.options.profesor1;
         stage.insert(profesor);
         if (stage.options.win) {
-            if(profesor.p.jefe){
+            if (profesor.p.jefe) {
                 Q.clearStages();
                 Q.stageScene("finDeJuego");
             }
@@ -1799,7 +1801,7 @@ window.addEventListener("load", function() {
 
             profesor.trigger("win");
             Q.state.inc('energia', 15);
-            if(Q.state.p.victorias < Q.state.p.victoriasHastaJefe){
+            if (Q.state.p.victorias < Q.state.p.victoriasHastaJefe) {
                 Q.state.inc('victorias', 1);
             }
         } else {
@@ -1892,7 +1894,7 @@ window.addEventListener("load", function() {
             Q.stageScene("expedicion");
         });
 
-        
+
     });
 
     Q.scene('startGame', function(stage) {
@@ -1926,11 +1928,13 @@ window.addEventListener("load", function() {
         Q.input.on("confirm", button, function() {
             carga();
             empezarJuego();
+            Q.audio.play("musicatenebrosa.mp3", { loop: true });
         });
 
         button.on("click", function() {
             carga();
             empezarJuego();
+            Q.audio.play("musicatenebrosa.mp3", { loop: true });
         });
     });
 });
