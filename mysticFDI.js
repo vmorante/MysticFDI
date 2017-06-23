@@ -5,7 +5,7 @@
 window.addEventListener("load", function() {
 
     const inicioNiveles = {
-        uno: { xPlayer: 50, yPlayer: 989, victoriasParaSalirJefe: 1, xJefe: 1322, yJefe: 125 }
+        uno: { xPlayer: 50, yPlayer: 989, victoriasParaSalirJefe: 15, xJefe: 1322, yJefe: 125 }
     };
 
 
@@ -1872,7 +1872,7 @@ window.addEventListener("load", function() {
             y: Q.height / 2
         }));
 
-        Q.state.reset({ coins: 100, cmasmas: 0, gestion: 0, c: 0, ensamblador: 0, matematicas: 0, fisica: 0, alumnoSoftware: 1, alumnoComputadores: 0, alumnoInformatica: 1, tamañoEquipo: 2, equipoActual: 0, equipoSoftware: 0, equipoInformatica: 0, equipoComputadores: 0, cocinero: 0, camarero: 0, recolector: 0, cocina: false, cafeteria: false, totalTrabajadores: 0, trabajadoresActuales: 0, comida: 0, energia: 50, xPlayer: inicioNiveles.uno.xPlayer, yPlayer: inicioNiveles.uno.yPlayer, vidaProfesor: 0, vidaPropia: 0, vidaRestanteProfesor: 0, vidaRestantePropia: 0, enBatalla: false, enMapa: false, victoriasHastaJefe: inicioNiveles.uno.victoriasParaSalirJefe, victorias: 0, xJefe: inicioNiveles.uno.xJefe, yJefe: inicioNiveles.uno.yJefe, jefe: false });
+        Q.state.reset({ coins: 100, cmasmas: 0, gestion: 0, c: 0, ensamblador: 0, matematicas: 0, fisica: 0, alumnoSoftware: 0, alumnoComputadores: 0, alumnoInformatica: 0, tamañoEquipo: 2, equipoActual: 0, equipoSoftware: 0, equipoInformatica: 0, equipoComputadores: 0, cocinero: 0, camarero: 0, recolector: 0, cocina: false, cafeteria: false, totalTrabajadores: 0, trabajadoresActuales: 0, comida: 0, energia: 50, xPlayer: inicioNiveles.uno.xPlayer, yPlayer: inicioNiveles.uno.yPlayer, vidaProfesor: 0, vidaPropia: 0, vidaRestanteProfesor: 0, vidaRestantePropia: 0, enBatalla: false, enMapa: false, victoriasHastaJefe: inicioNiveles.uno.victoriasParaSalirJefe, victorias: 0, xJefe: inicioNiveles.uno.xJefe, yJefe: inicioNiveles.uno.yJefe, jefe: false });
         var button = box.insert(new Q.UI.Button({ asset: "puerta/1.jpg", scale: 1 / 2 }));
         var titulo = box.insert(new Q.UI.Button({ x: 0, y: -10, asset: "titulo.png" }));
         var label1 = box.insert(new Q.UI.Button({ x: 0, y: 190, h: 80, fill: "#CCCCCC", label: "Haz clic o presiona enter" }));
