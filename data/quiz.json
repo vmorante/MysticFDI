@@ -1,0 +1,262 @@
+{
+    "lista": [{
+            "id": 1,
+            "pregunta": "El número 1010 en binario se representa en decimal como",
+            "correcta": 3,
+            "respuestas": {
+                "respuesta1": {
+                    "id": 1,
+                    "respuesta": "8 "
+
+                },
+                "respuesta2": {
+                    "id": 2,
+                    "respuesta": "12"
+
+
+                },
+
+                "respuesta3": {
+                    "id": 3,
+                    "respuesta": "Las anteriores respuestas no son correctas "
+
+
+                }
+            }
+
+
+        }, {
+            "id": 2,
+            "pregunta": "Se considera que el primer lenguaje de alto nivel fue",
+            "correcta": 3,
+            "respuestas": {
+                "respuesta1": {
+                    "id": 1,
+                    "respuesta": "Ada"
+
+                },
+                "respuesta2": {
+                    "id": 2,
+                    "respuesta": "C "
+
+
+                },
+
+                "respuesta3": {
+                    "id": 3,
+                    "respuesta": "Fortran "
+
+
+                }
+            }
+
+        },
+        {
+            "id": 3,
+            "pregunta": "if, else, for y while son",
+            "correcta": 2,
+            "respuestas": {
+                "respuesta1": {
+                    "id": 1,
+                    "respuesta": "Funciones de acceso a datos "
+
+                },
+                "respuesta2": {
+                    "id": 2,
+                    "respuesta": "Sentencias de control  "
+
+
+                },
+
+                "respuesta3": {
+                    "id": 3,
+                    "respuesta": "Tipos de datos  "
+
+
+                }
+            }
+
+        },
+        {
+            "id": 4,
+            "pregunta": "¿Cuál es el código ASCII decimal de la letra A mayúscula?",
+            "correcta": 2,
+            "respuestas": {
+                "respuesta1": {
+                    "id": 1,
+                    "respuesta": "32 "
+
+                },
+                "respuesta2": {
+                    "id": 2,
+                    "respuesta": "65  "
+
+
+                },
+
+                "respuesta3": {
+                    "id": 3,
+                    "respuesta": "97"
+
+
+                }
+            }
+
+        },
+        {
+            "id": 5,
+            "pregunta": "¿Qué significa EOF?",
+            "correcta": 2,
+            "respuestas": {
+                "respuesta1": {
+                    "id": 1,
+                    "respuesta": " Empty or full "
+
+                },
+                "respuesta2": {
+                    "id": 2,
+                    "respuesta": "End of file  "
+
+
+                },
+
+                "respuesta3": {
+                    "id": 3,
+                    "respuesta": "End of floop  "
+
+
+                }
+            }
+
+        },
+        {
+            "id": 6,
+            "pregunta": "int, char, float, string y boolean son",
+            "correcta": 3,
+            "respuestas": {
+                "respuesta1": {
+                    "id": 1,
+                    "respuesta": "Instrucciones de acceso a datos "
+
+                },
+                "respuesta2": {
+                    "id": 2,
+                    "respuesta": "Funciones de acceso a datos  "
+
+
+                },
+
+                "respuesta3": {
+                    "id": 3,
+                    "respuesta": "Tipos de datos "
+
+
+                }
+            }
+
+        },
+        {
+            "id": 7,
+            "pregunta": "Para incluir una biblioteca en c++ se utiliza la siguiente sentencia",
+            "correcta": 2,
+            "respuestas": {
+                "respuesta1": {
+                    "id": 1,
+                    "respuesta": "# include (stdlib) "
+
+                },
+                "respuesta2": {
+                    "id": 2,
+                    "respuesta": "# include <stdlib>  "
+
+
+                },
+
+                "respuesta3": {
+                    "id": 3,
+                    "respuesta": "cout << biblioteca "
+
+
+                }
+            }
+
+        },
+        {
+            "id": 8,
+            "pregunta": " La definición de una variable se realiza de la siguiente manera",
+            "correcta": 2,
+            "respuestas": {
+                "respuesta1": {
+                    "id": 1,
+                    "respuesta": "include variable1"
+
+                },
+                "respuesta2": {
+                    "id": 2,
+                    "respuesta": "int variable1  "
+
+
+                },
+
+                "respuesta3": {
+                    "id": 3,
+                    "respuesta": "const int variable1=25 "
+
+
+                }
+            }
+
+        },
+        {
+            "id": 9,
+            "pregunta": " En el proceso de Compilar, pueden aparecer 2 tipos de errores",
+            "correcta": 1,
+            "respuestas": {
+                "respuesta1": {
+                    "id": 1,
+                    "respuesta": "Errores de compilación y de ejecución"
+
+                },
+                "respuesta2": {
+                    "id": 2,
+                    "respuesta": "Errores de entrada y salida  "
+
+
+                },
+
+                "respuesta3": {
+                    "id": 3,
+                    "respuesta": "Errores de compilación y salida "
+
+
+                }
+            }
+        },
+        {
+            "id": 10,
+            "pregunta": " La sentencia en C++: const float PI=3.14; hace referencia a:",
+            "correcta": 2,
+            "respuestas": {
+                "respuesta1": {
+                    "id": 1,
+                    "respuesta": "Una variable"
+
+                },
+                "respuesta2": {
+                    "id": 2,
+                    "respuesta": "Una constante  "
+
+
+                },
+
+                "respuesta3": {
+                    "id": 3,
+                    "respuesta": "Una biblioteca "
+
+
+                }
+            }
+
+        }
+    ]
+}
