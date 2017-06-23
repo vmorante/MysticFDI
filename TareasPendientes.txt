@@ -1,7 +1,0 @@
-
-- Hacer inivisibles los profes del mapa
-
-
-EXTRAS-----------------------
- - Dialogo amenazador cuando colisionas con profe
- - Que aparezca una frase durante un tiempo diciendo que has aumentado de energia con el cocinero, que has comprado tal...
