@@ -5,7 +5,7 @@
 window.addEventListener("load", function() {
 
     const inicioNiveles = {
-        uno: { xPlayer: 50, yPlayer: 989.5, victoriasParaSalirJefe: 15, xJefe: 1322, yJefe: 125.5 }
+        uno: { xPlayer: 50, yPlayer: 989, victoriasParaSalirJefe: 1, xJefe: 1322, yJefe: 125 }
     };
 
 
@@ -27,7 +27,7 @@ window.addEventListener("load", function() {
     });
 
 
-    Q.load(["fdi.png", "fletxaI.png", "fletxaD.png", "tick1.png", "puerta/1.jpg", "puerta/2.jpg", "puerta/3.jpg", "puerta/4.jpg", "puerta/5.jpg", "puerta/6.jpg", "puerta/7.jpg", "puerta/8.jpg", "puerta/9.jpg", "puerta/10.jpg", "puerta/11.jpg", "puerta/12.jpg", "titulo.png", "personaje.png", "player.json", "coins.mp3", "coins.ogg", "mas.png", "menos.png", "quiz.json", "profesor1a.png", "profesor2a.png", "ace.png", "ace.json", "clover.png", "clover.json", "gumshoe.png", "gumshoe.json", "june.png", "june.json", "ema.png", "ema.json", "energia.png", "profeJefe.png"], function() {
+    Q.load(["fdi.png", "fletxaI.png", "fletxaD.png", "tick1.png", "puerta/1.jpg", "puerta/2.jpg", "puerta/3.jpg", "puerta/4.jpg", "puerta/5.jpg", "puerta/6.jpg", "puerta/7.jpg", "puerta/8.jpg", "puerta/9.jpg", "puerta/10.jpg", "puerta/11.jpg", "puerta/12.jpg", "titulo.png", "personaje.png", "player.json", "coins.mp3", "coins.ogg", "mas.png", "menos.png", "quiz.json", "profesor1a.png", "profesor2a.png", "ace.png", "ace.json", "clover.png", "clover.json", "gumshoe.png", "gumshoe.json", "june.png", "june.json", "ema.png", "ema.json", "energia.png", "profeJefe.png", "golpe.mp3", "victoria.mp3", "derrota.mp3", "aplausos.mp3"], function() {
         Q.loadTMX("level.tmx", function() {
             Q.compileSheets("personaje.png", "player.json");
             Q.compileSheets("ace.png", "ace.json");
@@ -253,7 +253,7 @@ window.addEventListener("load", function() {
             if(!this.entity.p.jefe){
                 this.entity.p.w = 12;
                 this.entity.p.h = 12;
-                 this.entity.p.hidden = true
+                this.entity.p.hidden = true;
 
                 this.entity.on("fallar", function() {
 
@@ -1725,6 +1725,7 @@ window.addEventListener("load", function() {
 
             button.on("click", function() {
                 if (t2 >= velocidadAlumno1) {
+                    Q.audio.play("golpe.mp3");
                     Q.state.dec('vidaRestanteProfesor', alumnosActuales[0].poder);
                     if (Q.state.p.vidaRestanteProfesor <= 0) {
                         Q.clearStages();
@@ -1738,6 +1739,7 @@ window.addEventListener("load", function() {
 
                 button2.on("click", function() {
                     if (t3 >= velocidadAlumno2) {
+                        Q.audio.play("golpe.mp3");
                         Q.state.dec('vidaRestanteProfesor', alumnosActuales[1].poder);
                         if (Q.state.p.vidaRestanteProfesor <= 0) {
                             Q.clearStages();
@@ -1760,6 +1762,8 @@ window.addEventListener("load", function() {
 
 
     Q.scene('finDeJuego', function(stage) {
+        Q.audio.play("victoria.mp3");
+
         var box = stage.insert(new Q.UI.Container({
             x: Q.width / 2,
             y: Q.height / 2
@@ -1772,6 +1776,7 @@ window.addEventListener("load", function() {
         var label4 = box.insert(new Q.UI.Text({ x: 0, y: 120, color: "white", label: "Pulsa enter para volver a empezar", size: 15 }));
 
         Q.input.on("confirm", function() {
+            Q.audio.stop();
             Q.clearStages();
             Q.stageScene("startGame");
         });
@@ -1789,6 +1794,8 @@ window.addEventListener("load", function() {
                 Q.clearStages();
                 Q.stageScene("finDeJuego");
             }
+            else
+                Q.audio.play("aplausos.mp3");
 
             profesor.trigger("win");
             Q.state.inc('energia', 15);
@@ -1796,6 +1803,7 @@ window.addEventListener("load", function() {
                 Q.state.inc('victorias', 1);
             }
         } else {
+            Q.audio.play("derrota.mp3");
             profesor.trigger("perder");
 
         }
