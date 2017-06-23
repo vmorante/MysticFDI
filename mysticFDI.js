@@ -720,14 +720,6 @@ window.addEventListener("load", function() {
             asset: "fletxaI.png"
         }));
 
-        // var botonTaquillas = box.insert(new Q.UI.Button({
-        //     x: -70,
-        //     y: -150,
-        //     w: 150,
-        //     fill: "#CCCCCC",
-        //     label: "Taquillas"
-        // }));
-
         var botonClase = box.insert(new Q.UI.Button({
             x: -70,
             y: -150,
@@ -760,30 +752,10 @@ window.addEventListener("load", function() {
             label: "Cafeteria"
         }));
 
-        /*var botonAparcamiento = box.insert(new Q.UI.Button({
-            x: -70,
-            y: 30,
-            w: 150,
-            fill: "#CCCCCC",
-            label: "Aparcamiento"
-        }));*/
-
         flechaI.on("click", function() {
             Q.clearStages();
             Q.stageScene("screenMain");
         });
-
-        // botonTaquillas.on("click", function() {
-        //     if (!Q.state.p.taquillas) {
-        //         dinero = comprobarDinero(1, "edificios");
-        //         if (dinero) {
-        //             Q.state.p.taquillas = true;
-        //             box.insert(new Q.UI.Button({ x: 50, y: -145, asset: "tick1.png" }));
-        //             Q.state.dec("coins", 1);
-        //             labelTaquillas.destroy();
-        //         }
-        //     }
-        // });
 
         botonClase.on("click", function() {
             dinero = comprobarDinero(50, "edificios");
@@ -817,17 +789,6 @@ window.addEventListener("load", function() {
                 }
             }
         });
-
-        // if (Q.state.p.taquillas) {
-        //     box.insert(new Q.UI.Button({ x: 50, y: -145, asset: "tick1.png" }));
-        // } else {
-        //     var labelTaquillas = box.insert(new Q.UI.Text({
-        //         x: 50,
-        //         y: -155,
-        //         label: "x1",
-        //         size: 20
-        //     }));
-        // }
 
         if (Q.state.p.cocina) {
             box.insert(new Q.UI.Button({ x: 50, y: -90, asset: "tick1.png" }));
@@ -1911,7 +1872,7 @@ window.addEventListener("load", function() {
             y: Q.height / 2
         }));
 
-        Q.state.reset({ coins: 100, cmasmas: 0, gestion: 0, c: 0, ensamblador: 0, matematicas: 0, fisica: 0, alumnoSoftware: 0, alumnoComputadores: 0, alumnoInformatica: 0, tamañoEquipo: 2, equipoActual: 0, equipoSoftware: 0, equipoInformatica: 0, equipoComputadores: 0, cocinero: 0, camarero: 0, recolector: 0, cocina: false, cafeteria: false, totalTrabajadores: 0, trabajadoresActuales: 0, comida: 0, energia: 50, xPlayer: inicioNiveles.uno.xPlayer, yPlayer: inicioNiveles.uno.yPlayer, vidaProfesor: 0, vidaPropia: 0, vidaRestanteProfesor: 0, vidaRestantePropia: 0, enBatalla: false, enMapa: false, victoriasHastaJefe: inicioNiveles.uno.victoriasParaSalirJefe, victorias: 0, xJefe: inicioNiveles.uno.xJefe, yJefe: inicioNiveles.uno.yJefe, jefe: false });
+        Q.state.reset({ coins: 100, cmasmas: 0, gestion: 0, c: 0, ensamblador: 0, matematicas: 0, fisica: 0, alumnoSoftware: 1, alumnoComputadores: 0, alumnoInformatica: 1, tamañoEquipo: 2, equipoActual: 0, equipoSoftware: 0, equipoInformatica: 0, equipoComputadores: 0, cocinero: 0, camarero: 0, recolector: 0, cocina: false, cafeteria: false, totalTrabajadores: 0, trabajadoresActuales: 0, comida: 0, energia: 50, xPlayer: inicioNiveles.uno.xPlayer, yPlayer: inicioNiveles.uno.yPlayer, vidaProfesor: 0, vidaPropia: 0, vidaRestanteProfesor: 0, vidaRestantePropia: 0, enBatalla: false, enMapa: false, victoriasHastaJefe: inicioNiveles.uno.victoriasParaSalirJefe, victorias: 0, xJefe: inicioNiveles.uno.xJefe, yJefe: inicioNiveles.uno.yJefe, jefe: false });
         var button = box.insert(new Q.UI.Button({ asset: "puerta/1.jpg", scale: 1 / 2 }));
         var titulo = box.insert(new Q.UI.Button({ x: 0, y: -10, asset: "titulo.png" }));
         var label1 = box.insert(new Q.UI.Button({ x: 0, y: 190, h: 80, fill: "#CCCCCC", label: "Haz clic o presiona enter" }));
