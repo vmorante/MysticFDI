@@ -595,9 +595,9 @@ window.addEventListener("load", function() {
 
             } else {
                 if (Q.state.get('energia') <= 0)
-                    Q.stageScene("materialInsuficiente", 1, { escena: "expedicion", label: "No tienes energía suficiente" });
+                    Q.stageScene("informacion", 1, { escena: "expedicion", label: "No tienes energía suficiente" });
                 else if (Q.state.get('equipoActual') <= 0)
-                    Q.stageScene("materialInsuficiente", 1, { escena: "expedicion", label: "Debes reclutar a alumnos en tu equipo" });
+                    Q.stageScene("informacion", 1, { escena: "expedicion", label: "Debes reclutar a alumnos en tu equipo" });
             }
         });
 
@@ -689,7 +689,7 @@ window.addEventListener("load", function() {
 
     function comprobarExpedicion(tipoAlumno, equipoAlumno) {
         if (tipoAlumno <= equipoAlumno || Q.state.p.equipoActual >= Q.state.p.tamañoEquipo) {
-            Q.stageScene("materialInsuficiente", 1, { escena: "expedicion", label: "No tienes alumnos suficientes" });
+            Q.stageScene("informacion", 1, { escena: "expedicion", label: "No tienes alumnos suficientes" });
             return false;
         } else {
             return true;
@@ -790,7 +790,7 @@ window.addEventListener("load", function() {
             if (dinero) {
                 Q.state.inc("totalTrabajadores", 3);
                 Q.state.dec("coins", 50);
-                Q.stageScene("materialInsuficiente", 1, { escena: "edificios", label: "Ha añadido 3 trabajadores que podrá asignar" });
+                Q.stageScene("informacion", 1, { escena: "edificios", label: "Ha añadido 3 trabajadores que podrá asignar" });
             }
         });
 
@@ -985,6 +985,7 @@ window.addEventListener("load", function() {
             if (dinero) {
                 Q.state.dec("coins", 20);
                 Q.state.inc("cmasmas", 1);
+                Q.stageScene("informacion", 1, { escena: "aprender", label: "Has aprendido C++" });
             }
         });
 
@@ -993,6 +994,7 @@ window.addEventListener("load", function() {
             if (dinero) {
                 Q.state.dec("coins", 10);
                 Q.state.inc("gestion", 1);
+                Q.stageScene("informacion", 1, { escena: "aprender", label: "Has aprendido gestión" });
             }
         });
 
@@ -1001,6 +1003,7 @@ window.addEventListener("load", function() {
             if (dinero) {
                 Q.state.dec("coins", 60);
                 Q.state.inc("c", 1);
+                Q.stageScene("informacion", 1, { escena: "aprender", label: "Has aprendido C" });
             }
         });
 
@@ -1009,6 +1012,7 @@ window.addEventListener("load", function() {
             if (dinero) {
                 Q.state.dec("coins", 90);
                 Q.state.inc("ensamblador", 1);
+                Q.stageScene("informacion", 1, { escena: "aprender", label: "Has aprendido ensamblador" });
             }
         });
 
@@ -1017,6 +1021,7 @@ window.addEventListener("load", function() {
             if (dinero) {
                 Q.state.dec("coins", 150);
                 Q.state.inc("matematicas", 1);
+                Q.stageScene("informacion", 1, { escena: "aprender", label: "Has aprendido matemáticas" });
             }
         });
 
@@ -1025,6 +1030,7 @@ window.addEventListener("load", function() {
             if (dinero) {
                 Q.state.dec("coins", 10);
                 Q.state.inc("fisica", 1);
+                Q.stageScene("informacion", 1, { escena: "aprender", label: "Has aprendido física" });
             }
         });
     });
@@ -1135,7 +1141,7 @@ window.addEventListener("load", function() {
 
     function comprobarDinero(precio, escena) {
         if (precio > Q.state.p.coins) {
-            Q.stageScene("materialInsuficiente", 1, { escena: escena, label: "No tienes dinero suficiente" });
+            Q.stageScene("informacion", 1, { escena: escena, label: "No tienes dinero suficiente" });
             return false;
         } else
             return true;
@@ -1144,14 +1150,14 @@ window.addEventListener("load", function() {
 
     function comprobarConocimientos(conocimiento1, conocimiento2, tipoAlumno, escena) {
         if (tipoAlumno.conocimiento1 > conocimiento1 || tipoAlumno.conocimiento2 > conocimiento2) {
-            Q.stageScene("materialInsuficiente", 1, { escena: escena, label: "No tienes conocimientos suficientes" });
+            Q.stageScene("informacion", 1, { escena: escena, label: "No tienes conocimientos suficientes" });
             return false;
         } else
             return true;
     }
 
 
-    Q.scene('materialInsuficiente', function(stage) {
+    Q.scene('informacion', function(stage) {
 
         var box = stage.insert(new Q.UI.Container({
             x: Q.width / 2,
@@ -1444,10 +1450,10 @@ window.addEventListener("load", function() {
                     Q.state.inc("cocinero", 1);
                     Q.state.inc("trabajadoresActuales", 1);
                 } else {
-                    Q.stageScene("materialInsuficiente", 1, { escena: "casa", label: "No tiene trabajadores suficientes" });
+                    Q.stageScene("informacion", 1, { escena: "casa", label: "No tiene trabajadores suficientes" });
                 }
             } else {
-                Q.stageScene("materialInsuficiente", 1, { escena: "casa", label: "Compre la cocina" });
+                Q.stageScene("informacion", 1, { escena: "casa", label: "Compre la cocina" });
             }
         });
 
@@ -1466,10 +1472,10 @@ window.addEventListener("load", function() {
                     Q.state.inc("camarero", 1);
                     Q.state.inc("trabajadoresActuales", 1);
                 } else {
-                    Q.stageScene("materialInsuficiente", 1, { escena: "casa", label: "No tiene trabajadores suficientes" });
+                    Q.stageScene("informacion", 1, { escena: "casa", label: "No tiene trabajadores suficientes" });
                 }
             } else {
-                Q.stageScene("materialInsuficiente", 1, { escena: "casa", label: "Compre la cafeteria" });
+                Q.stageScene("informacion", 1, { escena: "casa", label: "Compre la cafeteria" });
             }
         });
 
@@ -1487,7 +1493,7 @@ window.addEventListener("load", function() {
                 Q.state.inc("recolector", 1);
                 Q.state.inc("trabajadoresActuales", 1);
             } else {
-                Q.stageScene("materialInsuficiente", 1, { escena: "casa", label: "No tiene trabajadores suficientes" });
+                Q.stageScene("informacion", 1, { escena: "casa", label: "No tiene trabajadores suficientes" });
             }
         });
 
@@ -1881,14 +1887,15 @@ window.addEventListener("load", function() {
             Q.stageScene("expedicion");
         });
 
-        var label1 = box.insert(new Q.UI.Text({ x: 0, y: -160, color: "white", label: "Mystic FDI" }));
+        var label1 = box.insert(new Q.UI.Text({ x: 0, y: -180, color: "white", label: "Mystic FDI", size:30 }));
         var label2 = box.insert(new Q.UI.Text({ x: 0, y: -120, color: "white", label: "Verónica Morante Pindado" }));
         var label3 = box.insert(new Q.UI.Text({ x: 0, y: -80, color: "white", label: "Alejandro Pidal Gallego" }));
         var label4 = box.insert(new Q.UI.Text({ x: 0, y: -40, color: "white", label: "Recursos gráficos:" }));
         var label5 = box.insert(new Q.UI.Text({ x: 0, y: 0, color: "white", label: "http://spritedatabase.net/" }));
-        var label6 = box.insert(new Q.UI.Text({ x: 0, y: 40, color: "white", label: "Juego:999" }));
-        var label7 = box.insert(new Q.UI.Text({ x: 0, y: 80, color: "white", label: "Juego:Phoenix wright" }));
-        var label8 = box.insert(new Q.UI.Text({ x: 0, y: 140, color: "white", label: "Pulsa enter para volver", size: 15 }));
+        var label6 = box.insert(new Q.UI.Text({ x: 0, y: 40, color: "white", label: "Juego:Mystic castle" }));
+        var label7 = box.insert(new Q.UI.Text({ x: 0, y: 80, color: "white", label: "Juego:999" }));
+        var label8 = box.insert(new Q.UI.Text({ x: 0, y: 120, color: "white", label: "Juego:Phoenix wright" }));
+        var label9 = box.insert(new Q.UI.Text({ x: 0, y: 200, color: "white", label: "Pulsa enter para volver", size: 15 }));
 
         Q.input.on("confirm", function() {
             Q.stageScene("expedicion");
