@@ -27,7 +27,7 @@ window.addEventListener("load", function() {
     });
 
 
-    Q.load(["fdi.png", "fletxaI.png", "fletxaD.png", "tick1.png", "puerta/1.jpg", "puerta/2.jpg", "puerta/3.jpg", "puerta/4.jpg", "puerta/5.jpg", "puerta/6.jpg", "puerta/7.jpg", "puerta/8.jpg", "puerta/9.jpg", "puerta/10.jpg", "puerta/11.jpg", "puerta/12.jpg", "titulo.png", "personaje.png", "player.json", "coins.mp3", "coins.ogg", "mas.png", "menos.png", "quiz.json", "profesor1a.png", "profesor2a.png", "ace.png", "ace.json", "clover.png", "clover.json", "gumshoe.png", "gumshoe.json", "june.png", "june.json", "ema.png", "ema.json", "energia.png", "profeJefe.png", "musicatenebrosa.mp3","golpe.mp3", "victoria.mp3", "derrota.mp3", "aplausos.mp3"], function() {
+    Q.load(["fdi.png", "fletxaI.png", "fletxaD.png", "tick1.png", "puerta/1.jpg", "puerta/2.jpg", "puerta/3.jpg", "puerta/4.jpg", "puerta/5.jpg", "puerta/6.jpg", "puerta/7.jpg", "puerta/8.jpg", "puerta/9.jpg", "puerta/10.jpg", "puerta/11.jpg", "puerta/12.jpg", "titulo.png", "personaje.png", "player.json", "coins.mp3", "coins.ogg", "mas.png", "menos.png", "quiz.json", "ace.png", "ace.json", "clover.png", "clover.json", "gumshoe.png", "gumshoe.json", "june.png", "june.json", "ema.png", "ema.json", "energia.png", "profeJefe.png", "musicatenebrosa.mp3","golpe.mp3", "victoria.mp3", "derrota.mp3", "aplausos.mp3"], function() {
         Q.loadTMX("level.tmx", function() {
             Q.compileSheets("personaje.png", "player.json");
             Q.compileSheets("ace.png", "ace.json");
