@@ -302,14 +302,9 @@ window.addEventListener("load", function() {
             this.add('2d,aiBounce');
 
             this.on("bump.left, bump.right, bump.bottom, bump.top", function(collision) {
+                this.destroy();
                 if (collision.obj.isA("Player")) {
-                    //Q.input.on("fire", this, function() {
                     Q.state.inc("energia", 5);
-                    this.destroy();
-
-
-
-                    // })
                 }
             });
 
