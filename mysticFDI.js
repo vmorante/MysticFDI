@@ -5,7 +5,7 @@
 window.addEventListener("load", function() {
 
     const inicioNiveles = {
-        uno: { xPlayer: 50, yPlayer: 989.5, victoriasParaSalirJefe: 10, xJefe: 1322, yJefe: 125.5 }
+        uno: { xPlayer: 50, yPlayer: 989.5, victoriasParaSalirJefe: 15, xJefe: 1322, yJefe: 125.5 }
     };
 
 
@@ -162,19 +162,9 @@ window.addEventListener("load", function() {
                 vida: 15,
                 poder: 4,
                 velocidad: 4.5,
-                gravity: 0,
                 jefe: true
             });
-            this.add('2d,aiBounce,animation');
-
-            this.on("hit.sprite", function(collision) {
-                if (collision.obj.isA("Player")) {
-                    Q.state.set({ xPlayer: collision.obj.p.x, yPlayer: collision.obj.p.y, vidaRestanteProfesor: this.p.vida, vidaProfesor: this.p.vida });
-
-                    Q.clearStages();
-                    Q.stageScene("batalla", 1, { profesor: this });
-                }
-            });
+            this.add('2d,aiBounce,animation, Profesor');
         }
 
     });
@@ -258,26 +248,29 @@ window.addEventListener("load", function() {
 
         added: function() {
 
-            this.entity.p.w = 12;
-            this.entity.p.h = 12;
             this.entity.p.gravity = 0;
 
-            this.entity.on("fallar", function() {
+            if(!this.entity.p.jefe){
+                this.entity.p.w = 12;
+                this.entity.p.h = 12;
 
-                this.p.sheet = this.p.name + "Acertar";
-            });
-            this.entity.on("acertar", function() {
+                this.entity.on("fallar", function() {
 
-                this.p.sheet = this.p.name + "Fallar";
-            });
-            this.entity.on("win", function() {
+                    this.p.sheet = this.p.name + "Acertar";
+                });
+                this.entity.on("acertar", function() {
 
-                this.p.sheet = this.p.name + "Perder";
-            });
-            this.entity.on("perder", function() {
+                    this.p.sheet = this.p.name + "Fallar";
+                });
+                this.entity.on("win", function() {
 
-                this.p.sheet = this.p.name + "Win";
-            });
+                    this.p.sheet = this.p.name + "Perder";
+                });
+                this.entity.on("perder", function() {
+
+                    this.p.sheet = this.p.name + "Win";
+                });
+            }
 
             this.entity.on("hit.sprite", function(collision) {
                 if (collision.obj.isA("Player")) {
