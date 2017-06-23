@@ -253,6 +253,7 @@ window.addEventListener("load", function() {
             if(!this.entity.p.jefe){
                 this.entity.p.w = 12;
                 this.entity.p.h = 12;
+                 this.entity.p.hidden = true
 
                 this.entity.on("fallar", function() {
 
@@ -314,6 +315,7 @@ window.addEventListener("load", function() {
         profesor.p.y = 230;
         profesor.p.h = 300;
         profesor.p.w = 300;
+        profesor.p.hidden=false;
         profesor.p.scale = 2;
         stage.insert(profesor);
 
