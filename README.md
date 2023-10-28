@@ -18,7 +18,7 @@ Juego en javascript con motor Quintus
 
 **Edad:**					7+
 
-**Autores:**  Verónica Morante Pindado y Alejandro Pidal Gallego
+**Autores:**  Verónica  y Alejandro 
 
 
 
